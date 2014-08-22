@@ -1,0 +1,5 @@
+eventmedals_control:
+    path: /eventmedals/{action}/{userid}
+    defaults: { _controller: anavaro.eventmedals.ajaxyfy:base }
+    requirements:
+        userid: \d+

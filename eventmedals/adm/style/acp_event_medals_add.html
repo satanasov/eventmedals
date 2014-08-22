@@ -1,0 +1,170 @@
+<!-- INCLUDE overall_header.html -->
+
+<a name="maincontent"></a>
+<h1>{L_MEDALS_TITLE}</h1>
+	<!-- IF S_STAGE == 'first' -->
+	<p> {L_MEDALS_ADD_SCRIPT}
+	<p> {L_MEDALS_ADD_STEP_ONE}
+	<fieldset>
+	<form id="acp_board" method="post" action="{U_ACTION}">
+	<dl>
+		<dt>
+			<label for="usernemes">{L_MEDALS_USERS_LIST}</label>
+			<br>
+			<span>{L_MEDALS_USERS_LIST_HINT}</span>
+		</dt>
+		<dd>
+			<textarea style="width: 100%; height: 500px;" cols="5" rows="5" name="usernames" id="username"></textarea>
+			<p class="submit-buttons">
+			<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" />&nbsp;
+			<input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" />
+		</dd>
+	</dl>
+	{S_FORM_TOKEN}
+	</fieldset>
+	</form>
+	<!-- ELSEIF S_STAGE == 'second' -->
+	<p> {L_MEDALS_ADD_SCRIPT}
+	<p> {L_MEDALS_ADD_STEP_TWO}
+	<!-- IF S_ERROR -->
+	<div class="errorbox">
+		<h3>{L_WARNING}</h3>
+		<p>{L_USER} {S_ERROR} {L_NOT_EXISTENT}<br><br>
+		{L_CORRECT_WARNING_ONE}</p>
+	</div>
+	<!-- ENDIF -->
+	<form id="acp_board" method="post" action="{U_ACTION}">
+		<!-- BEGIN usrs -->
+		<fieldset>
+			<legend>{usrs.USERNAME}</legend>
+			<dl>
+				<dt>{L_MEDAL_TYPE}</dt>
+				<dd> 
+					<input type="hidden" name="usesr[{usrs.ID}][username]" value="{usrs.USERNAME}"/>
+					<select id="usesr[{usrs.ID}][select]" name="usesr[{usrs.ID}][select]">
+						<option value="1">{L_MEDAL_TYPE_ONE}</option>
+						<option value="2" SELECTED>{L_MEDAL_TYPE_TWO}</option>
+						<option value="3">{L_MEDAL_TYPE_THREE}</option>
+						<option value="4">{L_MEDAL_TYPE_FOUR}</option>
+					</select>
+				</dd>
+			</dl>
+		</fieldset>
+		<!-- END usrs -->
+		<p class="submit-buttons">
+		<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" />&nbsp;
+		<input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" />
+	</p>
+	{S_FORM_TOKEN}
+	</fieldset>
+	</form>
+	<!-- ELSEIF S_STAGE == 'third' -->
+	<p> {L_MEDALS_ADD_SCRIPT}
+	<p> {L_MEDALS_ADD_STEP_THREE}
+
+	<form id="acp_board" method="post" action="{U_ACTION}">
+		<!-- BEGIN usrs1 -->
+		<fieldset>
+			<legend>{usrs1.USERNAME}</legend>
+			<dl>
+				<dt>{L_MEDAL_TYPE}</dt>
+				<dd> 
+					<input type="hidden" name="usesr[{usrs1.USERID}][username]" value="{usrs1.USERNAME}" />
+					<select id="usesr[{usrs1.USERID}][select]" name="usesr[{usrs1.USERID}][select]">
+						<option value="1" <!-- IF usrs1.SELECTION == 1 -->SELECTED<!-- ENDIF -->>{L_MEDAL_TYPE_ONE}</option>
+						<option value="2" <!-- IF usrs1.SELECTION == 2 -->SELECTED<!-- ENDIF -->>{L_MEDAL_TYPE_TWO}</option>
+						<option value="3" <!-- IF usrs1.SELECTION == 3 -->SELECTED<!-- ENDIF -->>{L_MEDAL_TYPE_THREE}</option>
+						<option value="4" <!-- IF usrs1.SELECTION == 4 -->SELECTED<!-- ENDIF -->>{L_MEDAL_TYPE_FOUR}</option>
+					</select>
+				</dd>
+			</dl>
+		</fieldset>
+		<!-- END usrs1 -->
+		<fieldset>
+         <dl>
+			<dt>{L_DATE}</dt>
+			<dd>{L_DAY} <select id="day" name="day">
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
+							<option value="10">10</option>
+							<option value="11">11</option>
+							<option value="12">12</option>
+							<option value="13">13</option>
+							<option value="14">14</option>
+							<option value="15">15</option>
+							<option value="16">16</option>
+							<option value="17">17</option>
+							<option value="18">18</option>
+							<option value="19">19</option>
+							<option value="20">20</option>
+							<option value="21">21</option>
+							<option value="22">22</option>
+							<option value="23">23</option>
+							<option value="24">24</option>
+							<option value="25">25</option>
+							<option value="26">26</option>
+							<option value="27">27</option>
+							<option value="28">28</option>
+							<option value="29">29</option>
+							<option value="30">30</option>
+							<option value="31">31</option>
+						</select>
+                {L_MONTH} <select id="month" name="month">
+					<option value="1">{L_M_JAN}</option>
+					<option value="2">{L_M_FEB}</option>
+					<option value="3">{L_M_MAR}</option>
+					<option value="4">{L_M_APR}</option>
+					<option value="5">{L_M_MAY}</option>
+					<option value="6">{L_M_JUN}</option>
+					<option value="7">{L_M_JUL}</option>
+					<option value="8">{L_M_AUG}</option>
+					<option value="9">{L_M_SEP}</option>
+					<option value="10">{L_M_OCT}</option>
+					<option value="11">{L_M_NOV}</option>
+					<option value="12">{L_M_DEC}</option>
+					</select>
+				{L_YEAR} <input type="text" size="4" maxlength="4" id="year" name="year" class="post">
+			</dd>
+		</dl>
+		<dl>
+			<dt>{L_TOPIC_NUMBER} </dt>
+			<dd><input type="text" size="6" id="link" name="link" class="post"></dd>
+		</dl>
+		<dl>
+			<dt>{L_IMAGE_PATH} </dt>
+			<dd><input type="text" size="36" id="image" name="image" class="post"></dd>
+		</dl>
+		</fieldset>
+		<p class="submit-buttons">
+		<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" />&nbsp;
+		<input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" />
+	</p>
+	{S_FORM_TOKEN}
+	</fieldset>
+	</form>
+	<!-- ELSEIF S_STAGE == 'fourth' -->
+		<!-- IF S_ERROR --> 
+			<div class="errorbox">
+				<h3>{L_WARNING}</h3>
+				<!-- BEGIN errs -->
+					<p> {errs.MSG}
+				<!-- END errs -->
+				<br><br>
+				{L_CORRECT_WARNING_THREE}</p>
+			</div>
+		<!-- ELSE -->
+			<div class="successbox">
+				<h3>{L_INFO}</h3>
+				<p>{L_SUCCESS_ADD_INFO}<br><br><a href="{U_ACTION}">{L_BACK}</a></p>
+			</div>
+		<!-- ENDIF -->
+	<!-- ENDIF -->
+
+<!-- INCLUDE overall_footer.html -->

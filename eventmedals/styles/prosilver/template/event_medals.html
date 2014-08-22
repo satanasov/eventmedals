@@ -1,0 +1,147 @@
+<!-- INCLUDE overall_header.html -->
+<!-- IF TYPE == "add" -->
+<!-- IF STEP == "first" -->
+<h2>{L_MEDALS_TITLE} - {USERNAME}</h2>
+<div class="panel">
+	<form id="event_medals" method="post" action="{S_ACTION}"{S_FORM_ENCTYPE}>
+	<input type="hidden" id="confirm" name="confirm" value="true">
+	<div class="inner">
+		<fieldset>
+			<dl>
+					<dt>{L_DATE}</dt>
+					<dd>{L_DAY} <select id="day" name="day">
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
+							<option value="10">10</option>
+							<option value="11">11</option>
+							<option value="12">12</option>
+							<option value="13">13</option>
+							<option value="14">14</option>
+							<option value="15">15</option>
+							<option value="16">16</option>
+							<option value="17">17</option>
+							<option value="18">18</option>
+							<option value="19">19</option>
+							<option value="20">20</option>
+							<option value="21">21</option>
+							<option value="22">22</option>
+							<option value="23">23</option>
+							<option value="24">24</option>
+							<option value="25">25</option>
+							<option value="26">26</option>
+							<option value="27">27</option>
+							<option value="28">28</option>
+							<option value="29">29</option>
+							<option value="30">30</option>
+							<option value="31">31</option>
+						</select>
+						{L_MONTH} <select id="month" name="month">
+							<option value="1">{L_M_JAN}</option>
+							<option value="2">{L_M_FEB}</option>
+							<option value="3">{L_M_MAR}</option>
+							<option value="4">{L_M_APR}</option>
+							<option value="5">{L_M_MAY}</option>
+							<option value="6">{L_M_JUN}</option>
+							<option value="7">{L_M_JUL}</option>
+							<option value="8">{L_M_AUG}</option>
+							<option value="9">{L_M_SEP}</option>
+							<option value="10">{L_M_OCT}</option>
+							<option value="11">{L_M_NOV}</option>
+							<option value="12">{L_M_DEC}</option>
+							</select>
+						{L_YEAR} <input size="4" maxlength="4" id="year" name="year">
+					</dd>
+			</dl>
+			<dl>
+				<dt>{L_TOPIC_NUMBER} </dt>
+				<dd><input size="6" id="link" name="link"></dd>
+			</dl>
+			<dl>
+				<dt>{L_IMAGE_PATH} </dt>
+				<dd><input size="36" id="image" name="image"></dd>
+			</dl>
+			<dl>
+				<dt>{L_MEDAL_TYPE}</dt>
+				<dd> 
+					<select id="type" name="type">
+						<option value="1">{L_MEDAL_TYPE_ONE}</option>
+						<option value="2" SELECTED>{L_MEDAL_TYPE_TWO}</option>
+						<option value="3">{L_MEDAL_TYPE_THREE}</option>
+						<option value="4">{L_MEDAL_TYPE_FOUR}</option>
+					</select>
+				</dd>
+			</dl>
+		</fieldset>
+		<fieldset class="submit-buttons">
+			{S_HIDDEN_FIELDS}<input type="reset" value="{L_RESET}" name="reset" class="button2" />&nbsp;
+			<input type="submit" name="submit" value="{L_SUBMIT}" class="button1" />
+			{S_FORM_TOKEN}
+		</fieldset>
+	</div>
+</div>
+<!-- ELSE -->	
+	<!-- IF S_ERROR --> 
+		<div class="errorbox">
+			<h3>{L_WARNING}</h3>
+			<!-- BEGIN errs -->
+				<p> {errs.MSG}
+			<!-- END errs -->
+			<br><br>
+			{L_CORRECT_WARNING_THREE}</p>
+		</div>
+	<!-- ELSE -->
+		<div class="successbox">
+			<h3>{L_INFO}</h3>
+			<p>{L_SUCCESS_ADD_INFO}<br><br></p>
+		</div>
+	<!-- ENDIF -->
+<!-- ENDIF -->
+<!-- ELSE -->
+
+<h2>{L_MEDALS_TITLE} - {USERNAME}</h2>
+<div class="panel">
+<!-- IF STEP == "first" -->
+<form id="acp_board" method="post" action="{S_ACTION}">
+<input type="hidden" id="confirm" name="confirm" value="true">
+<div class="inner">
+		<fieldset>
+			<!-- BEGIN user_edit -->
+			<dl>
+				<dt>{user_edit.TITLE}</dt>
+				<dd>
+					<select id="events[{user_edit.EVENT_ID}][select]" name="events[{user_edit.EVENT_ID}][select]">
+						<option value="1" <!-- IF user_edit.TYPE == 1 -->SELECTED<!-- ENDIF -->>{L_MEDAL_TYPE_ONE}</option>
+						<option value="2" <!-- IF user_edit.TYPE == 2 -->SELECTED<!-- ENDIF -->>{L_MEDAL_TYPE_TWO}</option>
+						<option value="3" <!-- IF user_edit.TYPE == 3 -->SELECTED<!-- ENDIF -->>{L_MEDAL_TYPE_THREE}</option>
+						<option value="4" <!-- IF user_edit.TYPE == 4 -->SELECTED<!-- ENDIF -->>{L_MEDAL_TYPE_FOUR}</option>
+					</select>
+					<label><input type="checkbox" name="delete[]" value="{user_edit.EVENT_ID}"> {L_MEDAL_DELETE}</label>
+				</dd>
+				<dt></dt>
+				<dd><input size="36" id="events[{user_edit.EVENT_ID}][image]" name="events[{user_edit.EVENT_ID}][image]" value="{user_edit.IMAGE}"></dd>
+			</dl>
+			<!-- END user_edit -->
+		</fieldset>
+		<fieldset class="submit-buttons">
+			<input type="hidden" name="target_user" value="{S_USER_ID}">
+			<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" />&nbsp;
+			<input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" />
+		</fieldset>
+	</form>
+	</div>
+</div>
+<!-- ELSE -->
+<div class="successbox">
+			<h3>{L_INFO}</h3>
+			<p>{L_SUCCESS_EDIT_INFO}<br><br></p>
+		</div>
+<!-- ENDIF -->
+<!-- ENDIF -->
+<!-- INCLUDE overall_footer.html -->

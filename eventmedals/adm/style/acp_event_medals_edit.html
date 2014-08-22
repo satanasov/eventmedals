@@ -1,0 +1,114 @@
+<!-- INCLUDE overall_header.html -->
+
+<a name="maincontent"></a>
+<h1>{L_MEDALS_TITLE}</h1>
+	<!-- IF S_STAGE == 'first' -->
+	<p> {L_MEDALS_EDIT_SCRIPT}
+	<p> {L_MEDALS_EDIT_STEP_ONE}
+	<fieldset>
+	<form id="acp_board" method="post" action="{U_ACTION}">
+	<dl>
+		<dt>
+			<label for="usernemes">{L_MEDALS_USER_SELECT}</label>
+		</dt>
+		<dd>
+			<input type="text" id="username" name="username" />
+		</dd>
+	</dl>
+	<dl>
+		<dt>
+			<label for="usernemes">{L_MEDALS_EVENT_SELECT}</label>
+		</dt>
+		<dd>
+			<select name="topic" id="topic">
+			<!-- BEGIN event -->
+				<option value="{event.ID}">{event.EVENT}</option>
+			<!-- END event -->
+			</select>
+		</dd>
+	</dl>
+	<dl>
+		<dt>
+			<label for="username">{L_MEDALS_SELECT_TYPE}</label>
+			<br>
+			<span>{L_MEDALS_SELECT_TYPE_EXPLENATION}</span>
+		</dt>
+		<dd>
+			<label><input type="radio" class="radio" id="event_edit_type" value="user" name="event_edit_type">{L_USER}</label>
+			<label><input type="radio" class="radio" id="event_edit_type" value="event" name="event_edit_type" checked="checked">{L_EVENT}</label>
+		</dd>
+	</dl>
+	{S_FORM_TOKEN}
+	</fieldset>
+	<p class="submit-buttons">
+		<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" />&nbsp;
+		<input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" />
+	</form>
+	<!-- ELSEIF S_STAGE == 'second' -->
+	<p> {L_MEDALS_EDIT_SCRIPT}
+	<p> {L_MEDALS_EDIT_STEP_TWO_EVENT}
+	<form id="acp_board" method="post" action="{U_ACTION}">
+		<!-- BEGIN event_edit -->
+		<fieldset>
+			<legend>{event_edit.USERNAME}</legend>
+			<dl>
+				<dt>{L_MEDAL_TYPE}</dt>
+				<dd> 
+					<input type="hidden" name="usesr[{event_edit.USER_ID}][username]" value="{event_edit.USERNAME}" />
+					<select id="usesr[{event_edit.USER_ID}][select]" name="usesr[{event_edit.USER_ID}][select]">
+						<option value="1" <!-- IF event_edit.TYPE == 1 -->SELECTED<!-- ENDIF -->>{L_MEDAL_TYPE_ONE}</option>
+						<option value="2" <!-- IF event_edit.TYPE == 2 -->SELECTED<!-- ENDIF -->>{L_MEDAL_TYPE_TWO}</option>
+						<option value="3" <!-- IF event_edit.TYPE == 3 -->SELECTED<!-- ENDIF -->>{L_MEDAL_TYPE_THREE}</option>
+						<option value="4" <!-- IF event_edit.TYPE == 4 -->SELECTED<!-- ENDIF -->>{L_MEDAL_TYPE_FOUR}</option>
+					</select>
+					<label><input type="checkbox" name="delete[]" value="{event_edit.USER_ID}"> {L_MEDAL_DELETE}</label><br>
+				</dd>
+			</dl>
+			<dl>
+				<dt>{L_IMAGE_PATH} </dt>
+				<dd><input type="text" size="36" id="usesr[{event_edit.USER_ID}][image]" name="usesr[{event_edit.USER_ID}][image]" class="post" value="{event_edit.IMAGE}"></dd>
+			</dl>
+		</fieldset>
+		<!-- END event_edit -->
+		<p class="submit-buttons">
+		<input type="hidden" name="target_event" value="{S_EVENT_ID}">
+		<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" />&nbsp;
+		<input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" />
+	</form>
+	<!-- ELSEIF S_STAGE == 'second_user' -->
+	<p> {L_MEDALS_EDIT_SCRIPT}
+	<p> {L_MEDALS_EDIT_STEP_TWO_USER}
+	<form id="acp_board" method="post" action="{U_ACTION}">
+		<fieldset>
+			<legend>{S_USERNAME}</legend>
+			<!-- BEGIN user_edit -->
+			<dl>
+				<dt>{user_edit.TITLE}</dt>
+				<dd>
+					<select id="events[{user_edit.EVENT_ID}][select]" name="events[{user_edit.EVENT_ID}][select]">
+						<option value="1" <!-- IF user_edit.TYPE == 1 -->SELECTED<!-- ENDIF -->>{L_MEDAL_TYPE_ONE}</option>
+						<option value="2" <!-- IF user_edit.TYPE == 2 -->SELECTED<!-- ENDIF -->>{L_MEDAL_TYPE_TWO}</option>
+						<option value="3" <!-- IF user_edit.TYPE == 3 -->SELECTED<!-- ENDIF -->>{L_MEDAL_TYPE_THREE}</option>
+						<option value="4" <!-- IF user_edit.TYPE == 4 -->SELECTED<!-- ENDIF -->>{L_MEDAL_TYPE_FOUR}</option>
+					</select>
+					<label><input type="checkbox" name="delete[]" value="{user_edit.EVENT_ID}"> {L_MEDAL_DELETE}</label>
+				</dd>
+				<dt></dt>
+				<dd><input type="text" size="36" id="events[{user_edit.EVENT_ID}][image]" name="events[{user_edit.EVENT_ID}][image]" class="post" value="{user_edit.IMAGE}"></dd>
+			</dl>
+			<!-- END user_edit -->
+		</fieldset>
+		<p class="submit-buttons">
+		<input type="hidden" name="target_user" value="{S_USER_ID}">
+		<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" />&nbsp;
+		<input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" />
+	</form>
+	<!-- ELSEIF S_STAGE == 'third' -->
+		<div class="successbox">
+			<h3>{L_INFO}</h3>
+			<p>{L_SUCCESS_EDIT_INFO}<br><br><a href="{U_ACTION}">{L_BACK}</a></p>
+		</div>
+	<!-- ENDIF -->
+	
+
+<!-- INCLUDE overall_footer.html -->
