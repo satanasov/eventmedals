@@ -13,30 +13,25 @@
 */
 namespace anavaro\eventmedals\ucp;
 
-if (!defined('IN_PHPBB'))
-{
-    exit;
-}
-
 class ucp_medals_module
 {
 	var $u_action;
-	function var_display($i) {
+	function var_display($i) 
+	{
 		echo "<pre>";
 		print_r($i);
 		echo "</pre>";
 	}
 	function main($id, $mode)
-	{	
-		
-		
+	{
 		global $db, $user, $auth, $template, $cache, $request;
         global $config, $SID, $phpbb_root_path, $phpbb_admin_path, $phpEx, $k_config, $table_prefix;
 		//$this->var_display($action);
 
 		//$this->var_display($tid);
 		//Lets get some groups!
-		switch ($mode) {
+		switch ($mode) 
+		{
 			case 'control':
 				$user->add_lang_ext('anavaro/eventmedals', 'event_medals');
 				$this->tpl_name		= 'ucp_event_medals_control';
@@ -52,7 +47,7 @@ class ucp_medals_module
 						}
 						$sql = 'UPDATE '. $table_prefix .'users_custom SET profile_event_show = ' . $db->sql_escape($allowLevel) . ' WHERE user_id = '.$user->data['user_id'];
 						$db->sql_query($sql);
-						
+
 					case 'first':
 						//Let's get initial values
 						$sql = 'SELECT profile_event_show FROM '. $table_prefix .'users_custom WHERE user_id = '.$user->data['user_id'];
@@ -74,8 +69,8 @@ class ucp_medals_module
 			break;
 		}
 	}
-	function edit($id, $mode) {
+	function edit($id, $mode) 
+	{
 		$this->var_display($_POST);
 	}
 }
-?>

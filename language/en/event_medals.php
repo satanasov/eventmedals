@@ -12,11 +12,11 @@
 
 if (!defined('IN_PHPBB'))
 {
-        exit;
+		exit;
 }
 if (empty($lang) || !is_array($lang))
 {
-        $lang = array();
+		$lang = array();
 }
 
 $lang = array_merge($lang, array(
@@ -24,7 +24,7 @@ $lang = array_merge($lang, array(
 	'ACP_EVENT_MEDALS_ADD'	=>	'Add event medals',
 	'ACP_EVENT_MEDALS_EDIT'	=>	'Edit event medals',
 	'ACP_EVENT_MEDALS_GRP'	=>	'Event medals',
-	
+
 	'MEDALS_TITLE'	=> 'Event medals',
 	'MEDALS_ADD_SCRIPT'	=>	'Event medals addition script',
 	'MEDALS_ADD_STEP_ONE'	=> 'STEP 1: User list',
@@ -58,8 +58,6 @@ $lang = array_merge($lang, array(
 	'MEDAL_DELETE'	=>	'Remove event medal',
 	'SUCCESS_EDIT_INFO'	=>	'Event medals changed successfully!',
 
-
-	
 	'DATE'	=> 'Date:',
 	'M_JAN'	=>	'January',
 	'M_FEB'	=>	'February',
@@ -75,24 +73,24 @@ $lang = array_merge($lang, array(
 	'M_DEC'	=>	'December',
 	'TOPIC_NUMBER'	=>	'Topic ID:',
 	'IMAGE_PATH'	=> 'Custom images path:',
-	
+
 	'ERR_DAY_NOT_NUM'	=>	'You know that the day should be a number, right?',
 	'ERR_DAY_NOT_IN_RANGE'	=>	'There is no such day in the month!',
 	'ERR_YEAR_NOT_NUM'	=> 'Not numeral Year?',
 	'ERR_DATE_ERR'	=> 'The date is wrong ...',
 	'ERR_TOPIC_ERR'	=> 'Nope! There is no Topic ID like the one you\'ve provided',
-	
+
 	'UCP_EVENT_CONTROL'	=>	'Event control',
 	'UCP_PROFILE_MEDALS_CONTROL'	=> 'Event medals in profile',
 	'UCP_PROFILE_MEDALS_EXPLAIN'	=> 'Who can see the event medals',
-	
+
 	'NONE'	=>	'No one',
 	'SPECIAL_FRIENDS'	=> 'Special friends',
-	
+
 	'UCP_PROFILE_ACC_ERROR' => 'You don\'t have access to see this user\'s event medals',
 	'UCP_PROFILE_CONTROL_ERROR'	=> 'You are not authorized to change event medals',
-	
+
 	'ACL_U_EVENT_ADD'	=> 'Add event medals',
 	'ACL_U_EVENT_MODIFY'	=> 'Modify event medals',
-	
+
 ));

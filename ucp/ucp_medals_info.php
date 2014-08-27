@@ -14,30 +14,21 @@
 
 namespace anavaro\eventmedals\ucp;
 
-if (!defined('IN_PHPBB'))
-{
-    exit;
-}
-
-
-
 class ucp_medals_info
 {
-    function module()
-    {
-        return array(
-            'filename' => '\anavaro\eventmedals\ucp\ucp_medals_module',
-            'title' => 'MEDALS_TITLE',
-            'version' => '1.0.0',
-            'modes' => array(
-                'control' => array(
-					'title' => 'UCP_EVENT_CONTROL', 
-					'auth' => 'ext_anavaro/eventmedals', 
+	function module()
+	{
+		return array(
+			'filename' => '\anavaro\eventmedals\ucp\ucp_medals_module',
+			'title' => 'MEDALS_TITLE',
+			'version' => '1.0.0',
+			'modes' => array(
+				'control' => array(
+					'title' => 'UCP_EVENT_CONTROL',
+					'auth' => 'ext_anavaro/eventmedals',
 					'cat' => array('UCP_PROFILE')
 				),
-            ),
-        );
-    }
-} 
-
-?>
+			),
+		);
+	}
+}

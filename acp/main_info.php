@@ -14,13 +14,6 @@
 
 namespace anavaro\eventmedals\acp;
 
-if (!defined('IN_PHPBB'))
-{
-    exit;
-}
-
-
-
 class main_info
 {
 	function module()
@@ -52,5 +45,3 @@ class main_info
 	{
 	}
 }
-
-?>

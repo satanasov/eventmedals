@@ -12,11 +12,11 @@
 
 if (!defined('IN_PHPBB'))
 {
-        exit;
+		exit;
 }
 if (empty($lang) || !is_array($lang))
 {
-        $lang = array();
+		$lang = array();
 }
 
 $lang = array_merge($lang, array(
@@ -24,7 +24,7 @@ $lang = array_merge($lang, array(
 	'ACP_EVENT_MEDALS_GRP'	=>	'Медали',
 	'ACP_EVENT_MEDALS_ADD'	=>	'Добави медали',
 	'ACP_EVENT_MEDALS_EDIT'	=>	'Промени медали',
-	
+
 	'MEDALS_TITLE'	=> 'Медали',
 	'MEDALS_ADD_SCRIPT'	=>	'Скрип за добавяне на медали',
 	'MEDALS_ADD_STEP_ONE'	=> 'СТЪПКА 1: Добавете списък с потребители',
@@ -46,7 +46,7 @@ $lang = array_merge($lang, array(
 	'MEDAL_TYPE_THREE'	=> 'Избягал',
 	'MEDAL_TYPE_FOUR'	=> 'НЕ ЖЕЛАН!',
 	'MEDALS_ADD_STEP_THREE'	=> 'СТЪПКА 3: Дати и картинки.',
-	
+
 	'MEDALS_EDIT_SCRIPT'	=>	'Скрипт за промяна на медалите!',
 	'MEDALS_EDIT_STEP_ONE'	=>	'СТЪПКА 1: Изберете потребител или среща за които ще променяте медали!',
 	'MEDALS_USER_SELECT'	=>	'Изберете потребител',
@@ -57,9 +57,7 @@ $lang = array_merge($lang, array(
 	'MEDALS_EDIT_STEP_TWO_USER'	=>	'СТЪПКА 2: Изберете промените за този потребител.',
 	'MEDAL_DELETE'	=>	'Премахни медала',
 	'SUCCESS_EDIT_INFO'	=>	'Медалите са променени успешно',
-	
-	
-	
+
 	'DATE'	=> 'Дата:',
 	'M_JAN'	=>	'Януари',
 	'M_FEB'	=>	'Февруари',
@@ -73,7 +71,7 @@ $lang = array_merge($lang, array(
 	'M_OCT'	=>	'Октомври',
 	'M_NOV'	=>	'Ноември',
 	'M_DEC'	=>	'Декември',
-	'TOPIC_NUMBER'	=>	'Номер на тема:',
+	'TOPIC_NUMBER'	=> 'Номер на тема:',
 	'IMAGE_PATH'	=> 'Път към картинка:',
 	
 	'ERR_DAY_NOT_NUM'	=>	'Деня трябва да е число, нали знаеш?',
@@ -81,18 +79,18 @@ $lang = array_merge($lang, array(
 	'ERR_YEAR_NOT_NUM'	=> 'Е не може годината да не е число!',
 	'ERR_DATE_ERR'	=> 'Нещо си объркал в датата ...',
 	'ERR_TOPIC_ERR'	=> 'А не ... намери си темата в която е срещата!',
-	
+
 	'UCP_EVENT_CONTROL'	=>	'Настройка на медали',
 	'UCP_PROFILE_MEDALS_CONTROL'	=> 'Медали в профилa',
 	'UCP_PROFILE_MEDALS_EXPLAIN'	=> 'Кой може да вижда медалите в профила ви',
-	
+
 	'NONE'	=>	'Никой',
 	'SPECIAL_FRIENDS'	=> 'Специални приятели',
-	
+
 	'UCP_PROFILE_ACC_ERROR' => 'Нямате права да виждате медалите на този потребител',
 	'UCP_PROFILE_CONTROL_ERROR'	=> 'Не сте оторизиран да променяте медалите на потребители',
-	
+
 	'ACL_U_EVENT_ADD'	=> 'Може да слага медали',
 	'ACL_U_EVENT_MODIFY'	=> 'Може да променя медали',
-	
+
 ));

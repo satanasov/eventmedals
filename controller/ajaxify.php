@@ -13,11 +13,6 @@ namespace anavaro\eventmedals\controller;
 * @ignore
 */
 
-if (!defined('IN_PHPBB'))
-{
-	exit;
-}
-
 class ajaxify
 {
 	/**
@@ -51,8 +46,7 @@ class ajaxify
 		$this->php_ext = $php_ext;
 		$this->table_prefix = $table_prefix;
 	}
-	
-	
+
 	public function base ($action, $userid)
 	{
 		$this->user->add_lang_ext('anavaro/eventmedals', 'event_medals');
@@ -75,21 +69,21 @@ class ajaxify
 					$link = $this->request->variable('link', '');
 					$image = utf8_normalize_nfc($this->request->variable('image', 'none'));
 					$type = $this->request->variable('type', 2);
-					
+
 					$error_array = array();
-					
+
 					if (!is_numeric($day)) { $error_array[] = '{L_ERR_DAY_NOT_NUM}'; }
 					if ($day < 1 OR $day > 31) { $error_array[] = '{L_ERR_DAY_NOT_IN_RANGE}'; }
-					
+
 					if (!is_numeric($year)) { $error_array[] = '{L_ERR_YEAR_NOT_NUM}'; }
-					
+
 					$months_long = array("1", "3", "5", "7", "8", "10", "12");
 					if ((in_array($month, $months_long) AND $day <= "31") OR (!in_array($month, $months_long) AND $month != "2" AND $day <= "30") OR ($month == "2" AND $year % 4 == "0" AND $day <= "29") OR ($month == "2" AND $year % 4 != "0" AND $day <= "28")) {
 						
 					}
 					else { $error_array[] = '{L_ERR_DATE_ERR}'; }
 					if ($link AND !is_numeric($link)) { $error_array[] = '{L_ERR_TOPIC_ERR}'; }
-					
+
 					if (!$error_array)
 					{
 							$timestamp = mktime("0", "0", "0", $month, $day, $year);
@@ -111,7 +105,7 @@ class ajaxify
 						$template->assign_vars(array(
 							'S_ERROR'	=>	'1',
 						));
-						
+
 						foreach ($error_array AS $VAR) { 
 							$template->assign_block_vars('errs', array( 
 								'MSG'	=>	$VAR,
@@ -231,5 +225,5 @@ class ajaxify
 					'S_ACTION'	=>	$this->root_path . $userid
 		));
 		return $this->helper->render('event_medals.html', $this->user->lang('MEDALS_TITLE'));
-	}	
+	}
 }

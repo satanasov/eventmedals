@@ -13,11 +13,6 @@
 */
 namespace anavaro\eventmedals\acp;
 
-if (!defined('IN_PHPBB'))
-{
-    exit;
-}
-
 class main_module
 {
 	var $u_action;
@@ -31,7 +26,7 @@ class main_module
 		
 		
 		global $db, $user, $auth, $template, $cache, $request;
-        global $config, $SID, $phpbb_root_path, $phpbb_admin_path, $phpEx, $k_config, $table_prefix;
+		global $config, $SID, $phpbb_root_path, $phpbb_admin_path, $phpEx, $k_config, $table_prefix;
 		//$this->var_display($action);
 
 		//$this->var_display($tid);
@@ -64,10 +59,9 @@ class main_module
 						$users_arry = explode(PHP_EOL, $usersSTR);
 						
 						//let's check users in DB
-						
+
 						$nick_errs = array();
-						
-						
+
 						foreach ($users_arry as $VAR) {
 							$sql = 'SELECT user_id, username 
 									FROM ' . USERS_TABLE . '
@@ -113,7 +107,6 @@ class main_module
 								'USERID'	=>	$ID,
 							));
 						}
-						
 					break;
 					case 'fourth':
 						$medals_array = $request->variable('usesr', array(array('' => '', '' => '', '' => '')));
@@ -122,26 +115,26 @@ class main_module
 						$year = $request->variable('year', '');
 						$link = $request->variable('link', '');
 						$image = utf8_normalize_nfc($request->variable('image', 'none'));
-						
+
 						$error_array = array();
-						
+
 						if (!is_numeric($day)) { $error_array[] = '{L_ERR_DAY_NOT_NUM}'; }
 						if ($day < 1 OR $day > 31) { $error_array[] = '{L_ERR_DAY_NOT_IN_RANGE}'; }
-						
+
 						if (!is_numeric($year)) { $error_array[] = '{L_ERR_YEAR_NOT_NUM}'; }
 						
 						$months_long = array("1", "3", "5", "7", "8", "10", "12");
 						if ((in_array($month, $months_long) AND $day <= "31") OR (!in_array($month, $months_long) AND $month != "2" AND $day <= "30") OR ($month == "2" AND $year % 4 == "0" AND $day <= "29") OR ($month == "2" AND $year % 4 != "0" AND $day <= "28")) {
-							
+
 						}
 						else { $error_array[] = '{L_ERR_DATE_ERR}'; }
 						if ($link AND !is_numeric($link)) { $error_array[] = '{L_ERR_TOPIC_ERR}'; }
 						$error_array_sub = 0;
 						if (!$error_array) {
 							$timestamp = mktime("0", "0", "0", $month, $day, $year);
-							
+
 							foreach ($medals_array AS $ID => $VAR) {
-								
+
 								//$this->var_display($VAR);
 								$sql_rq = 'SELECT  oid, link, COUNT(*) FROM  phpbb_event_medals WHERE oid = '.$db->sql_escape($ID).' AND link = '.$db->sql_escape($link);
 								$result = $db->sql_fetchrow($db->sql_query($sql_rq));
@@ -162,14 +155,14 @@ class main_module
 							$template->assign_vars(array(
 								'S_ERROR'	=>	'1',
 							));
-							
+
 							foreach ($error_array AS $VAR) { 
 								$template->assign_block_vars('errs', array( 
 									'MSG'	=>	$VAR,
 								));
 							}
 						}
-						
+
 						$template->assign_vars(array(
 							'S_STAGE' => 'fourth',
 							'U_ACTION'	=>	$post_url,
@@ -181,9 +174,9 @@ class main_module
 				$user->add_lang_ext('anavaro/eventmedals', 'event_medals');
 				$this->tpl_name		= 'acp_event_medals_edit';
 				$this->page_title	= 'ACP_EVENT_MEDALS_EDIT';
-				
+
 				$stage = $request->variable('stage', 'first');
-				
+
 				switch ($stage) {
 					case 'first':
 						$sql_array = array(
@@ -316,7 +309,7 @@ class main_module
 						}
 						$sql = 'SELECT oid, type, image FROM phpbb_event_medals WHERE link = '.$db->sql_escape($event_id);
 						$result = $db->sql_query($sql);
-						
+
 						while ($row = $db->sql_fetchrow($result))
 						{
 							$users_old[$row['oid']] = $row['type'];
@@ -324,7 +317,7 @@ class main_module
 						}
 						$users_diff = array_diff_assoc($users_new, $users_old);
 						$users_image_diff = array_diff_assoc($users_image_new, $users_image_old);
-						
+
 						foreach ($delete as $VAR)
 						{
 							unset($users_diff[$VAR]);
@@ -346,7 +339,7 @@ class main_module
 								$db->sql_query($sql);
 							}
 						}
-						
+
 						$post_url = append_sid("index.php?i=".$id."&mode=".$mode);
 						$template->assign_vars(array(
 							'S_STAGE' => 'third',
@@ -412,4 +405,3 @@ class main_module
 		$this->var_display($_POST);
 	}
 }
-?>

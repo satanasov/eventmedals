@@ -16,10 +16,18 @@ namespace anavaro\eventmedals\tests\functional;
 class eventmedals_test extends eventmedals_base
 {
 
+	public $post;
 	public function test_request()
 	{
 		//create new user
 		$this->create_user('testuser');
 		$this->add_user_group('NEWLY_REGISTERED', array('testuser'));
+		
+		$this->login();
+		
+		$this->post = $this->create_topic(2, 'Test Topic 1', 'this is test topic for events');
+		$crawler = self::request('GET', "viewtopic.php?t={$post['topic_id']}&sid={$this->sid}");
+		
+		
 	}
 }
