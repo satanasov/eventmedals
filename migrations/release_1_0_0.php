@@ -12,18 +12,18 @@ namespace anavaro\eventmedals\migrations;
 class release_1_0_0 extends \phpbb\db\migration\migration
 {
 	public function effectively_installed()
-		{
-			return isset($this->config['event_medals_version']) && version_compare($this->config['event_medals_version'], '1.0.0', '>=');
-		}
+	{
+		return isset($this->config['event_medals_version']) && version_compare($this->config['event_medals_version'], '1.0.0', '>=');
+	}
 	static public function depends_on()
-		{
-			return array('\phpbb\db\migration\data\v310\dev');
-		}
-		
+	{
+		return array('\phpbb\db\migration\data\v310\dev');
+	}
+
 	public function update_data()
 	{
 		return array(
-		
+
 			array('module.add', array(
 				'acp',
 				'ACP_CAT_DOT_MODS',
@@ -46,7 +46,7 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 					'modiel_modes' => array('control'),
 					'module_auth'	=> 'ext_anavaro/eventmedals',
 				),
-				
+
 			)),
 
 			array('config.add', array('event_medals_version', '1.0.0')),
@@ -63,7 +63,7 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 		);
 	}
 
-	//lets create the needed table	
+	//lets create the needed table
 	public function update_schema()
 	{
 		return array(

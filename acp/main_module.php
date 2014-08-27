@@ -16,15 +16,14 @@ namespace anavaro\eventmedals\acp;
 class main_module
 {
 	var $u_action;
-	function var_display($i) {
+	function var_display($i)
+	{
 		echo "<pre>";
 		print_r($i);
 		echo "</pre>";
 	}
 	function main($id, $mode)
-	{	
-		
-		
+	{
 		global $db, $user, $auth, $template, $cache, $request;
 		global $config, $SID, $phpbb_root_path, $phpbb_admin_path, $phpEx, $k_config, $table_prefix;
 		//$this->var_display($action);
@@ -36,7 +35,7 @@ class main_module
 				$user->add_lang_ext('anavaro/eventmedals', 'event_medals');
 				$this->tpl_name		= 'acp_event_medals_add';
 				$this->page_title	= 'ACP_EVENT_MEDALS_ADD';
-				
+
 				$stage = $request->variable('stage', 'first');
 				//$this->var_display($stage);
 				switch ($stage) {
@@ -57,7 +56,7 @@ class main_module
 						$usersSTR = utf8_normalize_nfc($request->variable('usernames', '', true));
 						//build nick array
 						$users_arry = explode(PHP_EOL, $usersSTR);
-						
+
 						//let's check users in DB
 
 						$nick_errs = array();
@@ -69,15 +68,16 @@ class main_module
 							$result = $db->sql_query($sql);
 							$row = $db->sql_fetchrow($result);
 							//$this->var_display($row);
-							if (!$row) { 
-								$nick_errs[] = $VAR; 
+							if (!$row)
+							{
+								$nick_errs[] = $VAR;
 							}
 							else {
 								$users[$row['user_id']] = $row['username'];
 							}
 						}
 						if ($users) {
-							foreach ($users AS $ID => $VAR) {
+							foreach ($users as $ID => $VAR) {
 								$template->assign_block_vars('usrs', array(
 									'USERNAME' => $VAR,
 									'ID'	=>	$ID,
@@ -87,7 +87,7 @@ class main_module
 						$template->assign_vars(array(
 							'S_ERROR' => implode($nick_errs, " "),
 						));
-						
+
 						//$this->var_display($users_arry);
 					break;
 					case 'third':
@@ -99,7 +99,7 @@ class main_module
 						$medals_array = $request->variable('usesr', array(array('' => '', '' => '')));
 						//$this->var_display($_POST);
 						//$this->var_display($medals_array);
-						foreach ($medals_array AS $ID => $VAR) {
+						foreach ($medals_array as $ID => $VAR) {
 							//$this->var_display($VAR);
 							$template->assign_block_vars('usrs1', array(
 								'SELECTION' => $VAR['select'],
@@ -119,21 +119,21 @@ class main_module
 						$error_array = array();
 
 						if (!is_numeric($day)) { $error_array[] = '{L_ERR_DAY_NOT_NUM}'; }
-						if ($day < 1 OR $day > 31) { $error_array[] = '{L_ERR_DAY_NOT_IN_RANGE}'; }
+						if ($day < 1 or $day > 31) { $error_array[] = '{L_ERR_DAY_NOT_IN_RANGE}'; }
 
 						if (!is_numeric($year)) { $error_array[] = '{L_ERR_YEAR_NOT_NUM}'; }
-						
+
 						$months_long = array("1", "3", "5", "7", "8", "10", "12");
-						if ((in_array($month, $months_long) AND $day <= "31") OR (!in_array($month, $months_long) AND $month != "2" AND $day <= "30") OR ($month == "2" AND $year % 4 == "0" AND $day <= "29") OR ($month == "2" AND $year % 4 != "0" AND $day <= "28")) {
+						if ((in_array($month, $months_long) and $day <= "31") or (!in_array($month, $months_long) and $month != "2" and $day <= "30") or ($month == "2" and $year % 4 == "0" and $day <= "29") or ($month == "2" and $year % 4 != "0" and $day <= "28")) {
 
 						}
 						else { $error_array[] = '{L_ERR_DATE_ERR}'; }
-						if ($link AND !is_numeric($link)) { $error_array[] = '{L_ERR_TOPIC_ERR}'; }
+						if ($link and !is_numeric($link)) { $error_array[] = '{L_ERR_TOPIC_ERR}'; }
 						$error_array_sub = 0;
 						if (!$error_array) {
 							$timestamp = mktime("0", "0", "0", $month, $day, $year);
 
-							foreach ($medals_array AS $ID => $VAR) {
+							foreach ($medals_array as $ID => $VAR) {
 
 								//$this->var_display($VAR);
 								$sql_rq = 'SELECT  oid, link, COUNT(*) FROM  phpbb_event_medals WHERE oid = '.$db->sql_escape($ID).' AND link = '.$db->sql_escape($link);
@@ -156,8 +156,9 @@ class main_module
 								'S_ERROR'	=>	'1',
 							));
 
-							foreach ($error_array AS $VAR) { 
-								$template->assign_block_vars('errs', array( 
+							foreach ($error_array as $VAR)
+							{
+								$template->assign_block_vars('errs', array(
 									'MSG'	=>	$VAR,
 								));
 							}
@@ -187,7 +188,6 @@ class main_module
 							),
 							'WHERE'	=>	'e.link = t.topic_id',
 							'ORDER_BY'	=>	'id DESC'
-							
 						);
 						$sql = $db->sql_build_query('SELECT', $sql_array);
 						$result = $db->sql_query($sql);
@@ -198,9 +198,8 @@ class main_module
 								'EVENT'	=>	$row['title'],
 							));
 							//$this->var_display($row);
-							
 						}
-						
+
 						$post_url = append_sid("index.php?i=".$id."&mode=".$mode."&stage=second");
 						$template->assign_vars(array(
 							'S_STAGE' => 'first',
@@ -222,8 +221,8 @@ class main_module
 							);
 							$sql = $db->sql_build_query('SELECT', $sql_array);
 							$result = $db->sql_query($sql);
-							
-							while ($row = $db->sql_fetchrow($result)) 
+
+							while ($row = $db->sql_fetchrow($result))
 							{
 								$template->assign_block_vars('event_edit', array(
 									'USERNAME'	=>	$row['username'],
@@ -287,7 +286,7 @@ class main_module
 									'IMAGE'	=>	$VAR['image']
 								));
 							}
-							
+
 							//$this->var_display($events);
 						}
 					break;
@@ -302,7 +301,7 @@ class main_module
 						}
 						$users = $request->variable ('usesr', array('' => array(''=>'',''=>'',''=>'')));
 
-						foreach ($users as $ID=>$VAR)
+						foreach ($users as $ID => $VAR)
 						{
 							$users_new[$ID] = $VAR['select'];
 							$users_image_new[$ID] = $VAR['image'];
@@ -323,7 +322,7 @@ class main_module
 							unset($users_diff[$VAR]);
 							unset($users_image_diff[$VAR]);
 						}
-						if ($users_diff) 
+						if ($users_diff)
 						{
 							foreach ($users_diff as $ID => $VAR)
 							{
@@ -360,7 +359,7 @@ class main_module
 							$events_new[$ID] = $VAR['select'];
 							$events_image_new[$ID] = $VAR['image'];
 						}
-						
+
 						$sql = 'SELECT link, type, image FROM phpbb_event_medals WHERE oid = '.$db->sql_escape($user_id);
 						$result = $db->sql_query($sql);
 						while ($row = $db->sql_fetchrow($result))
@@ -401,7 +400,8 @@ class main_module
 			break;
 		}
 	}
-	function edit($id, $mode) {
+	function edit($id, $mode)
+	{
 		$this->var_display($_POST);
 	}
 }

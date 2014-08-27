@@ -16,7 +16,7 @@ namespace anavaro\eventmedals\ucp;
 class ucp_medals_module
 {
 	var $u_action;
-	function var_display($i) 
+	function var_display($i)
 	{
 		echo "<pre>";
 		print_r($i);
@@ -25,17 +25,17 @@ class ucp_medals_module
 	function main($id, $mode)
 	{
 		global $db, $user, $auth, $template, $cache, $request;
-        global $config, $SID, $phpbb_root_path, $phpbb_admin_path, $phpEx, $k_config, $table_prefix;
+		global $config, $SID, $phpbb_root_path, $phpbb_admin_path, $phpEx, $k_config, $table_prefix;
 		//$this->var_display($action);
 
 		//$this->var_display($tid);
 		//Lets get some groups!
-		switch ($mode) 
+		switch ($mode)
 		{
 			case 'control':
 				$user->add_lang_ext('anavaro/eventmedals', 'event_medals');
 				$this->tpl_name		= 'ucp_event_medals_control';
-				
+
 				$stage = $request->variable('stage', 'first');
 				//$this->var_display($stage);
 				switch ($stage) {
@@ -69,7 +69,7 @@ class ucp_medals_module
 			break;
 		}
 	}
-	function edit($id, $mode) 
+	function edit($id, $mode)
 	{
 		$this->var_display($_POST);
 	}

@@ -26,7 +26,9 @@ class eventmedals_test extends eventmedals_base
 		$this->login();
 		
 		$this->post = $this->create_topic(2, 'Test Topic 1', 'this is test topic for events');
-		$crawler = self::request('GET', "viewtopic.php?t={$post['topic_id']}&sid={$this->sid}");
+		$crawler = self::request('GET', "viewtopic.php?t={$this->post['topic_id']}&sid={$this->sid}");
+		
+		$this->assertContains('this is test topic for events', $crawler->filter('html')->text());
 		
 		
 	}

@@ -73,7 +73,7 @@ $lang = array_merge($lang, array(
 	'M_DEC'	=>	'Декември',
 	'TOPIC_NUMBER'	=> 'Номер на тема:',
 	'IMAGE_PATH'	=> 'Път към картинка:',
-	
+
 	'ERR_DAY_NOT_NUM'	=>	'Деня трябва да е число, нали знаеш?',
 	'ERR_DAY_NOT_IN_RANGE'	=>	'Е не може да си написал такова число!',
 	'ERR_YEAR_NOT_NUM'	=> 'Е не може годината да не е число!',

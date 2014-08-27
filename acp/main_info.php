@@ -25,12 +25,12 @@ class main_info
 			'modes'		=> array(
 				'add'		=> array(
 									'title' => 'ACP_EVENT_MEDALS_ADD',
-									'auth' 		=> 'ext_anavaro/eventmedals && acl_a_board', 
+									'auth' 		=> 'ext_anavaro/eventmedals && acl_a_board',
 									'cat'		=> array('ACP_EVENT_MEDALS')
 									),
 				'edit'		=> array(
-									'title' => 'ACP_EVENT_MEDALS_EDIT', 
-									'auth' 		=> 'ext_anavaro/eventmedals && acl_a_board', 
+									'title' => 'ACP_EVENT_MEDALS_EDIT',
+									'auth' 		=> 'ext_anavaro/eventmedals && acl_a_board',
 									'cat'		=> array('ACP_EVENT_MEDALS')
 									),
 			),

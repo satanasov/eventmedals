@@ -16,7 +16,7 @@ namespace anavaro\eventmedals\event;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class main_listener implements EventSubscriberInterface
-{	
+{
 	static public function getSubscribedEvents()
 	{
 		return array(
@@ -57,8 +57,9 @@ class main_listener implements EventSubscriberInterface
 		$this->php_ext = $php_ext;
 		$this->table_prefix = $table_prefix;
 	}
-	
-	public function load_language_on_setup($event){
+
+	public function load_language_on_setup($event)
+	{
 		$lang_set_ext = $event['lang_set_ext'];
 		$lang_set_ext[] = array(
 			'ext_name' => 'anavaro/eventmedals',
@@ -89,7 +90,7 @@ class main_listener implements EventSubscriberInterface
 			$friend_state = 1;
 		}
 
-		if ($event['data']['user_id'] == $this->user->data['user_id'] || $this->auth->acl_getf_global('m_approve') || $this->auth->acl_get('a_user') || ($optResult['profile_event_show'] > 0 AND $optResult['profile_event_show'] <= $friend_state)) {
+		if ($event['data']['user_id'] == $this->user->data['user_id'] || $this->auth->acl_getf_global('m_approve') || $this->auth->acl_get('a_user') || ($optResult['profile_event_show'] > 0 and $optResult['profile_event_show'] <= $friend_state)) {
 			$sql='SELECT * FROM ' . $this->table_prefix . 'event_medals WHERE oid = '.$this->db->sql_escape($event['data']['user_id']).' ORDER BY date ASC';
 			$result=$this->db->sql_query($sql);
 			$outputMedals = '';
@@ -110,7 +111,7 @@ class main_listener implements EventSubscriberInterface
 			if (isset($medals)) {
 				$outputMedals = '';
 				$count = "1";
-				foreach($medals AS $VAR) {
+				foreach($medals as $VAR) {
 					$outputMedals .= "<a href=\"{$this->root_path}viewtopic.{$this->php_ext}?t=".$VAR['link']."\">";
 					$date = date("[d F Y]", $VAR['date']);
 					if ($count == "") {
@@ -140,7 +141,7 @@ class main_listener implements EventSubscriberInterface
 			}
 		}
 		else
-		{	
+		{
 			$outputMedals = $this->user->lang['UCP_PROFILE_ACC_ERROR'];
 		}
 		//Let's see if user hase "u_event_control"
@@ -206,14 +207,12 @@ class main_listener implements EventSubscriberInterface
 			$event['post_row'] = $post_row;
 		}
 		//$this->var_display($event['post_row']);
-		
 	}
-	protected function var_display($i) 
+	protected function var_display($i)
 	{
 		echo '<pre>';
 		print_r($i);
 		echo '</pre>';
 		return true;
 	}
-	
 }

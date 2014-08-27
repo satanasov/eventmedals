@@ -73,21 +73,21 @@ class ajaxify
 					$error_array = array();
 
 					if (!is_numeric($day)) { $error_array[] = '{L_ERR_DAY_NOT_NUM}'; }
-					if ($day < 1 OR $day > 31) { $error_array[] = '{L_ERR_DAY_NOT_IN_RANGE}'; }
+					if ($day < 1 or $day > 31) { $error_array[] = '{L_ERR_DAY_NOT_IN_RANGE}'; }
 
 					if (!is_numeric($year)) { $error_array[] = '{L_ERR_YEAR_NOT_NUM}'; }
 
 					$months_long = array("1", "3", "5", "7", "8", "10", "12");
-					if ((in_array($month, $months_long) AND $day <= "31") OR (!in_array($month, $months_long) AND $month != "2" AND $day <= "30") OR ($month == "2" AND $year % 4 == "0" AND $day <= "29") OR ($month == "2" AND $year % 4 != "0" AND $day <= "28")) {
+					if ((in_array($month, $months_long) and $day <= "31") or (!in_array($month, $months_long) and $month != "2" and $day <= "30") or ($month == "2" and $year % 4 == "0" and $day <= "29") or ($month == "2" and $year % 4 != "0" and $day <= "28")) {
 						
 					}
 					else { $error_array[] = '{L_ERR_DATE_ERR}'; }
-					if ($link AND !is_numeric($link)) { $error_array[] = '{L_ERR_TOPIC_ERR}'; }
+					if ($link and !is_numeric($link)) { $error_array[] = '{L_ERR_TOPIC_ERR}'; }
 
 					if (!$error_array)
 					{
 							$timestamp = mktime("0", "0", "0", $month, $day, $year);
-							
+
 							$sql_rq = 'SELECT  oid, link, COUNT(*) FROM ' . $this->table_prefix . 'event_medals WHERE oid = '.$this->db->sql_escape($userid).' AND link = '.$this->db->sql_escape($link);
 							$result = $this->db->sql_fetchrow($this->db->sql_query($sql_rq));
 							//$this->var_display($result['COUNT(*)']);
@@ -95,7 +95,7 @@ class ajaxify
 								$sql = 'INSERT INTO ' . $this->table_prefix . 'event_medals SET oid = '.$this->db->sql_escape($userid).', type = '.$this->db->sql_escape($type).', date = '.$this->db->sql_escape($timestamp);
 								if ($link) { $sql .= ', link = '.$this->db->sql_escape($link); }
 								if ($image) { $sql .= ', image = \''.$this->db->sql_escape($image).'\''; }
-								
+
 								$this->db->sql_query($sql);
 							}
 						}
@@ -106,8 +106,8 @@ class ajaxify
 							'S_ERROR'	=>	'1',
 						));
 
-						foreach ($error_array AS $VAR) { 
-							$template->assign_block_vars('errs', array( 
+						foreach ($error_array as $VAR) { 
+							$template->assign_block_vars('errs', array(
 								'MSG'	=>	$VAR,
 							));
 						}
@@ -149,7 +149,7 @@ class ajaxify
 						$events_new[$ID] = $VAR['select'];
 						$events_image_new[$ID] = $VAR['image'];
 					}
-					
+
 					$sql = 'SELECT link, type, image FROM phpbb_event_medals WHERE oid = '.$this->db->sql_escape($userid);
 					$result = $this->db->sql_query($sql);
 					while ($row = $this->db->sql_fetchrow($result))
