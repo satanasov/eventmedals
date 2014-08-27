@@ -70,10 +70,10 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 			'add_tables'    => array(
 				$this->table_prefix . 'event_medals'		=> array(
 					'COLUMNS'		=> array(
-						'oid'		=> array('UINT:8', null),
+						'oid'		=> array('UINT:8', 0),
 						'type'		=> array('UINT:2', 1),
-						'link'		=> array('UINT:8', null),
-						'date'		=> array('VCHAR:16', null),
+						'link'		=> array('UINT:8', 0),
+						'date'		=> array('VCHAR:16', 0),
 						'image'		=> array('VCHAR:128', 'none')
 					),
 					'PRIMARY_KEY'	=> 'oid, link',
