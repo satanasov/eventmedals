@@ -13,7 +13,7 @@ namespace anavaro\eventmedals\tests\functional;
 /**
 * @group functional
 */
-class eventmedals_test extends eventmedals_base
+class eventmedals_tests extends eventmedals_base
 {
 
 	public $post;

@@ -79,7 +79,7 @@ class ajaxify
 
 					$months_long = array("1", "3", "5", "7", "8", "10", "12");
 					if ((in_array($month, $months_long) and $day <= "31") or (!in_array($month, $months_long) and $month != "2" and $day <= "30") or ($month == "2" and $year % 4 == "0" and $day <= "29") or ($month == "2" and $year % 4 != "0" and $day <= "28")) {
-						
+
 					}
 					else { $error_array[] = '{L_ERR_DATE_ERR}'; }
 					if ($link and !is_numeric($link)) { $error_array[] = '{L_ERR_TOPIC_ERR}'; }
@@ -106,7 +106,8 @@ class ajaxify
 							'S_ERROR'	=>	'1',
 						));
 
-						foreach ($error_array as $VAR) { 
+						foreach ($error_array as $VAR)
+						{
 							$template->assign_block_vars('errs', array(
 								'MSG'	=>	$VAR,
 							));
