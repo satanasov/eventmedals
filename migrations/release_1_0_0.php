@@ -80,7 +80,7 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 				),
 				$this->table_prefix . 'users_custom'		=> array(
 					'COLUMNS'	=> array(
-						'user_id'	=> array('UINT'),
+						'user_id'	=> array('UINT', 0),
 					),
 					'PRIMARY_KEY'    => 'user_id'
 				),
