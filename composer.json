@@ -2,9 +2,9 @@
 	"name": "anavaro/eventmedals",
 	"type": "phpbb-extension",
 	"description": "Adds support for event medals",
-	"homepage": "https://github.com/lucifer4o/anavaro/tree/master/eventmedals",
+	"homepage": "https://github.com/lucifer4o/eventmedals",
 	"version": "1.0.0",
-	"time": "2014-05-23",
+	"time": "2014-08-22",
 	"license": "GPL-2.0",
 	"authors": [
 		{
@@ -15,10 +15,17 @@
 		}
 	],
 	"require": {
-		"php": ">=5.3",
-		"phpbb/phpbb": "3.1.*@dev"
+		"php": ">=5.3"
 	},
 	"extra": {
-		"display-name": "phpBB 3.1 Event Medals"
+		"display-name": "phpBB 3.1 Event medals",
+		"version-check": {
+			"host": "lab.anavaro.com",
+			"directory": "/phpbb-ext",
+			"filename": "eventmedals.json"
+		},
+		"soft-require": {
+			"phpbb/phpbb": ">=3.1.0-RC2,<3.2.*@dev"
+		}
 	}
 }
