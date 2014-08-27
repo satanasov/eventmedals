@@ -15,5 +15,9 @@ namespace anavaro\eventmedals\tests\functional;
 */
 class eventmedals_main_test extends eventmedals_base
 {
-
+	public function test_install()
+	{
+		$this->login();
+		$this->assertContains('123', '123');
+	}
 }
