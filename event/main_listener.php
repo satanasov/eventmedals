@@ -77,20 +77,30 @@ class main_listener implements EventSubscriberInterface
 		$optResult = $this->db->sql_fetchrow($result);
 		$sql = 'SELECT * FROM ' . ZEBRA_TABLE . ' WHERE user_id = '.$this->db->sql_escape($event['data']['user_id']).' AND zebra_id = '.$this->user->data['user_id'];
 		$result = $this->db->sql_fetchrow($this->db->sql_query($sql));
-		$friend_state;
-		if ($result) {
-			if ($result['bff'] == '0') {
-				$friend_state = 2;
+		$zebra_state = 0;
+		if ($result)
+		{
+			if ($result['foe'] == 1)
+			{
+				$zebra_state = 1;
 			}
-			else {
-				$friend_state = 3;
+			else
+			{
+				if ($result['bff'] == '0') {
+					$zebra_state = 3;
+				}
+				else {
+					$zebra_state = 4;
+				}
 			}
 		}
-		else {
-			$friend_state = 1;
+		else
+		{
+			$zebra_state = 2;
 		}
 
-		if ($event['data']['user_id'] == $this->user->data['user_id'] || $this->auth->acl_getf_global('m_approve') || $this->auth->acl_get('a_user') || ($optResult['profile_event_show'] > 0 and $optResult['profile_event_show'] <= $friend_state)) {
+		$show = ($optResult['profile_friend_show'] > 0 ? (($optResult['profile_friend_show'] == 1 and $zebra_state != 1) ? (($optResult['profile_friend_show'] <= $zebra_state) ? true : false) : false) : false);
+		if ($event['data']['user_id'] == $this->user->data['user_id'] || $this->auth->acl_getf_global('m_approve') || $this->auth->acl_get('a_user') || $show) {
 			$sql='SELECT * FROM ' . $this->table_prefix . 'event_medals WHERE oid = '.$this->db->sql_escape($event['data']['user_id']).' ORDER BY date ASC';
 			$result=$this->db->sql_query($sql);
 			$outputMedals = '';
@@ -146,12 +156,12 @@ class main_listener implements EventSubscriberInterface
 		}
 		//Let's see if user hase "u_event_control"
 
-		if ($this->auth->acl_get('u_event_add'))
+		if ($this->auth->acl_get('u_event_add') || $this->auth->acl_get('a_user'))
 		{
 			$this->template->assign_var('MEDALS_ADD', "1");
 			$this->template->assign_var('MEDALS_EVENT_ADD_URL', $this->root_path . 'app.php/eventmedals/add/'. $event['data']['user_id']);
 		}
-		if ($this->auth->acl_get('u_event_modify'))
+		if ($this->auth->acl_get('u_event_modify') || $this->auth->acl_get('a_user'))
 		{
 			$this->template->assign_var('MEDALS_MODIFY', "1");
 			$this->template->assign_var('MEDALS_EVENT_EDIT_URL', $this->root_path . 'app.php/eventmedals/edit/'. $event['data']['user_id']);

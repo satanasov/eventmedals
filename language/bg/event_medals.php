@@ -85,6 +85,7 @@ $lang = array_merge($lang, array(
 	'UCP_PROFILE_MEDALS_EXPLAIN'	=> 'Кой може да вижда медалите в профила ви',
 
 	'NONE'	=>	'Никой',
+	'NOT_ENEMY'	=>	'Всички без врагове',
 	'SPECIAL_FRIENDS'	=> 'Специални приятели',
 
 	'UCP_PROFILE_ACC_ERROR' => 'Нямате права да виждате медалите на този потребител',

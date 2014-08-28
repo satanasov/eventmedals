@@ -85,6 +85,7 @@ $lang = array_merge($lang, array(
 	'UCP_PROFILE_MEDALS_EXPLAIN'	=> 'Who can see the event medals',
 
 	'NONE'	=>	'No one',
+	'NOT_ENEMY'	=>	'All except enemies',
 	'SPECIAL_FRIENDS'	=> 'Special friends',
 
 	'UCP_PROFILE_ACC_ERROR' => 'You don\'t have access to see this user\'s event medals',
