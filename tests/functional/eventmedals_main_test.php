@@ -49,10 +49,37 @@ class eventmedals_main_test extends eventmedals_base
 		
 		$crawler = self::request('GET', 'adm/index.php?i=-anavaro-eventmedals-acp-main_module&mode=add&sid=' . $this->sid);
 		
-	/*	$form = $crawler->selectButton($this->lang('SUBMIT'))->form();
-		$form['username'] = 'admin\n testuser1 \n testuser2 \ntestuser3\n';
+		$form = $crawler->selectButton($this->lang('SUBMIT'))->form();
+		$form['usernames'] = 'admin'. PHP_EOL .' testuser1 '. PHP_EOL .' testuser2 '. PHP_EOL .'testuser3'. PHP_EOL;
 		$crawler = self::submit($form);
-	*/	
-		$this->assertContains('zzzz', $crawler->text());
+	
+		//test step 2 begins
+		$this->assertContainsLang('MEDALS_ADD_STEP_TWO', $crawler->text());
+		
+		$form = $crawler->selectButton($this->lang('SUBMIT'))->form();
+		
+		$form['usesr[2][select]'] = 1;
+		$user1 = $this->get_user_id('testuser1');
+		$form['usesr['.$user1.'][select]'] = 2;
+		$user2 = $this->get_user_id('testuser2');
+		$form['usesr['.$user2.'][select]'] =  3;
+		$user3 = $this->get_user_id('testuser3');
+		$form['usesr['.$user3.'][select]'] =  4;
+		
+		$crawler = self::submit($form);
+		
+		//test step 3 begins
+		$this->assertContainsLang('MEDALS_ADD_STEP_THREE', $crawler->text());
+		
+		$form = $crawler->selectButton($this->lang('SUBMIT'))->form();
+		
+		$form['day'] = 2;
+		$form['month'] = 5;
+		$form['year'] = 2014;
+		$form['link'] = $this->post['topic_id'];
+		
+		//$crawler = self::submit($form);
+		
+		//$this->assertContainsLang('SUCCESS_ADD_INFO', $crawler->text());
 	}
 }
