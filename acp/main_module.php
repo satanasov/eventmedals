@@ -138,14 +138,16 @@ class main_module
 							$timestamp = mktime("0", "0", "0", $month, $day, $year);
 
 							foreach ($medals_array as $ID => $VAR) {
-								$sql_ary = array(
+								/*$sql_ary = array(
 									'oid'	=> (int) $ID,
 									'type'	=> (int) $VAR['select'],
 									'date'	=> (int) $timestamp,
 									'link'	=> (int) $link,
 									'image'	=> $db->sql_escape($image),
 								);
-								$sql = 'INSERT INTO phpbb_event_medals' . $db->sql_build_array('INSERT', $sql_ary);
+								$sql = 'INSERT INTO phpbb_event_medals' . $db->sql_build_array('INSERT', $sql_ary);*/
+								$sql = 'INSERT INTO phpnn_event_medals (oid, type, date, link, image) 
+									VALUES (' . (int) $ID . ', ' . (int) $VAR['select'] . ', ' . (int) $link . ', \'' . $db->sql_escape($image) . '\');';
 								$this->var_display($sql);
 								$db->sql_query($sql);
 							}
