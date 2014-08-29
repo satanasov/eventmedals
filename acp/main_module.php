@@ -140,11 +140,8 @@ class main_module
 									'type'	=> (int) $VAR['select'],
 									'date'	=> (int) $timestamp,
 									'link'	=> (int) $link,
+									'image'	=> $db->sql_escape($image),
 								);
-								if ($image)
-								{
-									$sql_ary['image'] = $db->sql_escape($image);
-								}
 								$sql = 'INSERT INTO phpbb_event_medals ' . $db->sql_build_array('INSERT', $sql_ary);
 								//$this->var_display($sql);
 								$db->sql_query($sql);
