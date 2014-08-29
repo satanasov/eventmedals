@@ -78,8 +78,8 @@ class eventmedals_main_test extends eventmedals_base
 		$form['year'] = 2014;
 		$form['link'] = $this->post['topic_id'];
 		
-		//$crawler = self::submit($form);
+		$crawler = self::submit($form);
 		
-		//$this->assertContainsLang('SUCCESS_ADD_INFO', $crawler->text());
+		$this->assertContainsLang('SUCCESS_ADD_INFO', $crawler->text());
 	}
 }

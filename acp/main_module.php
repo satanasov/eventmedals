@@ -60,6 +60,7 @@ class main_module
 						//let's check users in DB
 
 						$nick_errs = array();
+						$users = array();
 
 						foreach ($users_arry as $VAR) {
 							$sql = 'SELECT user_id, username 
@@ -134,19 +135,19 @@ class main_module
 							$timestamp = mktime("0", "0", "0", $month, $day, $year);
 
 							foreach ($medals_array as $ID => $VAR) {
-
-								//$this->var_display($VAR);
-								$sql_rq = 'SELECT  oid, link, COUNT(*) FROM  phpbb_event_medals WHERE oid = '.$db->sql_escape($ID).' AND link = '.$db->sql_escape($link);
-								$result = $db->sql_fetchrow($db->sql_query($sql_rq));
-								//$this->var_display($result['COUNT(*)']);
-								if ($result['COUNT(*)'] < 1) {
-									$sql = 'INSERT INTO phpbb_event_medals SET oid = '.$db->sql_escape($ID).', type = '.$db->sql_escape($VAR['select']).', date = '.$db->sql_escape($timestamp);
-									if ($link) { $sql .= ', link = '.$db->sql_escape($link); }
-									if ($image) { $sql .= ', image = \''.$db->sql_escape($image).'\''; }
-									//$this->var_display($sql);
-									$db->sql_query($sql);
+								$sql_ary = array(
+									'oid'	=> (int) $ID,
+									'type'	=> (int) $VAR['select'],
+									'date'	=> (int) $timestamp,
+									'link'	=> (int) $link,
+								);
+								if ($image)
+								{
+									$sql_ary['image'] = $db->sql_escape($image);
 								}
-								else {	$error_array_sub ++; }
+								$sql = 'INSERT INTO phpbb_event_medals ' . $db->sql_build_array('INSERT', $sql_ary);
+								//$this->var_display($sql);
+								$db->sql_query($sql);
 							}
 							$post_url = append_sid("index.php?i=".$id."&mode=".$mode);
 						}
