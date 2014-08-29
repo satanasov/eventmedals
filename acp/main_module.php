@@ -145,7 +145,7 @@ class main_module
 									'link'	=> (int) $link,
 									'image'	=> $db->sql_escape($image),
 								);
-								$sql = 'INSERT INTO phpbb_event_medals' . $db->sql_build_array('INSERT', $sql_ary);
+								$sql = 'INSERT INTO phpbb_event_medals ' . $db->sql_build_array('INSERT', $sql_ary);
 								//$this->var_display($sql);
 								$db->sql_query($sql);
 							}
