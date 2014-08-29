@@ -80,6 +80,6 @@ class eventmedals_main_test extends eventmedals_base
 		
 		$crawler = self::submit($form);
 		
-		$this->assertContains('SUCCESS_ADD_INFO', $crawler->text());
+		$this->assertContainsLang('SUCCESS_ADD_INFO', $crawler->text());
 	}
 }
