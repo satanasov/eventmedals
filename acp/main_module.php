@@ -119,6 +119,9 @@ class main_module
 
 						$error_array = array();
 
+						//force none for empy image
+						$image = ($image ? $image : 'none');
+
 						if (!is_numeric($day)) { $error_array[] = '{L_ERR_DAY_NOT_NUM}'; }
 						if ($day < 1 or $day > 31) { $error_array[] = '{L_ERR_DAY_NOT_IN_RANGE}'; }
 

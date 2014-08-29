@@ -15,7 +15,6 @@ namespace anavaro\eventmedals\tests\functional;
 */
 class eventmedals_main_test extends eventmedals_base
 {
-	protected $post;
 	public function test_install()
 	{
 		//add users so we can test medals
@@ -32,7 +31,7 @@ class eventmedals_main_test extends eventmedals_base
 		
 		// Test creating topic and post to test
 		$this->post = $this->create_topic(2, 'Test Topic 1', 'This is a test topic posted by the testing framework.');
-		$crawler = self::request('GET', "viewtopic.php?t={$this->post['topic_id']}&sid={$this->sid}");
+		$crawler = self::request('GET', "viewtopic.php?t={".$this->post['topic_id']."}&sid={$this->sid}");
 		
 		$this->assertContains('This is a test topic posted by the testing framework.', $crawler->filter('html')->text());
 		
@@ -80,6 +79,8 @@ class eventmedals_main_test extends eventmedals_base
 		
 		$crawler = self::submit($form);
 		
-		$this->assertContainsLang('SUCCESS_ADD_INFO', $crawler->text());
+		$this->assertContains('SUCCESS_ADD_INFO', $crawler->text());
+		
+		return $post_id;
 	}
 }

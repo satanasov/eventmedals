@@ -20,9 +20,12 @@ class eventmedals_base extends \phpbb_functional_test_case
 		return array('anavaro/eventmedals');
 	}
 
+	protected $post;
+	
 	public function setUp()
 	{
 		parent::setUp();
+		$this->post = array();
 	}
 	
 	public function get_user_id($username)
