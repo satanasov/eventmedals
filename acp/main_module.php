@@ -143,7 +143,7 @@ class main_module
 							$timestamp = mktime("0", "0", "0", $month, $day, $year);
 							foreach ($medals_array as $ID => $VAR)
 							{
-								$sql = 'SELECT COUNT(*) as count FROM phpbb_event_medals WHERE oid = ' . $ID . ' AND link = ' . $link;
+								$sql = 'SELECT COUNT(*) as count FROM ' . $table_prefix  .  'event_medals WHERE oid = ' . $ID . ' AND link = ' . $link;
 								$result = $db->sql_query($sql);
 								$count = $db->sql_fetchrow($result);
 								$db->sql_freeresult($result);
@@ -156,7 +156,7 @@ class main_module
 										'link'	=> (int) $link,
 										'image'	=> $image,
 									);
-									$sql = 'INSERT INTO phpbb_event_medals ' . $db->sql_build_array('INSERT', $sql_ary);
+									$sql = 'INSERT INTO ' . $table_prefix  .  'event_medals ' . $db->sql_build_array('INSERT', $sql_ary);
 									//$this->var_display($sql);
 									$db->sql_query($sql);
 								}
