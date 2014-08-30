@@ -147,6 +147,7 @@ class main_module
 								$result = $db->sql_query($sql);
 								$count = $db->sql_fetchrow($result);
 								$db->sql_freeresult($result);
+								$this->var_display($count);
 								if ($count['count'] < 1)
 								{
 									$sql_ary = array(
@@ -156,9 +157,9 @@ class main_module
 										'link'	=> (int) $link,
 										'image'	=> $image,
 									);
-									$sql = 'INSERT INTO ' . $table_prefix  .  'event_medals' . $db->sql_build_array('INSERT', $sql_ary);
+									$sql = 'INSERT INTO ' . $table_prefix  .  'event_medals' . $db->sql_build_array('INSERT', $sql_ary) . ';';
 									//$this->var_display($sql);
-									//$db->sql_query($sql);
+									$db->sql_query($sql);
 								}
 								else
 								{
