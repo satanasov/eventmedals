@@ -140,7 +140,7 @@ class main_module
 								$sql = 'SELECT COUNT(*) as count FROM phpbb_event_medals WHERE oid = ' . $ID . ' AND link = ' . $link;
 								$result = $db->sql_query($sql);
 								$count = $db->sql_fetchrow($result);
-								if ($count['count'] < 0)
+								if ($count['count'] < 1)
 								{
 									$sql_ary = array(
 										'oid'	=> (int) $ID,
