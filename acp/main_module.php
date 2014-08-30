@@ -155,7 +155,7 @@ class main_module
 								}
 								else
 								{
-									$error_array[] = $user->lang('ERR_DUPLICATE_MEDAL');
+									$error_array[9999] = $user->lang('ERR_DUPLICATE_MEDAL');
 								}
 							}
 							$post_url = append_sid("index.php?i=".$id."&mode=".$mode);
