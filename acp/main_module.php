@@ -135,9 +135,9 @@ class main_module
 						$sql = 'SELECT COUNT(*) as count FROM ' . TOPICS_TABLE . ' WHERE topic_id = ' . $link;
 						$result = $db->sql_query($sql);
 						$tmp = $db->sql_fetchrow($result);
-						$exists = ($tmp['count'] ? true : false);
+						$exists = $tmp['count'] > 0 ? 1 : 0;
 						$db->sql_freeresult($result);
-						if ($link and !is_numeric($link) and $exists) { $error_array[] = $user->lang('ERR_TOPIC_ERR'); }
+						if ($link and (!is_numeric($link) or $exists < 1)) { $error_array[] = $user->lang('ERR_TOPIC_ERR'); }
 						$error_array_sub = 0;
 						if (!$error_array) {
 							$timestamp = mktime("0", "0", "0", $month, $day, $year);
@@ -165,8 +165,8 @@ class main_module
 									$error_array[9999] = $user->lang('ERR_DUPLICATE_MEDAL');
 								}
 							}
-							$post_url = append_sid("index.php?i=".$id."&mode=".$mode);
 						}
+						$post_url = append_sid("index.php?i=".$id."&mode=".$mode);
 						if ($error_array)
 						{
 							//$this->var_display($error_array);
