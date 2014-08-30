@@ -81,7 +81,7 @@ class eventmedals_main_test extends eventmedals_base
 		$crawler = self::submit($form);
 		
 		$this->assertContainsLang('SUCCESS_ADD_INFO', $crawler->text());
-		$this->logoff();
+
 	}
 	public function test_acp_add_medals_unique()
 	{
@@ -125,6 +125,6 @@ class eventmedals_main_test extends eventmedals_base
 		$crawler = self::submit($form);
 		
 		$this->assertContainsLang('ERR_DUPLICATE_MEDAL', $crawler->text());
-		$this->logoff();
+
 	}
 }
