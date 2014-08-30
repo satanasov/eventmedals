@@ -83,7 +83,7 @@ class eventmedals_main_test extends eventmedals_base
 		$this->assertContainsLang('SUCCESS_ADD_INFO', $crawler->text());
 		$this->logoff();
 	}
-	public function test_acp_add_medals()
+	public function test_acp_add_medals_unique()
 	{
 		//add medals
 		$this->login();
