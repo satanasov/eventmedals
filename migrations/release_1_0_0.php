@@ -76,7 +76,7 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 						'date'		=> array('UINT:16', 0),
 						'image'		=> array('VCHAR:128', 'none')
 					),
-					'PRIMARY_KEY'	=> 'owner_id, link',
+					'PRIMARY_KEY'	=> 'oid, link',
 				),
 				$this->table_prefix . 'users_custom'		=> array(
 					'COLUMNS'	=> array(
