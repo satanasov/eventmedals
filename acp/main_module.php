@@ -68,6 +68,7 @@ class main_module
 							$result = $db->sql_query($sql);
 							$row = $db->sql_fetchrow($result);
 							//$this->var_display($row);
+							$db->sql_freeresult($result);
 							if (!$row)
 							{
 								$nick_errs[] = $VAR;
@@ -131,7 +132,12 @@ class main_module
 
 						}
 						else { $error_array[] = $user->lang('L_ERR_DATE_ERR'); }
-						if ($link and !is_numeric($link)) { $error_array[] = $user->lang('L_ERR_TOPIC_ERR'); }
+						$sql = 'SELECT COUNT(*) as count FROM ' . TOPICS_TABLE . ' WHERE topic_id = ' . $link;
+						$result = $db->sql_query($sql);
+						$tmp = $db->sql_fetchrow($result);
+						$exists = ($tmp['count'] ? true : false);
+						$db->sql_freeresult($result);
+						if ($link and !is_numeric($link) and $exists) { $error_array[] = $user->lang('ERR_TOPIC_ERR'); }
 						$error_array_sub = 0;
 						if (!$error_array) {
 							$timestamp = mktime("0", "0", "0", $month, $day, $year);
@@ -140,6 +146,7 @@ class main_module
 								$sql = 'SELECT COUNT(*) as count FROM phpbb_event_medals WHERE oid = ' . $ID . ' AND link = ' . $link;
 								$result = $db->sql_query($sql);
 								$count = $db->sql_fetchrow($result);
+								$db->sql_freeresult($result);
 								if ($count['count'] < 1)
 								{
 									$sql_ary = array(
