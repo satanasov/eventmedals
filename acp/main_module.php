@@ -147,7 +147,7 @@ class main_module
 								$result = $db->sql_query($sql);
 								$count = $db->sql_fetchrow($result);
 								$db->sql_freeresult($result);
-								//$this->var_display($count);
+								$this->var_display($count);
 								if ($count['count'] < 1)
 								{
 									$sql_ary = array(
