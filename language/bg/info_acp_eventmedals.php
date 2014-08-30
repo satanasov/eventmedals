@@ -79,6 +79,7 @@ $lang = array_merge($lang, array(
 	'ERR_YEAR_NOT_NUM'	=> 'Е не може годината да не е число!',
 	'ERR_DATE_ERR'	=> 'Нещо си объркал в датата ...',
 	'ERR_TOPIC_ERR'	=> 'А не ... намери си темата в която е срещата!',
+	'ERR_DUPLICATE_MEDAL'	=> 'Вече има такъв медал. Върни се и си оправи списъка!',
 
 	'UCP_EVENT_CONTROL'	=>	'Настройка на медали',
 	'UCP_PROFILE_MEDALS_CONTROL'	=> 'Медали в профилa',

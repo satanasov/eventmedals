@@ -81,9 +81,9 @@ class eventmedals_main_test extends eventmedals_base
 		$crawler = self::submit($form);
 		
 		$this->assertContainsLang('SUCCESS_ADD_INFO', $crawler->text());
+		$this->logoff();
 	}
-	
-	public function test_acp_add_medals_valid_date()
+	public function test_acp_add_medals()
 	{
 		//add medals
 		$this->login();
@@ -117,15 +117,14 @@ class eventmedals_main_test extends eventmedals_base
 		
 		$form = $crawler->selectButton($this->lang('SUBMIT'))->form();
 		
-		$form['day'] = 35;
-		$form['month'] = 13;
+		$form['day'] = 2;
+		$form['month'] = 5;
 		$form['year'] = 2014;
 		$form['link'] = $this->get_topic_id('Test Topic 1');
 		
 		$crawler = self::submit($form);
 		
-		$this->assertContainsLang('ERR_DATE_ERR', $crawler->text());
-		
-		$this->logout();
+		$this->assertContainsLang('ERR_DUPLICATE_MEDAL', $crawler->text());
+		$this->logoff();
 	}
 }

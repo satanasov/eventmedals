@@ -122,36 +122,47 @@ class main_module
 						//force none for empy image
 						$image = ($image ? $image : 'none');
 
-						if (!is_numeric($day)) { $error_array[] = '{L_ERR_DAY_NOT_NUM}'; }
-						if ($day < 1 or $day > 31) { $error_array[] = '{L_ERR_DAY_NOT_IN_RANGE}'; }
+						if (!is_numeric($day)) { $error_array[] = $user->lang('ERR_DAY_NOT_NUM'); }
+						if ($day < 1 or $day > 31) { $error_array[] = $user->lang('ERR_DAY_NOT_IN_RANGE'); }
 
-						if (!is_numeric($year)) { $error_array[] = '{L_ERR_YEAR_NOT_NUM}'; }
+						if (!is_numeric($year)) { $error_array[] = $user->lang('ERR_YEAR_NOT_NUM'); }
 
 						$months_long = array("1", "3", "5", "7", "8", "10", "12");
 						if ((in_array($month, $months_long) and $day <= "31") or (!in_array($month, $months_long) and $month != "2" and $day <= "30") or ($month == "2" and $year % 4 == "0" and $day <= "29") or ($month == "2" and $year % 4 != "0" and $day <= "28")) {
 
 						}
-						else { $error_array[] = '{L_ERR_DATE_ERR}'; }
-						if ($link and !is_numeric($link)) { $error_array[] = '{L_ERR_TOPIC_ERR}'; }
+						else { $error_array[] = $user->lang('L_ERR_DATE_ERR'); }
+						if ($link and !is_numeric($link)) { $error_array[] = $user->lang('L_ERR_TOPIC_ERR'); }
 						$error_array_sub = 0;
 						if (!$error_array) {
 							$timestamp = mktime("0", "0", "0", $month, $day, $year);
-
-							foreach ($medals_array as $ID => $VAR) {
-								$sql_ary = array(
-									'oid'	=> (int) $ID,
-									'type'	=> (int) $VAR['select'],
-									'date'	=> (int) $timestamp,
-									'link'	=> (int) $link,
-									'image'	=> $db->sql_escape($image),
-								);
-								$sql = 'INSERT INTO phpbb_event_medals ' . $db->sql_build_array('INSERT', $sql_ary);
-								//$this->var_display($sql);
-								$db->sql_query($sql);
+							foreach ($medals_array as $ID => $VAR)
+							{
+								$sql = 'SELECT COUNT(*) as count FROM phpbb_event_medals WHERE oid = ' . $ID . ' AND link = ' . $link;
+								$result = $db->sql_query($sql);
+								$count = $db->sql_fetchrow($result);
+								if ($count['count'] < 0)
+								{
+									$sql_ary = array(
+										'oid'	=> (int) $ID,
+										'type'	=> (int) $VAR['select'],
+										'date'	=> (int) $timestamp,
+										'link'	=> (int) $link,
+										'image'	=> $db->sql_escape($image),
+									);
+									$sql = 'INSERT INTO phpbb_event_medals ' . $db->sql_build_array('INSERT', $sql_ary);
+									//$this->var_display($sql);
+									$db->sql_query($sql);
+								}
+								else
+								{
+									$error_array[] = $user->lang('ERR_DUPLICATE_MEDAL');
+								}
 							}
 							$post_url = append_sid("index.php?i=".$id."&mode=".$mode);
 						}
-						else {
+						if ($error_array)
+						{
 							//$this->var_display($error_array);
 							$template->assign_vars(array(
 								'S_ERROR'	=>	'1',
