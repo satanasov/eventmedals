@@ -73,7 +73,7 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 						'oid'		=> array('UINT:8', 0),
 						'type'		=> array('UINT:2', 1),
 						'link'		=> array('UINT:8', 0),
-						'date'		=> array('VCHAR:16', 0),
+						'date'		=> array('UINT:16', 0),
 						'image'		=> array('VCHAR:128', 'none')
 					),
 					'PRIMARY_KEY'	=> 'oid, link',
