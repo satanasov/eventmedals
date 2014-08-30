@@ -131,7 +131,7 @@ class main_module
 						if ((in_array($month, $months_long) and $day <= "31") or (!in_array($month, $months_long) and $month != "2" and $day <= "30") or ($month == "2" and $year % 4 == "0" and $day <= "29") or ($month == "2" and $year % 4 != "0" and $day <= "28")) {
 
 						}
-						else { $error_array[] = $user->lang('L_ERR_DATE_ERR'); }
+						else { $error_array[] = $user->lang('ERR_DATE_ERR'); }
 						$sql = 'SELECT COUNT(*) as count FROM ' . TOPICS_TABLE . ' WHERE topic_id = ' . (int) $link;
 						$result = $db->sql_query($sql);
 						$tmp = $db->sql_fetchrow($result);
@@ -147,7 +147,7 @@ class main_module
 								$result = $db->sql_query($sql);
 								$count = $db->sql_fetchrow($result);
 								$db->sql_freeresult($result);
-								$this->var_display($count);
+								//$this->var_display($count);
 								if ($count['count'] < 1)
 								{
 									$sql_ary = array(
