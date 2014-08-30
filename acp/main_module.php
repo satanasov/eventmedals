@@ -32,8 +32,9 @@ class main_module
 		//Lets get some groups!
 		switch ($mode) {
 			case 'add':
-				$this->tpl_name		= 'acp_event_medals_edit';
-				$this->page_title	= 'ACP_EVENT_MEDALS_EDIT';
+				$this->tpl_name		= 'acp_event_medals_add';
+				$this->page_title	= 'ACP_EVENT_MEDALS_ADD';
+
 				$stage = $request->variable('stage', 'first');
 				//$this->var_display($stage);
 				switch ($stage) {
