@@ -156,7 +156,7 @@ class main_module
 										'link'	=> (int) $link,
 										'image'	=> $image,
 									);
-									$sql = 'INSERT INTO ' . $table_prefix  .  'event_medals ' . $db->sql_build_array('INSERT', $sql_ary);
+									$sql = 'INSERT INTO ' . $table_prefix  .  'event_medals' . $db->sql_build_array('INSERT', $sql_ary);
 									//$this->var_display($sql);
 									$db->sql_query($sql);
 								}
