@@ -143,7 +143,7 @@ class main_module
 							$timestamp = mktime("0", "0", "0", $month, $day, $year);
 							foreach ($medals_array as $ID => $VAR)
 							{
-								$sql = 'SELECT COUNT(*) as count FROM ' . $table_prefix  .  'event_medals WHERE owner_id = ' . (int) $ID . ' AND link = ' . (int) $link;
+								$sql = 'SELECT COUNT(*) as count FROM ' . $table_prefix  .  'event_medals WHERE oid = ' . (int) $ID . ' AND link = ' . (int) $link;
 								$result = $db->sql_query($sql);
 								$count = $db->sql_fetchrow($result);
 								$db->sql_freeresult($result);
@@ -151,7 +151,7 @@ class main_module
 								if ($count['count'] < 1)
 								{
 									$sql_ary = array(
-										'owner_id'	=> (int) $ID,
+										'oid'	=> (int) $ID,
 										'type'	=> (int) $VAR['select'],
 										'date'	=> (int) $timestamp,
 										'link'	=> (int) $link,
