@@ -39,7 +39,7 @@ class eventmedals_main_test extends eventmedals_base
 		$this->logout();
 	}
 	
-	public function test_add_medals()
+	public function test_acp_add_medals()
 	{
 		//add medals
 		$this->login();
@@ -81,5 +81,51 @@ class eventmedals_main_test extends eventmedals_base
 		$crawler = self::submit($form);
 		
 		$this->assertContainsLang('SUCCESS_ADD_INFO', $crawler->text());
+	}
+	
+	public function test_acp_add_medals_valid_date()
+	{
+		//add medals
+		$this->login();
+		$this->admin_login();
+		
+		$this->add_lang_ext('anavaro/eventmedals', 'info_acp_eventmedals');
+		
+		$crawler = self::request('GET', 'adm/index.php?i=-anavaro-eventmedals-acp-main_module&mode=add&sid=' . $this->sid);
+		
+		$form = $crawler->selectButton($this->lang('SUBMIT'))->form();
+		$form['usernames'] = 'admin'. PHP_EOL .' testuser1 '. PHP_EOL .' testuser2 '. PHP_EOL .'testuser3'. PHP_EOL;
+		$crawler = self::submit($form);
+	
+		//test step 2 begins
+		$this->assertContainsLang('MEDALS_ADD_STEP_TWO', $crawler->text());
+		
+		$form = $crawler->selectButton($this->lang('SUBMIT'))->form();
+		
+		$form['usesr[2][select]'] = 1;
+		$user1 = $this->get_user_id('testuser1');
+		$form['usesr['.$user1.'][select]'] = 2;
+		$user2 = $this->get_user_id('testuser2');
+		$form['usesr['.$user2.'][select]'] =  3;
+		$user3 = $this->get_user_id('testuser3');
+		$form['usesr['.$user3.'][select]'] =  4;
+		
+		$crawler = self::submit($form);
+		
+		//test step 3 begins
+		$this->assertContainsLang('MEDALS_ADD_STEP_THREE', $crawler->text());
+		
+		$form = $crawler->selectButton($this->lang('SUBMIT'))->form();
+		
+		$form['day'] = 35;
+		$form['month'] = 13;
+		$form['year'] = 2014;
+		$form['link'] = $this->get_topic_id('Test Topic 1');
+		
+		$crawler = self::submit($form);
+		
+		$this->assertContainsLang('ERR_DATE_ERR', $crawler->text());
+		
+		$this->logout();
 	}
 }
