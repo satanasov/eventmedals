@@ -132,7 +132,7 @@ class main_module
 
 						}
 						else { $error_array[] = $user->lang('L_ERR_DATE_ERR'); }
-						$sql = 'SELECT COUNT(*) as count FROM ' . TOPICS_TABLE . ' WHERE topic_id = ' . $link;
+						$sql = 'SELECT COUNT(*) as count FROM ' . TOPICS_TABLE . ' WHERE topic_id = ' . (int) $link;
 						$result = $db->sql_query($sql);
 						$tmp = $db->sql_fetchrow($result);
 						$exists = $tmp['count'] > 0 ? 1 : 0;
@@ -143,7 +143,7 @@ class main_module
 							$timestamp = mktime("0", "0", "0", $month, $day, $year);
 							foreach ($medals_array as $ID => $VAR)
 							{
-								$sql = 'SELECT COUNT(*) as count FROM ' . $table_prefix  .  'event_medals WHERE oid = ' . $ID . ' AND link = ' . $link;
+								$sql = 'SELECT COUNT(*) as count FROM ' . $table_prefix  .  'event_medals WHERE oid = ' . (int) $ID . ' AND link = ' . (int) $link;
 								$result = $db->sql_query($sql);
 								$count = $db->sql_fetchrow($result);
 								$db->sql_freeresult($result);
@@ -158,7 +158,7 @@ class main_module
 									);
 									$sql = 'INSERT INTO ' . $table_prefix  .  'event_medals' . $db->sql_build_array('INSERT', $sql_ary);
 									//$this->var_display($sql);
-									$db->sql_query($sql);
+									//$db->sql_query($sql);
 								}
 								else
 								{
