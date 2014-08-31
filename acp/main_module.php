@@ -25,6 +25,8 @@ class main_module
 	
 	function set_medal($owner_id, $type, $link, $date, $image = 'none')
 	{
+		global $db, $table_prefix;
+		
 		$sql_ary = array(
 			'owner_id'	=> (int) $owner_id,
 			'type'	=> (int) $type,
@@ -32,12 +34,12 @@ class main_module
 			'date'	=> (int) $date,
 			'image'	=> $image,
 		);
-		$sql = 'INSERT INTO phpbb_event_medals' . $this->db->sql_build_array('INSERT', $sql_ary);
-		$this->db->sql_query($sql);
+		$sql = 'INSERT INTO ' . $table_prefix . 'event_medals' . $db->sql_build_array('INSERT', $sql_ary);
+		$db->sql_query($sql);
 		
-		$sql = 'SELECT COUNT(*) as count FROM phpbb_event_medals WHERE owner_id = ' . (int) $owner_id . ' AND link = ' . (int) $link;
-		$result = $this->db->sql_query($sql);
-		$row = $this->db->sql_fetchrow($result);
+		$sql = 'SELECT COUNT(*) as count FROM ' . $table_prefix . 'event_medals WHERE owner_id = ' . (int) $owner_id . ' AND link = ' . (int) $link;
+		$result = $db->sql_query($sql);
+		$row = $db->sql_fetchrow($result);
 		
 		return $row['count'];
 	}
