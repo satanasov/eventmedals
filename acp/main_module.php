@@ -22,27 +22,6 @@ class main_module
 		print_r($i);
 		echo "</pre>";
 	}
-	
-	function set_medal($owner_id, $type, $link, $date, $image = 'none')
-	{
-		global $db, $table_prefix;
-		
-		$sql_ary = array(
-			'owner_id'	=> (int) $owner_id,
-			'type'	=> (int) $type,
-			'link'	=> (int) $link,
-			'date'	=> (int) $date,
-			'image'	=> $image,
-		);
-		$sql = 'INSERT INTO ' . $table_prefix . 'event_medals' . $db->sql_build_array('INSERT', $sql_ary);
-		$db->sql_query($sql);
-		
-		$sql = 'SELECT COUNT(*) as count FROM ' . $table_prefix . 'event_medals WHERE owner_id = ' . (int) $owner_id . ' AND link = ' . (int) $link;
-		$result = $db->sql_query($sql);
-		$row = $db->sql_fetchrow($result);
-		
-		return $row['count'];
-	}
 	function main($id, $mode)
 	{
 		global $db, $user, $auth, $template, $cache, $request;
@@ -131,11 +110,11 @@ class main_module
 						}
 					break;
 					case 'fourth':
-						$medals_array = $request->variable('usesr', array(array('' => '', '' => '', '' => '')));
+						$medals_array = $request->variable('usesr', array(array('' => '', '' => '', '' => (int) '')));
 						$day = $request->variable('day', '');
 						$month = $request->variable('month', '');
 						$year = $request->variable('year', '');
-						$link = $request->variable('link', '');
+						$link = $request->variable('link', (int) '');
 						$image = utf8_normalize_nfc($request->variable('image', 'none'));
 
 						$error_array = array();
@@ -143,21 +122,15 @@ class main_module
 						//force none for empy image
 						$image = ($image ? $image : 'none');
 
-						if (!is_numeric($day)) { $error_array[] = $user->lang('ERR_DAY_NOT_NUM'); }
-						if ($day < 1 or $day > 31) { $error_array[] = $user->lang('ERR_DAY_NOT_IN_RANGE'); }
-
-						if (!is_numeric($year)) { $error_array[] = $user->lang('ERR_YEAR_NOT_NUM'); }
-
-						$months_long = array("1", "3", "5", "7", "8", "10", "12");
-						if ((in_array($month, $months_long) and $day <= "31") or (!in_array($month, $months_long) and $month != "2" and $day <= "30") or ($month == "2" and $year % 4 == "0" and $day <= "29") or ($month == "2" and $year % 4 != "0" and $day <= "28")) {
-
+						if (!checkdate($month, $day, $year))
+						{
+							$error_array[] = $user->lang('ERR_DATE_ERR');
 						}
-						else { $error_array[] = $user->lang('ERR_DATE_ERR'); }
 						$sql = 'SELECT COUNT(*) as count FROM ' . TOPICS_TABLE . ' WHERE topic_id = ' . $db->sql_escape((int) $link);
-						//$result = $db->sql_query($sql);
+						$result = $db->sql_query($sql);
 						$tmp = $db->sql_fetchrow($result);
 						$exists = $tmp['count'] > 0 ? 1 : 0;
-						//$db->sql_freeresult($result);
+						$db->sql_freeresult($result);
 						if ($link and (!is_numeric($link) or $exists < 1)) { $error_array[] = $user->lang('ERR_TOPIC_ERR'); }
 						$error_array_sub = 0;
 						if (!$error_array) {
@@ -165,22 +138,23 @@ class main_module
 							foreach ($medals_array as $ID => $VAR)
 							{
 								$sql = 'SELECT COUNT(*) as count FROM ' . $table_prefix  .  'event_medals WHERE owner_id = ' . $db->sql_escape((int) $ID) . ' AND link = ' . $db->sql_escape((int) $link);
-								//$result = $db->sql_query($sql);
+								$result = $db->sql_query($sql);
 								$count = $db->sql_fetchrow($result);
-								//$db->sql_freeresult($result);
+								$db->sql_freeresult($result);
 								//$this->var_display($count);
-								if ($count['count'] < 1)
+								if ($count['count'] < 2)
 								{
-									$this->set_medal($ID, $VAR['select'], $link, $timestamp, $image);
-								/*	$sql_ary = array(
-										'owner_id'	=> (int) $ID,
-										'type'	=> (int) $VAR['select'],
-										'link'	=> (int) $link,
-										'date'	=> (int) $timestamp,
+									$sql_ary = array(
+										'owner_id'	=> $ID,
+										'type'	=> $VAR['select'],
+										'date'	=> $timestamp,
+										'link'	=> $link,
 										'image'	=> $image,
 									);
-									$sql = 'INSERT INTO ' . $table_prefix . 'event_medals' . $db->sql_build_array('INSERT', $sql_ary);
-									$db->sql_query($sql);*/
+									var_dump($sql_ary);
+									$sql = 'INSERT INTO ' . $table_prefix  .  'event_medals' . $db->sql_build_array('INSERT', $sql_ary);
+									$this->var_display($sql);
+									$db->sql_query($sql);
 								}
 								else
 								{
