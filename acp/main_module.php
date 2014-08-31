@@ -157,7 +157,7 @@ class main_module
 						//$result = $db->sql_query($sql);
 						$tmp = $db->sql_fetchrow($result);
 						$exists = $tmp['count'] > 0 ? 1 : 0;
-						$db->sql_freeresult($result);
+						//$db->sql_freeresult($result);
 						if ($link and (!is_numeric($link) or $exists < 1)) { $error_array[] = $user->lang('ERR_TOPIC_ERR'); }
 						$error_array_sub = 0;
 						if (!$error_array) {
@@ -167,7 +167,7 @@ class main_module
 								$sql = 'SELECT COUNT(*) as count FROM ' . $table_prefix  .  'event_medals WHERE owner_id = ' . $db->sql_escape((int) $ID) . ' AND link = ' . $db->sql_escape((int) $link);
 								//$result = $db->sql_query($sql);
 								$count = $db->sql_fetchrow($result);
-								$db->sql_freeresult($result);
+								//$db->sql_freeresult($result);
 								//$this->var_display($count);
 								if ($count['count'] < 1)
 								{
