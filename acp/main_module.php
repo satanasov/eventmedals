@@ -153,12 +153,11 @@ class main_module
 									$sql_ary = array(
 										'owner_id'	=> (int) $ID,
 										'type'	=> (int) $VAR['select'],
-										'date'	=> (int) $timestamp,
 										'link'	=> (int) $link,
+										'date'	=> (int) $timestamp,
 										'image'	=> $image,
 									);
-									$sql = 'INSERT INTO ' . $table_prefix  .  'event_medals' . $db->sql_build_array('INSERT', $sql_ary);
-									//$this->var_display($sql);
+									$sql = 'INSERT INTO ' . $table_prefix . 'event_medals' . $db->sql_build_array('INSERT', $sql_ary);
 									$db->sql_query($sql);
 								}
 								else
