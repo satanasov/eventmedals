@@ -151,11 +151,11 @@ class main_module
 								if ($count['count'] < 1)
 								{
 									$sql_ary = array(
-										'owner_id'	=> $ID,
-										'type'	=> $VAR['select'],
-										'date'	=> $timestamp,
-										'link'	=> $link,
-										//'image'	=> $image,
+										'owner_id'	=> (int) $ID,
+										'type'	=> (int) $VAR['select'],
+										'date'	=> (int) $timestamp,
+										'link'	=> (int) $link,
+										'image'	=> $image,
 									);
 									$sql = 'INSERT INTO ' . $table_prefix  .  'event_medals' . $db->sql_build_array('INSERT', $sql_ary);
 									//$this->var_display($sql);

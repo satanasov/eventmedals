@@ -45,7 +45,7 @@ class eventmedals_main_test extends eventmedals_base
 		$link = 2;
 		$date = 1399248000;
 		
-		$this->assertEquals(1, set_medal($owner_id, $type, $link, $date));
+		$this->assertEquals(1, $this->set_medal($owner_id, $type, $link, $date));
 	}
 	
 	public function test_acp_add_medals()
