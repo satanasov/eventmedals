@@ -154,7 +154,7 @@ class main_module
 						}
 						else { $error_array[] = $user->lang('ERR_DATE_ERR'); }
 						$sql = 'SELECT COUNT(*) as count FROM ' . TOPICS_TABLE . ' WHERE topic_id = ' . $db->sql_escape((int) $link);
-						$result = $db->sql_query($sql);
+						//$result = $db->sql_query($sql);
 						$tmp = $db->sql_fetchrow($result);
 						$exists = $tmp['count'] > 0 ? 1 : 0;
 						$db->sql_freeresult($result);
@@ -165,7 +165,7 @@ class main_module
 							foreach ($medals_array as $ID => $VAR)
 							{
 								$sql = 'SELECT COUNT(*) as count FROM ' . $table_prefix  .  'event_medals WHERE owner_id = ' . $db->sql_escape((int) $ID) . ' AND link = ' . $db->sql_escape((int) $link);
-								$result = $db->sql_query($sql);
+								//$result = $db->sql_query($sql);
 								$count = $db->sql_fetchrow($result);
 								$db->sql_freeresult($result);
 								//$this->var_display($count);
