@@ -22,6 +22,25 @@ class main_module
 		print_r($i);
 		echo "</pre>";
 	}
+	
+	function set_medal($owner_id, $type, $link, $date, $image = 'none')
+	{
+		$sql_ary = array(
+			'owner_id'	=> (int) $owner_id,
+			'type'	=> (int) $type,
+			'link'	=> (int) $link,
+			'date'	=> (int) $date,
+			'image'	=> $image,
+		);
+		$sql = 'INSERT INTO phpbb_event_medals' . $this->db->sql_build_array('INSERT', $sql_ary);
+		$this->db->sql_query($sql);
+		
+		$sql = 'SELECT COUNT(*) as count FROM phpbb_event_medals WHERE owner_id = ' . (int) $owner_id . ' AND link = ' . (int) $link;
+		$result = $this->db->sql_query($sql);
+		$row = $this->db->sql_fetchrow($result);
+		
+		return $row['count'];
+	}
 	function main($id, $mode)
 	{
 		global $db, $user, $auth, $template, $cache, $request;
@@ -150,7 +169,8 @@ class main_module
 								//$this->var_display($count);
 								if ($count['count'] < 1)
 								{
-									$sql_ary = array(
+									$this->set_medal($ID, $VAR['select'], $link, $timestamp, $image);
+								/*	$sql_ary = array(
 										'owner_id'	=> (int) $ID,
 										'type'	=> (int) $VAR['select'],
 										'link'	=> (int) $link,
@@ -158,7 +178,7 @@ class main_module
 										'image'	=> $image,
 									);
 									$sql = 'INSERT INTO ' . $table_prefix . 'event_medals' . $db->sql_build_array('INSERT', $sql_ary);
-									$db->sql_query($sql);
+									$db->sql_query($sql);*/
 								}
 								else
 								{
