@@ -42,7 +42,7 @@ class eventmedals_main_test extends eventmedals_base
 	{
 		$owner_id = $this->get_user_id('admin');
 		$type = 2;
-		$link = 2;
+		$link = 5;
 		$date = 1399248000;
 		
 		$this->assertEquals(1, $this->set_medal($owner_id, $type, $link, $date));
@@ -89,7 +89,7 @@ class eventmedals_main_test extends eventmedals_base
 		
 		$crawler = self::submit($form);
 		
-		$this->assertContains('SUCCESS_ADD_INFO', $crawler->text());
+		$this->assertContainsLang('SUCCESS_ADD_INFO', $crawler->text());
 		
 		$this->logout();
 

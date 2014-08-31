@@ -50,7 +50,14 @@ class eventmedals_base extends \phpbb_functional_test_case
 	
 	public function set_medal($owner_id, $type, $link, $date, $image = 'none')
 	{
-		$sql = 'INSERT INTO phpbb_event_medals VALUES (' . (int) $owner_id . ', ' . (int) $type . ', ' . (int) $link . ', ' . (int) $date . ', ' . $image . ')';
+		$sql_ary = array(
+			'owner_id'	=> (int) $owner_id,
+			'type'	=> (int) $type,
+			'link'	=> (int) $link,
+			'date'	=> (int) $date,
+			'image'	=> $image,
+		);
+		$sql = 'INSERT INTO ' . $table_prefix  .  'event_medals' . $this->db->sql_build_array('INSERT', $sql_ary);
 		$this->db->sql_query($sql);
 		
 		$sql = 'SELECT COUNT(*) as count FROM phpbb_event_medals WHERE owner_id = ' . (int) $owner_id . ' AND link = ' . (int) $link;
