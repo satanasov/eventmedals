@@ -132,7 +132,7 @@ class main_module
 
 						}
 						else { $error_array[] = $user->lang('ERR_DATE_ERR'); }
-						$sql = 'SELECT COUNT(*) as count FROM ' . TOPICS_TABLE . ' WHERE topic_id = ' . (int) $link;
+						$sql = 'SELECT COUNT(*) as count FROM ' . TOPICS_TABLE . ' WHERE topic_id = ' . $db->sql_escape((int) $link);
 						$result = $db->sql_query($sql);
 						$tmp = $db->sql_fetchrow($result);
 						$exists = $tmp['count'] > 0 ? 1 : 0;
@@ -143,7 +143,7 @@ class main_module
 							$timestamp = mktime("0", "0", "0", $month, $day, $year);
 							foreach ($medals_array as $ID => $VAR)
 							{
-								$sql = 'SELECT COUNT(*) as count FROM ' . $table_prefix  .  'event_medals WHERE oid = ' . (int) $ID . ' AND link = ' . (int) $link;
+								$sql = 'SELECT COUNT(*) as count FROM ' . $table_prefix  .  'event_medals WHERE owner_id = ' . $db->sql_escape((int) $ID) . ' AND link = ' . $db->sql_escape((int) $link);
 								$result = $db->sql_query($sql);
 								$count = $db->sql_fetchrow($result);
 								$db->sql_freeresult($result);
@@ -151,7 +151,7 @@ class main_module
 								if ($count['count'] < 1)
 								{
 									$sql_ary = array(
-										'oid'	=> (int) $ID,
+										'owner_id'	=> (int) $ID,
 										'type'	=> (int) $VAR['select'],
 										'date'	=> (int) $timestamp,
 										'link'	=> (int) $link,
@@ -230,12 +230,12 @@ class main_module
 						{
 							$event_id = $request->variable('topic', '');
 							$sql_array = array(
-								'SELECT'	=>	'e.oid, e.type, u.username, e.image',
+								'SELECT'	=>	'e.owner_id, e.type, u.username, e.image',
 								'FROM'	=>	array(
 									'phpbb_event_medals'	=> 'e',
 									USERS_TABLE	=> 'u',
 								),
-								'WHERE' => 'e.oid = u.user_id AND e.link = ' . $db->sql_escape($event_id)
+								'WHERE' => 'e.owner_id = u.user_id AND e.link = ' . $db->sql_escape($event_id)
 							);
 							$sql = $db->sql_build_query('SELECT', $sql_array);
 							$result = $db->sql_query($sql);
@@ -276,7 +276,7 @@ class main_module
 									'phpbb_event_medals'	=>	'e',
 									TOPICS_TABLE	=> 't',
 								),
-								'WHERE'	=> 'e.link = t.topic_id AND oid = '. $user_id
+								'WHERE'	=> 'e.link = t.topic_id AND e.owner_id = '. $user_id
 							);
 							$sql = $db->sql_build_query('SELECT', $sql_array);
 							$result = $db->sql_query($sql);
@@ -314,7 +314,7 @@ class main_module
 						//first we delete, then we update
 						foreach ($delete as $VAR)
 						{
-							$sql = 'DELETE FROM phpbb_event_medals WHERE oid = '.$db->sql_escape($VAR).' AND `link` = '.$db->sql_escape($event_id).' LIMIT 1';
+							$sql = 'DELETE FROM phpbb_event_medals WHERE owner_id = '.$db->sql_escape($VAR).' AND `link` = '.$db->sql_escape($event_id).' LIMIT 1';
 							$db->sql_query($sql);
 						}
 						$users = $request->variable ('usesr', array('' => array(''=>'',''=>'',''=>'')));
@@ -324,13 +324,13 @@ class main_module
 							$users_new[$ID] = $VAR['select'];
 							$users_image_new[$ID] = $VAR['image'];
 						}
-						$sql = 'SELECT oid, type, image FROM phpbb_event_medals WHERE link = '.$db->sql_escape($event_id);
+						$sql = 'SELECT owner_id, type, image FROM phpbb_event_medals WHERE link = '.$db->sql_escape($event_id);
 						$result = $db->sql_query($sql);
 
 						while ($row = $db->sql_fetchrow($result))
 						{
-							$users_old[$row['oid']] = $row['type'];
-							$users_image_old[$row['oid']] = $row['image'];
+							$users_old[$row['owner_id']] = $row['type'];
+							$users_image_old[$row['owner_id']] = $row['image'];
 						}
 						$users_diff = array_diff_assoc($users_new, $users_old);
 						$users_image_diff = array_diff_assoc($users_image_new, $users_image_old);
@@ -344,7 +344,7 @@ class main_module
 						{
 							foreach ($users_diff as $ID => $VAR)
 							{
-								$sql = 'UPDATE phpbb_event_medals SET type = '.$db->sql_escape($VAR).' WHERE oid = '.$db->sql_escape($ID).' AND link = '.$db->sql_escape($event_id).' LIMIT 1';
+								$sql = 'UPDATE phpbb_event_medals SET type = '.$db->sql_escape($VAR).' WHERE owner_id = '.$db->sql_escape($ID).' AND link = '.$db->sql_escape($event_id).' LIMIT 1';
 								$db->sql_query($sql);
 							}
 						}
@@ -352,7 +352,7 @@ class main_module
 						{
 							foreach ($users_image_diff as $ID => $VAR)
 							{
-								$sql = 'UPDATE phpbb_event_medals SET image = \''.$db->sql_escape($VAR).'\' WHERE oid = '.$db->sql_escape($ID).' AND link = '.$db->sql_escape($event_id).' LIMIT 1';
+								$sql = 'UPDATE phpbb_event_medals SET image = \''.$db->sql_escape($VAR).'\' WHERE owner_id = '.$db->sql_escape($ID).' AND link = '.$db->sql_escape($event_id).' LIMIT 1';
 								$db->sql_query($sql);
 							}
 						}
@@ -368,7 +368,7 @@ class main_module
 						$delete = $request->variable('delete', array(''=>''));
 						foreach ($delete as $VAR)
 						{
-							$sql = 'DELETE FROM phpbb_event_medals WHERE oid = '.$db->sql_escape($user_id).' AND link = '.$db->sql_escape($VAR).' LIMIT 1';
+							$sql = 'DELETE FROM phpbb_event_medals WHERE owner_id = '.$db->sql_escape($user_id).' AND link = '.$db->sql_escape($VAR).' LIMIT 1';
 							$db->sql_query($sql);
 						}
 						$eventsrq = $request->variable ('events', array('' => array(''=>'',''=>'',''=>'')));
@@ -378,7 +378,7 @@ class main_module
 							$events_image_new[$ID] = $VAR['image'];
 						}
 
-						$sql = 'SELECT link, type, image FROM phpbb_event_medals WHERE oid = '.$db->sql_escape($user_id);
+						$sql = 'SELECT link, type, image FROM phpbb_event_medals WHERE owner_id = '.$db->sql_escape($user_id);
 						$result = $db->sql_query($sql);
 						while ($row = $db->sql_fetchrow($result))
 						{
@@ -396,7 +396,7 @@ class main_module
 						{
 							foreach ($events_diff as $ID => $VAR)
 							{
-								$sql = 'UPDATE phpbb_event_medals SET type = '.$db->sql_escape($VAR).' WHERE oid = '.$db->sql_escape($user_id).' AND link = '.$db->sql_escape($ID).' LIMIT 1';
+								$sql = 'UPDATE phpbb_event_medals SET type = '.$db->sql_escape($VAR).' WHERE owner_id = '.$db->sql_escape($user_id).' AND link = '.$db->sql_escape($ID).' LIMIT 1';
 								$db->sql_query($sql);
 							}
 						}
@@ -404,7 +404,7 @@ class main_module
 						{
 							foreach ($events_image_diff as $ID => $VAR)
 							{
-								$sql = 'UPDATE phpbb_event_medals SET image = \''.$db->sql_escape($VAR).'\' WHERE oid = '.$db->sql_escape($user_id).' AND link = '.$db->sql_escape($ID).' LIMIT 1';
+								$sql = 'UPDATE phpbb_event_medals SET image = \''.$db->sql_escape($VAR).'\' WHERE owner_id = '.$db->sql_escape($user_id).' AND link = '.$db->sql_escape($ID).' LIMIT 1';
 								$db->sql_query($sql);
 							}
 						}
