@@ -43,7 +43,7 @@ class eventmedals_main_test extends eventmedals_base
 		$owner_id = $this->get_user_id('admin');
 		$type = 2;
 		$link = 2;
-		$date = 1399248000
+		$date = 1399248000;
 		
 		$this->assertEquals(1, set_medal($owner_id, $type, $link, $date));
 	}
