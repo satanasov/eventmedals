@@ -57,7 +57,7 @@ class eventmedals_base extends \phpbb_functional_test_case
 			'date'	=> (int) $date,
 			'image'	=> $image,
 		);
-		$sql = 'INSERT INTO ' . $table_prefix  .  'event_medals' . $this->db->sql_build_array('INSERT', $sql_ary);
+		$sql = 'INSERT INTO phpbb_event_medals' . $this->db->sql_build_array('INSERT', $sql_ary);
 		$this->db->sql_query($sql);
 		
 		$sql = 'SELECT COUNT(*) as count FROM phpbb_event_medals WHERE owner_id = ' . (int) $owner_id . ' AND link = ' . (int) $link;
