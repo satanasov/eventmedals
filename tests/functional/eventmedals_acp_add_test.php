@@ -13,7 +13,7 @@ namespace anavaro\eventmedals\tests\functional;
 /**
 * @group functional
 */
-class eventmedals_main_test extends eventmedals_base
+class eventmedals_acp_add_test extends eventmedals_base
 {
 	protected $post;
 	public function test_install()
@@ -94,7 +94,7 @@ class eventmedals_main_test extends eventmedals_base
 		$this->logout();
 
 	}
-	/*
+
 	public function test_acp_add_medals_unique()
 	{
 		//add medals
@@ -183,5 +183,5 @@ class eventmedals_main_test extends eventmedals_base
 		
 		$this->assertContainsLang('ERR_TOPIC_ERR', $crawler->text());
 		$this->logout();
-	}*/
+	}
 }
