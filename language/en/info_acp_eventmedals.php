@@ -80,6 +80,7 @@ $lang = array_merge($lang, array(
 	'ERR_DATE_ERR'	=> 'The date is wrong ...',
 	'ERR_TOPIC_ERR'	=> 'Nope! There is no Topic ID like the one you\'ve provided',
 	'ERR_DUPLICATE_MEDAL'	=> 'There is allredy such medal. Go back and check the list!',
+	'ERR_NO_MEDALS'	=> 'There are no medals. Please add some so you can edit them!',
 
 	'UCP_EVENT_CONTROL'	=>	'Event control',
 	'UCP_PROFILE_MEDALS_CONTROL'	=> 'Event medals in profile',

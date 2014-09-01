@@ -190,12 +190,21 @@ class main_module
 
 				$stage = $request->variable('stage', 'first');
 
+				//let's see if there are ANY medals
+				$sql = 'SELECT COUNT(*) as count FROM ' . $table_prefix . 'event_medals';
+				$result = $db->sql_query($sql);
+				$tmp = $db->sql_fetchrow($result);
+				//$this->var_display($tmp);
+				if ($tmp['count'] == 0)
+				{
+					trigger_error($user->lang('ERR_NO_MEDALS'), E_USER_WARNING);
+				}
 				switch ($stage) {
 					case 'first':
 						$sql_array = array(
 							'SELECT'	=>	'DISTINCT(e.link) as id, t.topic_title as title',
 							'FROM'	=> array(
-								'phpbb_event_medals'	=> 'e',
+								$table_prefix . 'event_medals'	=> 'e',
 								TOPICS_TABLE	=> 't'
 							),
 							'WHERE'	=>	'e.link = t.topic_id',
