@@ -66,4 +66,12 @@ class eventmedals_base extends \phpbb_functional_test_case
 		
 		return $row['count'];
 	}
+	
+	public function clean_medals_db()
+	{
+		$sql = "DELETE FROM phpbb_event_medals WHERE owner_id <> 0";
+		$result = $this->db->sql_query($sql);
+		
+		return 0;
+	}
 }
