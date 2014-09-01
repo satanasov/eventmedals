@@ -29,14 +29,8 @@ class eventmedals_acp_edit_test extends eventmedals_base
 		$this->logout();
 	}
 		
-	public function test_acp_edit_user_edit()
+	public function test_acp_edit_build_medals()
 	{
-		
-		$this->login();
-		
-		$this->assertContains('This is a test topic posted by the testing framework.', $crawler->filter('html')->text());
-		
-		$this->logout();
 		
 		$owner_id = $this->get_user_id('admin');
 		$type = 1;
