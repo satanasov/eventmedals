@@ -103,4 +103,34 @@ class eventmedals_acp_edit_test extends eventmedals_base
 		$this->assertContainsLang('ERR_USER_NO_MEDALS', $crawler->filter('html')->text());
 		$this->logout();
 	}
+	
+	public function test_acp_edit_remove_medal()
+	{
+		$this->login();
+		$this->admin_login();
+		
+		$this->assertEquals(4, $this->medals_for_event($this->get_topic_id('Test Topic 1')));
+		$this->assertEquals(1, $this->medals_for_user($this->get_user_id('testuser3')));
+		
+		$this->add_lang_ext('anavaro/eventmedals', 'info_acp_eventmedals');
+		
+		$crawler = self::request('GET', 'adm/index.php?i=-anavaro-eventmedals-acp-main_module&mode=edit&sid=' . $this->sid);
+		
+		$form = $crawler->selectButton($this->lang('SUBMIT'))->form();
+		$form['username'] = 'testuser3';
+		$form['event_edit_type'] = 'user';
+		
+		$crawler = self::submit($form);
+		
+		$form = $crawler->selectButton($this->lang('SUBMIT'))->form();
+		$form['delete'] = array($this->get_topic_id('Test Topic 1'));
+		
+		$crawler = self::submit($form);
+		
+		$this->assertContainsLang('SUCCESS_EDIT_INFO', $crawler->filter('html')->text());
+		
+		$this->assertEquals(0, $this->medals_for_user($this->get_user_id('testuser3')));
+		
+		$this->assertEquals(3, $this->medals_for_event($this->get_topic_id('Test Topic 1')));
+	}
 }

@@ -74,4 +74,31 @@ class eventmedals_base extends \phpbb_functional_test_case
 		
 		return 0;
 	}
+	
+	public function medals_for_user($user_id)
+	{
+		$sql = 'SELECT COUNT(*) as count FROM phpbb_event_medals WHERE owner_id = ' . (int) $user_id;
+		$result = $this->db->sql_query($sql);
+		$row = $this->db->sql_fetchrow($result);
+		
+		return $row['count'];
+	}
+	
+	public function medals_for_event($event_id)
+	{
+		$sql = 'SELECT COUNT(*) as count FROM phpbb_event_medals WHERE link = ' . (int) $event_id;
+		$result = $this->db->sql_query($sql);
+		$row = $this->db->sql_fetchrow($result);
+		
+		return $row['count'];
+	}
+	
+	public function medal_type($user_id, $event_id)
+	{
+		$sql = 'SELECT type FROM phpbb_event_medals WHERE owner_id = ' . (int) $user_id . ' AND link = ' . (int) $event_id;
+		$result = $this->db->sql_query($sql);
+		$row = $this->db->sql_fetchrow($result);
+		
+		return $row['type'];
+	}
 }

@@ -92,9 +92,6 @@ $lang = array_merge($lang, array(
 	'NOT_ENEMY'	=>	'Всички без врагове',
 	'SPECIAL_FRIENDS'	=> 'Специални приятели',
 
-	'UCP_PROFILE_ACC_ERROR' => 'Нямате права да виждате медалите на този потребител',
-	'UCP_PROFILE_CONTROL_ERROR'	=> 'Не сте оторизиран да променяте медалите на потребители',
-
 	'ACL_U_EVENT_ADD'	=> 'Може да слага медали',
 	'ACL_U_EVENT_MODIFY'	=> 'Може да променя медали',
 

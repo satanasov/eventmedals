@@ -92,9 +92,6 @@ $lang = array_merge($lang, array(
 	'NOT_ENEMY'	=>	'All except enemies',
 	'SPECIAL_FRIENDS'	=> 'Special friends',
 
-	'UCP_PROFILE_ACC_ERROR' => 'You don\'t have access to see this user\'s event medals',
-	'UCP_PROFILE_CONTROL_ERROR'	=> 'You are not authorized to change event medals',
-
 	'ACL_U_EVENT_ADD'	=> 'Add event medals',
 	'ACL_U_EVENT_MODIFY'	=> 'Modify event medals',
 

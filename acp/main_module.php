@@ -379,11 +379,11 @@ class main_module
 						));
 					break;
 					case 'third_user':
-						$user_id = $request->variable('target_user', '');
-						$delete = $request->variable('delete', array(''=>''));
+						$user_id = $request->variable('target_user', (int) '');
+						$delete = $request->variable('delete', array(''=> (int) ''));
 						foreach ($delete as $VAR)
 						{
-							$sql = 'DELETE FROM phpbb_event_medals WHERE owner_id = '.$db->sql_escape($user_id).' AND link = '.$db->sql_escape($VAR).' LIMIT 1';
+							$sql = 'DELETE FROM phpbb_event_medals WHERE owner_id = '.$db->sql_escape((int) $user_id).' AND link = '.$db->sql_escape((int) $VAR);
 							$db->sql_query($sql);
 						}
 						$eventsrq = $request->variable ('events', array('' => array(''=>'',''=>'',''=>'')));
@@ -395,6 +395,8 @@ class main_module
 
 						$sql = 'SELECT link, type, image FROM phpbb_event_medals WHERE owner_id = '.$db->sql_escape($user_id);
 						$result = $db->sql_query($sql);
+						$events_old = array();
+						$events_image_old = array();
 						while ($row = $db->sql_fetchrow($result))
 						{
 							$events_old[$row['link']] = $row['type'];
