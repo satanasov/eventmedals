@@ -247,7 +247,7 @@ class main_module
 							{
 								$template->assign_block_vars('event_edit', array(
 									'USERNAME'	=>	$row['username'],
-									'USER_ID'	=>	$row['oid'],
+									'USER_ID'	=>	$row['owner_id'],
 									'TYPE'	=>	$row['type'],
 									'IMAGE'	=>	$row['image']
 								));
@@ -266,12 +266,17 @@ class main_module
 									FROM ' . USERS_TABLE . '
 									WHERE username_clean = \''.$db->sql_escape(utf8_clean_string($username_request)).'\'';
 							$result = $db->sql_query($sql);
-							$username;
-							$user_id;
+							$username = '';
+							$user_id = 0;
 							while ($row = $db->sql_fetchrow($result))
 							{
 								$username = $row['username'];
 								$user_id = $row['user_id'];
+							}
+							$db->sql_freeresult($result);
+							if (!$user_id)
+							{
+								trigger_error($user->lang('ERR_NO_USER'), E_USER_WARNING);
 							}
 							$sql_array = array(
 								'SELECT'	=>	'e.type as type, e.link as link, e.image as image, t.topic_title as title',
@@ -283,6 +288,7 @@ class main_module
 							);
 							$sql = $db->sql_build_query('SELECT', $sql_array);
 							$result = $db->sql_query($sql);
+							$events = array();
 							while ($row = $db->sql_fetchrow($result))
 							{
 								$events[$row['link']] = array(
@@ -291,6 +297,12 @@ class main_module
 									'image'	=>	$row['image']
 								);
 							}
+
+							if (empty($events))
+							{
+								trigger_error($user->lang('ERR_USER_NO_MEDALS'), E_USER_WARNING);
+							}
+
 							$post_url = append_sid("index.php?i=".$id."&mode=".$mode."&stage=third_user");
 							$template->assign_vars(array(
 								'S_STAGE' => 'second_user',

@@ -61,4 +61,46 @@ class eventmedals_acp_edit_test extends eventmedals_base
 		$this->assertEquals(1, $this->set_medal($owner_id, $type, $link, $date));
 		
 	}
+	
+	public function test_acp_edit_user_no_user()
+	{
+		$this->login();
+		$this->admin_login();
+		
+		$this->add_lang_ext('anavaro/eventmedals', 'info_acp_eventmedals');
+		
+		$crawler = self::request('GET', 'adm/index.php?i=-anavaro-eventmedals-acp-main_module&mode=edit&sid=' . $this->sid);
+		
+		$form = $crawler->selectButton($this->lang('SUBMIT'))->form();
+		$form['username'] = 'testuser4';
+		$form['event_edit_type'] = 'user';
+		
+		$crawler = self::submit($form);
+		
+		$this->assertContainsLang('ERR_NO_USER', $crawler->filter('html')->text());
+		$this->logout();
+		
+	}
+	
+	public function test_acp_edit_user_no_medals()
+	{
+		$this->create_user('testuser4');
+		$this->add_user_group('NEWLY_REGISTERED', array('testuser1'));
+		
+		$this->login();
+		$this->admin_login();
+		
+		$this->add_lang_ext('anavaro/eventmedals', 'info_acp_eventmedals');
+		
+		$crawler = self::request('GET', 'adm/index.php?i=-anavaro-eventmedals-acp-main_module&mode=edit&sid=' . $this->sid);
+		
+		$form = $crawler->selectButton($this->lang('SUBMIT'))->form();
+		$form['username'] = 'testuser4';
+		$form['event_edit_type'] = 'user';
+		
+		$crawler = self::submit($form);
+		
+		$this->assertContainsLang('ERR_USER_NO_MEDALS', $crawler->filter('html')->text());
+		$this->logout();
+	}
 }
