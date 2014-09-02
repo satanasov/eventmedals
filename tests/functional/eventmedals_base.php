@@ -101,4 +101,13 @@ class eventmedals_base extends \phpbb_functional_test_case
 		
 		return $row['type'];
 	}
+	
+	public function medal_image($user_id, $event_id)
+	{	
+		$sql = 'SELECT image FROM phpbb_event_medals WHERE owner_id = ' . (int) $user_id . ' AND link = ' . (int) $event_id;
+		$result = $this->db->sql_query($sql);
+		$row = $this->db->sql_fetchrow($result);
+		
+		return htmlspecialchars($row['image']);
+	}
 }
