@@ -167,5 +167,46 @@ class eventmedals_acp_edit_test extends eventmedals_base
 	public function test_acp_edit_user_edit_medal_image()
 	{
 		$this->assertContains('none', $this->medal_image($this->get_user_id('testuser2'), $this->get_topic_id('Test Topic 1')));
+		$this->login();
+		$this->admin_login();
+		
+		$this->add_lang_ext('anavaro/eventmedals', 'info_acp_eventmedals');
+		
+		$crawler = self::request('GET', 'adm/index.php?i=-anavaro-eventmedals-acp-main_module&mode=edit&sid=' . $this->sid);
+		
+		$form = $crawler->selectButton($this->lang('SUBMIT'))->form();
+		$form['username'] = 'testuser2';
+		$form['event_edit_type'] = 'user';
+		
+		$crawler = self::submit($form);
+		
+		$form = $crawler->selectButton($this->lang('SUBMIT'))->form();
+		$form['events'] = array($this->get_topic_id('Test Topic 1') => array('image' => '/images/test/data/image.jpg'));
+		
+		$crawler = self::submit($form);
+		
+		$this->assertContainsLang('SUCCESS_EDIT_INFO', $crawler->filter('html')->text());
+		
+		$this->assertContains('/images/test/data/image.jpg', $this->medal_image($this->get_user_id('testuser2'), $this->get_topic_id('Test Topic 1')));
+		
+		//let's test (and go back to none as image)
+		$crawler = self::request('GET', 'adm/index.php?i=-anavaro-eventmedals-acp-main_module&mode=edit&sid=' . $this->sid);
+		
+		$form = $crawler->selectButton($this->lang('SUBMIT'))->form();
+		$form['username'] = 'testuser2';
+		$form['event_edit_type'] = 'user';
+		
+		$crawler = self::submit($form);
+		
+		$form = $crawler->selectButton($this->lang('SUBMIT'))->form();
+		$form['events'] = array($this->get_topic_id('Test Topic 1') => array('image' => 'none'));
+		
+		$crawler = self::submit($form);
+		
+		$this->assertContainsLang('SUCCESS_EDIT_INFO', $crawler->filter('html')->text());
+		
+		$this->assertContains('none', $this->medal_image($this->get_user_id('testuser2'), $this->get_topic_id('Test Topic 1')));
+		
+		$this->logout();
 	}
 }
