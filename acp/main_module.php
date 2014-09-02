@@ -413,7 +413,7 @@ class main_module
 						{
 							foreach ($events_diff as $ID => $VAR)
 							{
-								$sql = 'UPDATE ' . $table_prefix . 'event_medals SET type = '.$db->sql_escape($VAR).' WHERE owner_id = '.$db->sql_escape($user_id).' AND link = '.$db->sql_escape($ID).' LIMIT 1';
+								$sql = 'UPDATE ' . $table_prefix . 'event_medals SET type = '.$db->sql_escape((int) $VAR).' WHERE owner_id = '.$db->sql_escape((int) $user_id).' AND link = '.$db->sql_escape((int) $ID);
 								//$this->var_display($sql);
 								$db->sql_query($sql);
 							}
@@ -422,7 +422,7 @@ class main_module
 						{
 							foreach ($events_image_diff as $ID => $VAR)
 							{
-								$sql = 'UPDATE ' . $table_prefix . 'event_medals SET image = \''.$db->sql_escape($VAR).'\' WHERE owner_id = '.$db->sql_escape($user_id).' AND link = '.$db->sql_escape($ID).' LIMIT 1';
+								$sql = 'UPDATE ' . $table_prefix . 'event_medals SET image = \''.$db->sql_escape($VAR).'\' WHERE owner_id = '.$db->sql_escape((int) $user_id).' AND link = '.$db->sql_escape((int) $ID);
 								$db->sql_query($sql);
 							}
 						}
