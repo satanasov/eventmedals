@@ -48,28 +48,86 @@
 	<p> {L_MEDALS_EDIT_SCRIPT}
 	<p> {L_MEDALS_EDIT_STEP_TWO_EVENT}
 	<form id="acp_board" method="post" action="{U_ACTION}">
-		<!-- BEGIN event_edit -->
 		<fieldset>
-			<legend>{event_edit.USERNAME}</legend>
+			<legend>{L_MEDALS_TITLE}</legend>
+			<!-- BEGIN event_edit -->
 			<dl>
-				<dt>{L_MEDAL_TYPE}</dt>
+				<dt>{event_edit.USERNAME}</dt>
 				<dd> 
-					<input type="hidden" name="usesr[{event_edit.USER_ID}][username]" value="{event_edit.USERNAME}" />
-					<select id="usesr[{event_edit.USER_ID}][select]" name="usesr[{event_edit.USER_ID}][select]">
+					<input type="hidden" name="users[{event_edit.USER_ID}][username]" value="{event_edit.USERNAME}" />
+					<select id="users[{event_edit.USER_ID}][select]" name="users[{event_edit.USER_ID}][select]">
 						<option value="1" <!-- IF event_edit.TYPE == 1 -->SELECTED<!-- ENDIF -->>{L_MEDAL_TYPE_ONE}</option>
 						<option value="2" <!-- IF event_edit.TYPE == 2 -->SELECTED<!-- ENDIF -->>{L_MEDAL_TYPE_TWO}</option>
 						<option value="3" <!-- IF event_edit.TYPE == 3 -->SELECTED<!-- ENDIF -->>{L_MEDAL_TYPE_THREE}</option>
 						<option value="4" <!-- IF event_edit.TYPE == 4 -->SELECTED<!-- ENDIF -->>{L_MEDAL_TYPE_FOUR}</option>
 					</select>
-					<label><input type="checkbox" name="delete[]" value="{event_edit.USER_ID}"> {L_MEDAL_DELETE}</label><br>
+					<label><input type="checkbox" name="users[{event_edit.USER_ID}][delete]" id="users[{event_edit.USER_ID}][delete]" value="1"> {L_MEDAL_DELETE}</label>
 				</dd>
 			</dl>
-			<dl>
-				<dt>{L_IMAGE_PATH} </dt>
-				<dd><input type="text" size="36" id="usesr[{event_edit.USER_ID}][image]" name="usesr[{event_edit.USER_ID}][image]" class="post" value="{event_edit.IMAGE}"></dd>
-			</dl>
+			<!-- END event_edit -->
 		</fieldset>
-		<!-- END event_edit -->
+				<fieldset>
+         <dl>
+			<dt>{L_DATE}</dt>
+			<dd>{L_DAY} <select id="day" name="day">
+							<option value="1"<!-- IF U_DAY == 1 --> SELECTED <!-- ENDIF -->>1</option>
+							<option value="2"<!-- IF U_DAY == 2 --> SELECTED <!-- ENDIF -->>2</option>
+							<option value="3"<!-- IF U_DAY == 3 --> SELECTED <!-- ENDIF -->>3</option>
+							<option value="4"<!-- IF U_DAY == 4 --> SELECTED <!-- ENDIF -->>4</option>
+							<option value="5"<!-- IF U_DAY == 5 --> SELECTED <!-- ENDIF -->>5</option>
+							<option value="6"<!-- IF U_DAY == 6 --> SELECTED <!-- ENDIF -->>6</option>
+							<option value="7"<!-- IF U_DAY == 7 --> SELECTED <!-- ENDIF -->>7</option>
+							<option value="8"<!-- IF U_DAY == 8 --> SELECTED <!-- ENDIF -->>8</option>
+							<option value="9"<!-- IF U_DAY == 9 --> SELECTED <!-- ENDIF -->>9</option>
+							<option value="10"<!-- IF U_DAY == 10 --> SELECTED <!-- ENDIF -->>10</option>
+							<option value="11"<!-- IF U_DAY == 11 --> SELECTED <!-- ENDIF -->>11</option>
+							<option value="12"<!-- IF U_DAY == 12 --> SELECTED <!-- ENDIF -->>12</option>
+							<option value="13"<!-- IF U_DAY == 13 --> SELECTED <!-- ENDIF -->>13</option>
+							<option value="14"<!-- IF U_DAY == 14 --> SELECTED <!-- ENDIF -->>14</option>
+							<option value="15"<!-- IF U_DAY == 15 --> SELECTED <!-- ENDIF -->>15</option>
+							<option value="16"<!-- IF U_DAY == 16 --> SELECTED <!-- ENDIF -->>16</option>
+							<option value="17"<!-- IF U_DAY == 17 --> SELECTED <!-- ENDIF -->>17</option>
+							<option value="18"<!-- IF U_DAY == 18 --> SELECTED <!-- ENDIF -->>18</option>
+							<option value="19"<!-- IF U_DAY == 19 --> SELECTED <!-- ENDIF -->>19</option>
+							<option value="20"<!-- IF U_DAY == 20 --> SELECTED <!-- ENDIF -->>20</option>
+							<option value="21"<!-- IF U_DAY == 21 --> SELECTED <!-- ENDIF -->>21</option>
+							<option value="22"<!-- IF U_DAY == 22 --> SELECTED <!-- ENDIF -->>22</option>
+							<option value="23"<!-- IF U_DAY == 23 --> SELECTED <!-- ENDIF -->>23</option>
+							<option value="24"<!-- IF U_DAY == 24 --> SELECTED <!-- ENDIF -->>24</option>
+							<option value="25"<!-- IF U_DAY == 25 --> SELECTED <!-- ENDIF -->>25</option>
+							<option value="26"<!-- IF U_DAY == 26 --> SELECTED <!-- ENDIF -->>26</option>
+							<option value="27"<!-- IF U_DAY == 27 --> SELECTED <!-- ENDIF -->>27</option>
+							<option value="28"<!-- IF U_DAY == 28 --> SELECTED <!-- ENDIF -->>28</option>
+							<option value="29"<!-- IF U_DAY == 29 --> SELECTED <!-- ENDIF -->>29</option>
+							<option value="30"<!-- IF U_DAY == 30 --> SELECTED <!-- ENDIF -->>30</option>
+							<option value="31"<!-- IF U_DAY == 31 --> SELECTED <!-- ENDIF -->>31</option>
+						</select>
+                {L_MONTH} <select id="month" name="month">
+					<option value="1"<!-- IF U_MOTH == 1 --> SELECTED <!-- ENDIF -->>{L_M_JAN}</option>
+					<option value="2"<!-- IF U_MOTH == 2 --> SELECTED <!-- ENDIF -->>{L_M_FEB}</option>
+					<option value="3"<!-- IF U_MOTH == 3 --> SELECTED <!-- ENDIF -->>{L_M_MAR}</option>
+					<option value="4"<!-- IF U_MOTH == 4 --> SELECTED <!-- ENDIF -->>{L_M_APR}</option>
+					<option value="5"<!-- IF U_MOTH == 5 --> SELECTED <!-- ENDIF -->>{L_M_MAY}</option>
+					<option value="6"<!-- IF U_MOTH == 6 --> SELECTED <!-- ENDIF -->>{L_M_JUN}</option>
+					<option value="7"<!-- IF U_MOTH == 7 --> SELECTED <!-- ENDIF -->>{L_M_JUL}</option>
+					<option value="8"<!-- IF U_MOTH == 8 --> SELECTED <!-- ENDIF -->>{L_M_AUG}</option>
+					<option value="9"<!-- IF U_MOTH == 9 --> SELECTED <!-- ENDIF -->>{L_M_SEP}</option>
+					<option value="10"<!-- IF U_MOTH == 10 --> SELECTED <!-- ENDIF -->>{L_M_OCT}</option>
+					<option value="11"<!-- IF U_MOTH == 11 --> SELECTED <!-- ENDIF -->>{L_M_NOV}</option>
+					<option value="12"<!-- IF U_MOTH == 11 --> SELECTED <!-- ENDIF -->>{L_M_DEC}</option>
+					</select>
+				{L_YEAR} <input type="text" size="4" maxlength="4" id="year" name="year" class="post" value="{U_YEAR}">
+			</dd>
+		</dl>
+		<dl>
+			<dt>{L_TOPIC_NUMBER} </dt>
+			<dd><input type="text" size="6" id="target_event_new" name="target_event_new" class="post" value="{S_EVENT_ID}"></dd>
+		</dl>
+		<dl>
+			<dt>{L_IMAGE_PATH} </dt>
+			<dd><input type="text" size="36" id="image" name="image" class="post" value="{U_IMAGE}"></dd>
+		</dl>
+		</fieldset>
 		<p class="submit-buttons">
 		<input type="hidden" name="target_event" value="{S_EVENT_ID}">
 		<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" />&nbsp;
@@ -93,8 +151,6 @@
 					</select>
 					<label><input type="checkbox" name="delete[]" value="{user_edit.EVENT_ID}"> {L_MEDAL_DELETE}</label>
 				</dd>
-				<dt></dt>
-				<dd><input type="text" size="36" id="events[{user_edit.EVENT_ID}][image]" name="events[{user_edit.EVENT_ID}][image]" class="post" value="{user_edit.IMAGE}"></dd>
 			</dl>
 			<!-- END user_edit -->
 		</fieldset>
