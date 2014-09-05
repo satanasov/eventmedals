@@ -337,7 +337,7 @@ class main_module
 						$year = $request->variable('year', (int) '');
 						$image = utf8_normalize_nfc($request->variable('image', 'none'));
 						//first we delete, then we update
-						if (!checkdate($month, $day, $year) OR $year < 1971)
+						if (!checkdate($month, $day, $year) or $year < 1971)
 						{
 							trigger_error($user->lang('ERR_DATE_ERR'), E_USER_WARNING);
 						}

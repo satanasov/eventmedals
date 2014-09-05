@@ -36,6 +36,9 @@ class eventmedals_acp_add_test extends eventmedals_base
 		
 		$this->assertContains('This is a test topic posted by the testing framework.', $crawler->filter('html')->text());
 		
+		$post2 = $this->create_post(2, $this->post['topic_id'], 'Re: Test Topic 1', 'This is a test [b]post[/b] posted by the testing framework.');
+		$crawler = self::request('GET', "viewtopic.php?t={$post2['topic_id']}&sid={$this->sid}");
+		
 		$this->logout();
 	}
 	public function test_direct_db()

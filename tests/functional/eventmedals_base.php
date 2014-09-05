@@ -110,4 +110,23 @@ class eventmedals_base extends \phpbb_functional_test_case
 		
 		return htmlspecialchars($row['image']);
 	}
+	
+	public function add_frineds($uid1, $uid2)
+	{
+		$sql_ary = array(
+			'user_id' => $uid1,
+			'zebra_id'	=> $uid2,
+			'friend' => 1
+		);
+		$sql = 'INSERT INTO phpbb_zebra' . $this->db->sql_build_array('INSERT', $sql_ary);
+	}
+	public function add_foe($uid1, $uid2)
+	{
+		$sql_ary = array(
+			'user_id' => $uid1,
+			'zebra_id'	=> $uid2,
+			'foe' => 1
+		);
+		$sql = 'INSERT INTO phpbb_zebra' . $this->db->sql_build_array('INSERT', $sql_ary);
+	}
 }
