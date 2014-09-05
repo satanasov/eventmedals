@@ -56,6 +56,8 @@ class eventmedals_view_tests extends eventmedals_base
 		$crawler = self::request('GET', "viewtopic.php?t={$this->get_topic_id('Test Topic 1')}&sid={$this->sid}");
 		
 		$this->assertContains('x 1', $crawler->filter('.medals_postrow')->text());
+		
+		$this->logout();
 	}
 
 }
