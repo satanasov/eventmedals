@@ -325,7 +325,7 @@ class main_module
 					break;
 					case 'third_event':
 						$event_id = $request->variable('target_event', '');
-						$delete = $request->variable('delete', array(''=>''));
+						$delete = $request->variable('delete', array(''=> (int) ''));
 						//first we delete, then we update
 						foreach ($delete as $VAR)
 						{
