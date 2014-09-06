@@ -76,7 +76,6 @@ class eventmedals_ucp_add_test extends eventmedals_base
 		// XXX globals for \phpbb\auth\auth, refactor it later
 		global $db, $cache;
 		$db = $this->get_db();
-		$cache = new phpbb_mock_null_cache;
 
 		$auth = new \phpbb\auth\auth;
 		// XXX hardcoded id
