@@ -132,26 +132,4 @@ class eventmedals_base extends \phpbb_functional_test_case
 		$this->db->sql_query($sql);
 	}
 	
-	public function set_permissions_add($user_id)
-	{
-		$sql = 'SELECT auth_option_id FROM ' . ACL_OPTIONS_TABLE . ' WHERE auth_option = \'u_event_add\'';
-		$result = $this->db->sql_query($sql);
-		$row = $this->db->sql_fetchrow($result);
-		
-		$sql_ary = array(
-			'user_id' => (int) $user_id,
-			'forum_id' => 0,
-			'auth_option_id'	=> $row['auth_option_id'],
-			'auth_role_id'	=> 0,
-			'auth_setting' => 1,
-		);
-		$sql = 'INSERT INTO ' . ACL_USERS_TABLE . $this->db->sql_build_array('INSERT', $sql_ary);
-		$this->db->sql_query($sql);
-		
-		
-		$sql = 'SELECT user_id FROM ' . ACL_USERS_TABLE . ' WHERE auth_option_id = ' . $row['auth_option_id'];
-		$row = $this->db->sql_fetchrow($result);
-		
-		return $row['user_id'];
-	}
 }
