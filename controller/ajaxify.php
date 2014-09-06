@@ -63,55 +63,46 @@ class ajaxify
 			{
 				if ($confirm)
 				{
-					$day = $this->request->variable('day', '');
-					$month = $this->request->variable('month', '');
-					$year = $this->request->variable('year', '');
+					$day = $this->request->variable('day', (int) '');
+					$month = $this->request->variable('month', (int) '');
+					$year = $this->request->variable('year', (int) '');
 					$link = $this->request->variable('link', '');
 					$image = utf8_normalize_nfc($this->request->variable('image', 'none'));
 					$type = $this->request->variable('type', 2);
 
 					$error_array = array();
 
-					if (!is_numeric($day)) { $error_array[] = '{L_ERR_DAY_NOT_NUM}'; }
-					if ($day < 1 or $day > 31) { $error_array[] = '{L_ERR_DAY_NOT_IN_RANGE}'; }
-
-					if (!is_numeric($year)) { $error_array[] = '{L_ERR_YEAR_NOT_NUM}'; }
-
-					$months_long = array("1", "3", "5", "7", "8", "10", "12");
-					if ((in_array($month, $months_long) and $day <= "31") or (!in_array($month, $months_long) and $month != "2" and $day <= "30") or ($month == "2" and $year % 4 == "0" and $day <= "29") or ($month == "2" and $year % 4 != "0" and $day <= "28")) {
-
-					}
-					else { $error_array[] = '{L_ERR_DATE_ERR}'; }
-					if ($link and !is_numeric($link)) { $error_array[] = '{L_ERR_TOPIC_ERR}'; }
-
-					if (!$error_array)
+					if (!checkdate($month, $day, $year) or $year < 1971)
 					{
-							$timestamp = mktime("0", "0", "0", $month, $day, $year);
+						trigger_error($this->user->lang('ERR_DATE_ERR'), E_USER_WARNING);
+					}
+					$sql = 'SELECT COUNT(*) as count FROM ' . TOPICS_TABLE . ' WHERE topic_id = ' . $this->db->sql_escape((int) $link);
+					$result = $this->db->sql_query($sql);
+					$tmp = $this->db->sql_fetchrow($result);
+					$exists = $tmp['count'] > 0 ? 1 : 0;
+					$this->db->sql_freeresult($result);
+					if ($link and (!is_numeric($link) or $exists < 1)) { trigger_error($this->user->lang('ERR_TOPIC_ERR'), E_USER_WARNING); }
+					//if we are here then no errors were called out
+					$timestamp = mktime("0", "0", "0", $month, $day, $year);
 
-							$sql_rq = 'SELECT  oid, link, COUNT(*) FROM ' . $this->table_prefix . 'event_medals WHERE oid = '.$this->db->sql_escape($userid).' AND link = '.$this->db->sql_escape($link);
-							$result = $this->db->sql_fetchrow($this->db->sql_query($sql_rq));
-							//$this->var_display($result['COUNT(*)']);
-							if ($result['COUNT(*)'] < 1) {
-								$sql = 'INSERT INTO ' . $this->table_prefix . 'event_medals SET oid = '.$this->db->sql_escape($userid).', type = '.$this->db->sql_escape($type).', date = '.$this->db->sql_escape($timestamp);
-								if ($link) { $sql .= ', link = '.$this->db->sql_escape($link); }
-								if ($image) { $sql .= ', image = \''.$this->db->sql_escape($image).'\''; }
-
-								$this->db->sql_query($sql);
-							}
-						}
+					$sql_rq = 'SELECT  owner_id, link, COUNT(*) FROM ' . $this->table_prefix . 'event_medals WHERE owner_id = '.$this->db->sql_escape($userid).' AND link = '.$this->db->sql_escape($link);
+					$result = $this->db->sql_fetchrow($this->db->sql_query($sql_rq));
+					//$this->var_display($result['COUNT(*)']);
+					if ($result['COUNT(*)'] < 1) {
+						$sql_ary = array(
+							'owner_id'	=> (int) $userid,
+							'type'	=> (int) $link,
+							'date'	=> (int) $timestamp,
+							'link'	=> (int) $link,
+							'image'	=> $image,
+						);
+						$sql = 'INSERT INTO ' . $this->table_prefix  .  'event_medals' . $this->db->sql_build_array('INSERT', $sql_ary);
+						//$this->var_display($sql);
+						$this->db->sql_query($sql);
+					}
 					else
 					{
-						//$this->var_display($error_array);
-						$template->assign_vars(array(
-							'S_ERROR'	=>	'1',
-						));
-
-						foreach ($error_array as $VAR)
-						{
-							$template->assign_block_vars('errs', array(
-								'MSG'	=>	$VAR,
-							));
-						}
+						trigger_error($this->user->lang('ERR_DUPLICATE_MEDAL'), E_USER_WARNING);
 					}
 					$this->template->assign_vars(array(
 						'STEP'	=> 'second',
@@ -141,7 +132,7 @@ class ajaxify
 					$delete = $this->request->variable('delete', array(''=>''));
 					foreach ($delete as $VAR)
 					{
-						$sql = 'DELETE FROM phpbb_event_medals WHERE oid = '.$db->sql_escape($user_id).' AND link = '.$db->sql_escape($VAR).' LIMIT 1';
+						$sql = 'DELETE FROM phpbb_event_medals WHERE owner_id = '.$db->sql_escape($user_id).' AND link = '.$db->sql_escape($VAR).' LIMIT 1';
 						$db->sql_query($sql);
 					}
 					$eventsrq = $this->request->variable ('events', array('' => array(''=>'',''=>'',''=>'')));
@@ -151,7 +142,7 @@ class ajaxify
 						$events_image_new[$ID] = $VAR['image'];
 					}
 
-					$sql = 'SELECT link, type, image FROM phpbb_event_medals WHERE oid = '.$this->db->sql_escape($userid);
+					$sql = 'SELECT link, type, image FROM phpbb_event_medals WHERE owner_id = '.$this->db->sql_escape($userid);
 					$result = $this->db->sql_query($sql);
 					while ($row = $this->db->sql_fetchrow($result))
 					{
@@ -169,7 +160,7 @@ class ajaxify
 					{
 						foreach ($events_diff as $ID => $VAR)
 						{
-							$sql = 'UPDATE ' . $this->table_prefix . 'event_medals SET type = '.$this->db->sql_escape($VAR).' WHERE oid = '.$this->db->sql_escape($userid).' AND link = '.$this->db->sql_escape($ID).' LIMIT 1';
+							$sql = 'UPDATE ' . $this->table_prefix . 'event_medals SET type = '.$this->db->sql_escape($VAR).' WHERE owner_id = '.$this->db->sql_escape($userid).' AND link = '.$this->db->sql_escape($ID).' LIMIT 1';
 							$this->db->sql_query($sql);
 						}
 					}
@@ -177,7 +168,7 @@ class ajaxify
 					{
 						foreach ($events_image_diff as $ID => $VAR)
 						{
-							$sql = 'UPDATE ' . $this->table_prefix . 'event_medals SET image = \''.$this->db->sql_escape($VAR).'\' WHERE oid = '.$this->db->sql_escape($userid).' AND link = '.$this->db->sql_escape($ID).' LIMIT 1';
+							$sql = 'UPDATE ' . $this->table_prefix . 'event_medals SET image = \''.$this->db->sql_escape($VAR).'\' WHERE owner_id = '.$this->db->sql_escape($userid).' AND link = '.$this->db->sql_escape($ID).' LIMIT 1';
 							$this->db->sql_query($sql);
 						}
 					}
@@ -190,7 +181,7 @@ class ajaxify
 							$this->table_prefix . 'event_medals'	=>	'e',
 							TOPICS_TABLE	=> 't',
 						),
-						'WHERE'	=> 'e.link = t.topic_id AND oid = '. $userid
+						'WHERE'	=> 'e.link = t.topic_id AND e.owner_id = '. $userid
 					);
 					$sql = $this->db->sql_build_query('SELECT', $sql_array);
 					$result = $this->db->sql_query($sql);

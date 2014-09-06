@@ -84,10 +84,6 @@ $lang = array_merge($lang, array(
 	'ERR_NO_USER'	=> 'User does not exist',
 	'ERR_USER_NO_MEDALS'	=> 'Selected user has no medals',
 
-	'UCP_EVENT_CONTROL'	=>	'Event control',
-	'UCP_PROFILE_MEDALS_CONTROL'	=> 'Event medals in profile',
-	'UCP_PROFILE_MEDALS_EXPLAIN'	=> 'Who can see the event medals',
-
 	'NONE'	=>	'No one',
 	'NOT_ENEMY'	=>	'All except enemies',
 	'SPECIAL_FRIENDS'	=> 'Special friends',

@@ -84,10 +84,6 @@ $lang = array_merge($lang, array(
 	'ERR_NO_USER'	=> 'Потребителя не съществува',
 	'ERR_USER_NO_MEDALS'	=> 'Избрания потребител няма медали.',
 
-	'UCP_EVENT_CONTROL'	=>	'Настройка на медали',
-	'UCP_PROFILE_MEDALS_CONTROL'	=> 'Медали в профилa',
-	'UCP_PROFILE_MEDALS_EXPLAIN'	=> 'Кой може да вижда медалите в профила ви',
-
 	'NONE'	=>	'Никой',
 	'NOT_ENEMY'	=>	'Всички без врагове',
 	'SPECIAL_FRIENDS'	=> 'Специални приятели',

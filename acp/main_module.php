@@ -122,16 +122,16 @@ class main_module
 						//force none for empy image
 						$image = ($image ? $image : 'none');
 
-						if (!checkdate($month, $day, $year))
+						if (!checkdate($month, $day, $year) or $year < 1971)
 						{
-							$error_array[] = $user->lang('ERR_DATE_ERR');
+							trigger_error($user->lang('ERR_DATE_ERR'), E_USER_WARNING);
 						}
 						$sql = 'SELECT COUNT(*) as count FROM ' . TOPICS_TABLE . ' WHERE topic_id = ' . $db->sql_escape((int) $link);
 						$result = $db->sql_query($sql);
 						$tmp = $db->sql_fetchrow($result);
 						$exists = $tmp['count'] > 0 ? 1 : 0;
 						$db->sql_freeresult($result);
-						if ($link and (!is_numeric($link) or $exists < 1)) { $error_array[] = $user->lang('ERR_TOPIC_ERR'); }
+						if ($link and (!is_numeric($link) or $exists < 1)) { trigger_error($user->lang('ERR_TOPIC_ERR'), E_USER_WARNING); }
 						$error_array_sub = 0;
 						if (!$error_array) {
 							$timestamp = mktime("0", "0", "0", $month, $day, $year);
@@ -145,10 +145,10 @@ class main_module
 								if ($count['count'] < 1)
 								{
 									$sql_ary = array(
-										'owner_id'	=> $ID,
-										'type'	=> $VAR['select'],
-										'date'	=> $timestamp,
-										'link'	=> $link,
+										'owner_id'	=> (int) $ID,
+										'type'	=> (int) $VAR['select'],
+										'date'	=> (int) $timestamp,
+										'link'	=> (int) $link,
 										'image'	=> $image,
 									);
 									$sql = 'INSERT INTO ' . $table_prefix  .  'event_medals' . $db->sql_build_array('INSERT', $sql_ary);
