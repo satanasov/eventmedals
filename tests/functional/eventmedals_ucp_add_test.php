@@ -65,6 +65,9 @@ class eventmedals_ucp_add_test extends eventmedals_base
 	*/
 	public function test_change_permission($description, $permission_type, $permission, $mode, $object_name, $object_id)
 	{
+		$this->login();
+		$this->admin_login();
+		
 		// Get the form
 		$crawler = self::request('GET', "adm/index.php?i=acp_permissions&icat=16&mode=$mode&${object_name}[0]=$object_id&type=$permission_type&sid=" . $this->sid);
 		$this->assertContains($this->lang('ACL_SET'), $crawler->filter('h1')->eq(1)->text());
