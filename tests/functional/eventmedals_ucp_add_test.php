@@ -29,11 +29,16 @@ class eventmedals_ucp_add_test extends eventmedals_base
 		$this->admin_login();
 		$this->add_lang('acp/permissions');
 		
+		// User permissions
 		$crawler = self::request('GET', 'adm/index.php?i=acp_permissions&icat=16&mode=setting_user_global&sid=' . $this->sid);
+		$this->assertContains($this->lang('ACP_USERS_PERMISSIONS_EXPLAIN'), $this->get_content());
+
+		// Select admin
 		$form = $crawler->selectButton($this->lang('SUBMIT'))->form();
-		$form['username'] = array( '' => 'admin');
-		
+		$data = array('username[0]' => 'admin');
+		$form->setValues($data);
 		$crawler = self::submit($form);
+		$this->assertContains($this->lang('ACL_SET'), $crawler->filter('h1')->eq(1)->text());
 		
 		$form = $crawler->selectButton($this->lang('APPLY_PERMISSIONS'))->form();
 		$form['setting'] = array($this->get_user_id('admin') => array('u_event_add' => 1));
