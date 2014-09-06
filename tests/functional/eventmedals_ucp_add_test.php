@@ -22,82 +22,32 @@ class eventmedals_ucp_add_test extends eventmedals_base
 
 		$this->assertEquals(0, $this->medals_for_user($this->get_user_id('admin')));
 	}
-	public function permissions_data()
-	{
-		return array(
-			// description
-			// permission type
-			// permission name
-			// mode
-			// object name
-			// object id
-			array(
-				'user permission',
-				'u_',
-				'u_event_add',
-				'setting_user_global',
-				'user_id',
-				2,
-			),
-			array(
-				'user permission',
-				'u_',
-				'u_event_edit',
-				'setting_user_global',
-				'user_id',
-				2,
-			),
-			/* Admin does not work yet, probably because founder can do everything
-			array(
-				'admin permission',
-				'a_',
-				'a_forum',
-				'setting_admin_global',
-				'group_id',
-				5,
-			),
-			*/
-		);
-	}
 
-	/**
-	* @dataProvider permissions_data
-	*/
-	public function test_change_permission($description, $permission_type, $permission, $mode, $object_name, $object_id)
+	public function test_set_permissions()
 	{
 		$this->login();
 		$this->admin_login();
 		$this->add_lang('acp/permissions');
 		
-		// Get the form
-		$crawler = self::request('GET', "adm/index.php?i=acp_permissions&icat=16&mode=$mode&${object_name}[0]=$object_id&type=$permission_type&sid=" . $this->sid);
-		$this->assertContains($this->lang('ACL_SET'), $crawler->filter('h1')->eq(1)->text());
-
-		$auth = new \phpbb\auth\auth;
-		// XXX hardcoded id
-		$user_data = $auth->obtain_user_data(2);
-		$auth->acl($user_data);
-		$this->assertEquals(0, $auth->acl_get($permission));
-
-		// Set u_hideonline to never
-		$form = $crawler->selectButton($this->lang('APPLY_PERMISSIONS'))->form();
-		// initially it should be a no
-		$values = $form->getValues();
-		$this->assertEquals(0, $values["setting[$object_id][0][$permission]"]);
-		// set to never
-		$data = array("setting[$object_id][0][$permission]" => '1');
-		$form->setValues($data);
+		$crawler = self::request('GET', 'adm/index.php?i=acp_permissions&icat=16&mode=setting_user_global&sid=' . $this->sid);
+		$form = $crawler->selectButton($this->lang('SUBMIT'))->form();
+		$form['username'] = 'admin';
+		
 		$crawler = self::submit($form);
-		$this->assertContains($this->lang('AUTH_UPDATED'), $crawler->text());
-
-		// check acl again
-		$auth = new \phpbb\auth\auth;
-		// XXX hardcoded id
-		$user_data = $auth->obtain_user_data(2);
-		$auth->acl($user_data);
-		$this->assertEquals(1, $auth->acl_get($permission));
+		
+		$form = $crawler->selectButton($this->lang('APPLY_PERMISSIONS'))->form();
+		$form['setting'] = array($this->get_user_id('admin') => array('u_event_add' => 1));
+		$form['setting'] = array($this->get_user_id('admin') => array('u_event_edit' => 1));
+		$crawler = self::submit($form);
+		
+		$this->assertContainsLang('AUTH_UPDATED', $crawler->filter('html')->text());
+		
+		$this->logout();
+		
 	}
-
+	/**
+     * @depends test_set_permissions
+     */
 	public function test_ucp_add_medals()
 	{
 		//add medals
