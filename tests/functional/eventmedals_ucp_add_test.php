@@ -13,7 +13,7 @@ namespace anavaro\eventmedals\tests\functional;
 /**
 * @group functional
 */
-class eventmedals_acp_add_test extends eventmedals_base
+class eventmedals_ucp_add_test extends eventmedals_base
 {
 
 	public function test_install()
@@ -71,7 +71,7 @@ class eventmedals_acp_add_test extends eventmedals_base
 	/**
      * @depends test_ucp_add_medals_unique
      */
-	public function test_ucp_add_medals_unique()
+	public function test_ucp_add_medals_valid_topic()
 	{
 		//add medals
 		$this->login();
