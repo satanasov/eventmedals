@@ -88,10 +88,10 @@ class ajaxify
 					//if we are here then no errors were called out
 					$timestamp = mktime("0", "0", "0", $month, $day, $year);
 
-					$sql_rq = 'SELECT  owner_id, link, COUNT(*) FROM ' . $this->table_prefix . 'event_medals WHERE owner_id = '.$this->db->sql_escape($userid).' AND link = '.$this->db->sql_escape($link);
+					$sql_rq = 'SELECT COUNT(*) as count FROM ' . $this->table_prefix . 'event_medals WHERE owner_id = '.$this->db->sql_escape($userid).' AND link = '.$this->db->sql_escape($link);
 					$result = $this->db->sql_fetchrow($this->db->sql_query($sql_rq));
 					//$this->var_display($result['COUNT(*)']);
-					if ($result['COUNT(*)'] < 1) {
+					if ($result['count'] < 1) {
 						$sql_ary = array(
 							'owner_id'	=> (int) $userid,
 							'type'	=> (int) $link,
