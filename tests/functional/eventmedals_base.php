@@ -129,4 +129,21 @@ class eventmedals_base extends \phpbb_functional_test_case
 		);
 		$sql = 'INSERT INTO phpbb_zebra' . $this->db->sql_build_array('INSERT', $sql_ary);
 	}
+	
+	public function set_permissions($user_id)
+	{
+		$sql = 'SELECT auth_option_id FROM ' . ACL_OPTIONS_TABLE . ' WHERE auth_option = \'u_event_add\'';
+		$result = $this->db->sql_query($sql);
+		$row = $this->db->sql_fetchrow($result);
+		
+		$sql_ary = array(
+			'user_id' => (int) $user_id,
+			'forum_id' => 0,
+			'auth_option_id'	=> $row['auth_option_id'],
+			'auth_role_id'	=> 0,
+			'auth_setting' => 1,
+		);
+		$sql = 'INSERT INTO ' . ACL_USERS_TABLE . $this->db->sql_build_array('INSERT', $sql_ary);
+		
+	}
 }
