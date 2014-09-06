@@ -45,7 +45,7 @@ class eventmedals_ucp_add_test extends eventmedals_base
 			'setting'	=> array(
 				$this->get_user_id('admin')	=> array(
 					''	=> array(
-						'u_event_add' => '0'
+						'u_event_add' => '0',
 						'u_event_edit' => '0'
 				),
 			),
