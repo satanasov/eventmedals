@@ -80,6 +80,8 @@ class eventmedals_ucp_add_test extends eventmedals_base
 		
 		$this->assertContainsLang('SUCCESS_ADD_INFO', $crawler->text());
 		
+		$this->assertEquals(1, $this->medals_for_user($this->get_user_id('testuser1')));
+		
 		$this->logout();
 
 	}
