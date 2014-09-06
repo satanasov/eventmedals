@@ -119,6 +119,7 @@ class eventmedals_base extends \phpbb_functional_test_case
 			'friend' => 1
 		);
 		$sql = 'INSERT INTO phpbb_zebra' . $this->db->sql_build_array('INSERT', $sql_ary);
+		$this->db->sql_query($sql);
 	}
 	public function add_foe($uid1, $uid2)
 	{
@@ -128,6 +129,7 @@ class eventmedals_base extends \phpbb_functional_test_case
 			'foe' => 1
 		);
 		$sql = 'INSERT INTO phpbb_zebra' . $this->db->sql_build_array('INSERT', $sql_ary);
+		$this->db->sql_query($sql);
 	}
 	
 	public function set_permissions($user_id)
@@ -144,6 +146,8 @@ class eventmedals_base extends \phpbb_functional_test_case
 			'auth_setting' => 1,
 		);
 		$sql = 'INSERT INTO ' . ACL_USERS_TABLE . $this->db->sql_build_array('INSERT', $sql_ary);
+		$this->db->sql_query($sql);
+		
 		
 	}
 }

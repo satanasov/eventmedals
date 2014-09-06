@@ -118,7 +118,7 @@ class eventmedals_view_tests extends eventmedals_base
 	/**
      * @depends test_change_acl_to_all_except_enemies
      */
-	public function test_view_acl_none()
+	public function test_view_acl_to_all_except_enemies()
 	{
 		$this->login('testuser2');
 		$this->add_lang_ext('anavaro/eventmedals', 'event_medals');
