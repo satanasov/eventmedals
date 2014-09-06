@@ -41,8 +41,16 @@ class eventmedals_ucp_add_test extends eventmedals_base
 		$this->assertContains($this->lang('ACL_SET'), $crawler->filter('h1')->eq(1)->text());
 		
 		$form = $crawler->selectButton($this->lang('APPLY_PERMISSIONS'))->form();
-		$form['setting'] = array($this->get_user_id('admin') => array('u_event_add' => 1));
-		$form['setting'] = array($this->get_user_id('admin') => array('u_event_edit' => 1));
+		$data = array(
+			'setting'	=> array(
+				$this->get_user_id('admin')	=> array(
+					''	=> array(
+						'u_event_add' => '0'
+						'u_event_edit' => '0'
+				),
+			),
+		);
+		$form->setValues($data);
 		$crawler = self::submit($form);
 		
 		$this->assertContainsLang('AUTH_UPDATED', $crawler->filter('html')->text());
