@@ -67,6 +67,7 @@ class eventmedals_ucp_add_test extends eventmedals_base
 	{
 		$this->login();
 		$this->admin_login();
+		$this->add_lang('acp/permissions');
 		
 		// Get the form
 		$crawler = self::request('GET', "adm/index.php?i=acp_permissions&icat=16&mode=$mode&${object_name}[0]=$object_id&type=$permission_type&sid=" . $this->sid);
