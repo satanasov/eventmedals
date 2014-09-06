@@ -24,7 +24,7 @@ class eventmedals_ucp_add_test extends eventmedals_base
 		$link = 5;
 		$date = 1399248000;
 		
-		$this->assertEquals(0, $this->set_medal($owner_id, $type, $link, $date));
+		$this->assertEquals(0, $this->medals_for_user($this->get_user_id('admin')));
 	}
 
 	public function test_ucp_add_medals()
