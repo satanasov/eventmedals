@@ -31,7 +31,7 @@ class eventmedals_ucp_add_test extends eventmedals_base
 		
 		$this->add_lang_ext('anavaro/eventmedals', 'event_medals');
 		
-		$crawler = self::request('GET', 'app.php/eventmedals/add/' . $this->get_user_id('testuser') . '&sid=' . $this->sid);
+		$crawler = self::request('GET', 'app.php/eventmedals/add/' . $this->get_user_id('testuser1') . '&sid=' . $this->sid);
 		
 		$form = $crawler->selectButton($this->lang('SUBMIT'))->form();
 		$form['day'] = 2;
@@ -56,7 +56,7 @@ class eventmedals_ucp_add_test extends eventmedals_base
 		
 		$this->add_lang_ext('anavaro/eventmedals', 'event_medals');
 		
-		$crawler = self::request('GET', 'app.php/eventmedals/add/' . $this->get_user_id('testuser') . '&sid=' . $this->sid);
+		$crawler = self::request('GET', 'app.php/eventmedals/add/' . $this->get_user_id('testuser1') . '&sid=' . $this->sid);
 		
 		$form = $crawler->selectButton($this->lang('SUBMIT'))->form();
 		$form['day'] = 2;
@@ -78,7 +78,7 @@ class eventmedals_ucp_add_test extends eventmedals_base
 		
 		$this->add_lang_ext('anavaro/eventmedals', 'event_medals');
 		
-		$crawler = self::request('GET', 'app.php/eventmedals/add/' . $this->get_user_id('testuser') . '&sid=' . $this->sid);
+		$crawler = self::request('GET', 'app.php/eventmedals/add/' . $this->get_user_id('testuser1') . '&sid=' . $this->sid);
 		
 		$form = $crawler->selectButton($this->lang('SUBMIT'))->form();
 		$form['day'] = 2;
@@ -89,6 +89,53 @@ class eventmedals_ucp_add_test extends eventmedals_base
 		$crawler = self::submit($form);
 		
 		$this->assertContainsLang('ERR_TOPIC_ERR', $crawler->text());
+		$this->logout();
+	}
+	
+	/**
+     * @depends test_ucp_add_medals_valid_topic
+     */
+	public function test_ucp_add_medals_valid_user()
+	{
+		//add medals
+		$this->login();
+		
+		$this->add_lang_ext('anavaro/eventmedals', 'event_medals');
+		
+		$crawler = self::request('GET', 'app.php/eventmedals/add/' . $this->get_user_id('testuser5') . '&sid=' . $this->sid);
+		
+		$form = $crawler->selectButton($this->lang('SUBMIT'))->form();
+		$form['day'] = 2;
+		$form['month'] = 5;
+		$form['year'] = 2014;
+		$form['link'] = $this->get_topic_id('Test Topic 1');
+		
+		$crawler = self::submit($form);
+		
+		$this->assertContainsLang('ERR_NO_USER', $crawler->text());
+		$this->logout();
+	}
+	/**
+     * @depends test_ucp_add_medals_valid_user
+     */
+	public function test_ucp_add_medals_valid_date()
+	{
+		//add medals
+		$this->login();
+		
+		$this->add_lang_ext('anavaro/eventmedals', 'event_medals');
+		
+		$crawler = self::request('GET', 'app.php/eventmedals/add/' . $this->get_user_id('testuser1') . '&sid=' . $this->sid);
+		
+		$form = $crawler->selectButton($this->lang('SUBMIT'))->form();
+		$form['day'] = 2;
+		$form['month'] = 5;
+		$form['year'] = 1969;
+		$form['link'] = $this->get_topic_id('Test Topic 1');
+		
+		$crawler = self::submit($form);
+		
+		$this->assertContainsLang('ERR_DATE_ERR', $crawler->text());
 		$this->logout();
 	}
 }

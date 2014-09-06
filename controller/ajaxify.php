@@ -59,6 +59,7 @@ class ajaxify
 		{
 			case 'add':
 			//Before we start we will check if user hase access to the panel
+			if (!$username) { trigger_error($this->user->lang('ERR_NO_USER'), E_USER_WARNING); }
 			if ($this->auth->acl_get('u_event_add'))
 			{
 				if ($confirm)
@@ -71,6 +72,8 @@ class ajaxify
 					$type = $this->request->variable('type', 2);
 
 					$error_array = array();
+
+					$image = ($image ? $image : 'none');
 
 					if (!checkdate($month, $day, $year) or $year < 1971)
 					{
@@ -98,7 +101,7 @@ class ajaxify
 						);
 						$sql = 'INSERT INTO ' . $this->table_prefix  .  'event_medals' . $this->db->sql_build_array('INSERT', $sql_ary);
 						//$this->var_display($sql);
-						$this->db->sql_query($sql);
+						//$this->db->sql_query($sql);
 					}
 					else
 					{
