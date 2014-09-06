@@ -31,7 +31,7 @@ class eventmedals_ucp_add_test extends eventmedals_base
 		
 		$crawler = self::request('GET', 'adm/index.php?i=acp_permissions&icat=16&mode=setting_user_global&sid=' . $this->sid);
 		$form = $crawler->selectButton($this->lang('SUBMIT'))->form();
-		$form['username'] = 'admin';
+		$form['username'] = array( '' => 'admin');
 		
 		$crawler = self::submit($form);
 		
