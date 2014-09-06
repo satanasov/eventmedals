@@ -162,7 +162,7 @@ class eventmedals_base extends \phpbb_functional_test_case
 		$sql = 'INSERT INTO ' . ACL_USERS_TABLE . $this->db->sql_build_array('INSERT', $sql_ary);
 		$this->db->sql_query($sql);
 		
-		$sql = 'SELECT user_id FROM ' . ACL_USERS_TABLE . ' WHERE auth_option_id = ' . $row2['auth_option_id']
+		$sql = 'SELECT user_id FROM ' . ACL_USERS_TABLE . ' WHERE auth_option_id = ' . $row2['auth_option_id'];
 		$row = $this->db->sql_fetchrow($result);
 		
 		return $row['user_id'];
