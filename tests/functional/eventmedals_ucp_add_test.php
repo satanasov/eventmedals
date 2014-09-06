@@ -21,9 +21,6 @@ class eventmedals_ucp_add_test extends eventmedals_base
 		$this->clean_medals_db();
 	}
 
-	/**
-     * @depends test_install
-     */
 	public function test_ucp_add_medals()
 	{
 		//add medals
