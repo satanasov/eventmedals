@@ -53,7 +53,6 @@ class ucp_medals_module
 						$sql = 'SELECT profile_event_show FROM '. $table_prefix .'users_custom WHERE user_id = '.$user->data['user_id'];
 						$result = $db->sql_query($sql);
 						$allowLevel = $db->sql_fetchrow($result);
-
 						if (isset($config['zebra_enhance_version']))
 						{
 							$template->assign_vars(array(
@@ -61,7 +60,7 @@ class ucp_medals_module
 							));
 						}
 						$template->assign_vars(array(
-							'S_EVENT_PROFILE_SELECTION' => $allowLevel['profile_event_show'],
+							'ZEBRA_ACL' => $allowLevel['profile_event_show'],
 							'S_UCP_ACTION'	=>	append_sid("ucp.php?i=".$id."&mode=".$mode."&stage=update")
 						));
 					break;

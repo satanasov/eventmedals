@@ -74,7 +74,6 @@ class eventmedals_view_tests extends eventmedals_base
 		$crawler = self::request('GET', 'ucp.php?i=-anavaro-eventmedals-ucp-ucp_medals_module&mode=control' . $this->sid);
 		
 		$form = $crawler->selectButton($this->lang('SUBMIT'))->form();
-		$form = $crawler->selectButton($this->lang('SUBMIT'))->form();
 		$form['ucp_profile_view'] = 0;
 		
 		$crawler = self::submit($form);
@@ -94,5 +93,48 @@ class eventmedals_view_tests extends eventmedals_base
 		
 		$this->assertContainsLang('UCP_PROFILE_ACC_ERROR', $crawler->filter('html')->text());
 		$this->logout();
+	}
+	
+	/**
+     * @depends test_view_acl_none
+     */
+	public function test_change_acl_to_all_except_enemies()
+	{
+		$this->login();
+		$this->add_lang_ext('anavaro/eventmedals', 'event_medals');
+		
+		$crawler = self::request('GET', 'ucp.php?i=-anavaro-eventmedals-ucp-ucp_medals_module&mode=control' . $this->sid);
+		
+		$form = $crawler->selectButton($this->lang('SUBMIT'))->form();
+		$form['ucp_profile_view'] = 1;
+		
+		$crawler = self::submit($form);
+		
+		//add testuser2 as enemy
+		$this->add_foe($this->user->data['user_id'], $this->get_user_id('testuser2');
+		
+		$this->logout();
+	}
+	/**
+     * @depends test_change_acl_to_all_except_enemies
+     */
+	public function test_view_acl_none()
+	{
+		$this->login('testuser2');
+		$this->add_lang_ext('anavaro/eventmedals', 'event_medals');
+		
+		$crawler = self::request('GET', 'memberlist.php?mode=viewprofile&u=' . $this->get_user_id('admin') . '&sid=' . $this->sid);
+		
+		$this->assertContainsLang('UCP_PROFILE_ACC_ERROR', $crawler->filter('html')->text());
+		$this->logout();
+		
+		$this->login('testuser1');
+		$this->add_lang_ext('anavaro/eventmedals', 'event_medals');
+		
+		$crawler = self::request('GET', 'memberlist.php?mode=viewprofile&u=' . $this->get_user_id('admin') . '&sid=' . $this->sid);
+		
+		$this->assertContains('MEDAL_TYPE_ONE', $crawler->filter('#medals_show')->text());
+		$this->logout();
+		
 	}
 }

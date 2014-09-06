@@ -9,12 +9,12 @@
 				<dt><label >{L_UCP_PROFILE_MEDALS_CONTROL}{L_COLON}</label><br /><span>{L_UCP_PROFILE_MEDALS_EXPLAIN}</span></dt>
 				<dd>
 					<select id="ucp_profile_view" name="ucp_profile_view">
-						<option value="0" <!-- IF ZEBRA_ACL == 0 -->SELECTED<!-- ENDIF -->>{L_NONE}</option>
-						<option value="1" <!-- IF ZEBRA_ACL == 1 -->SELECTED<!-- ENDIF -->>{L_NOT_ENEMY}</option>
-						<option value="2" <!-- IF ZEBRA_ACL == 2 -->SELECTED<!-- ENDIF -->>{L_ALL}</option>
-						<option value="3" <!-- IF ZEBRA_ACL == 3 -->SELECTED<!-- ENDIF -->>{L_FRIENDS}</option>
+						<option value="0"<!-- IF ZEBRA_ACL == 0 --> SELECTED<!-- ENDIF -->>{L_NONE}</option>
+						<option value="1"<!-- IF ZEBRA_ACL == 1 --> SELECTED<!-- ENDIF -->>{L_NOT_ENEMY}</option>
+						<option value="2"<!-- IF ZEBRA_ACL == 2 --> SELECTED<!-- ENDIF -->>{L_ALL}</option>
+						<option value="3"<!-- IF ZEBRA_ACL == 3 --> SELECTED<!-- ENDIF -->>{L_FRIENDS}</option>
 						<!-- IF S_EVENT_ZE == 1 -->
-						<option value="4" <!-- IF S_EVENT_PROFILE_SELECTION == 4 -->SELECTED<!-- ENDIF -->>{L_SPECIAL_FRIENDS}</option>
+						<option value="4"<!-- IF ZEBRA_ACL == 4 --> SELECTED<!-- ENDIF -->>{L_SPECIAL_FRIENDS}</option>
 						<!-- ENDIF -->
 					</select>
 				</dd>
