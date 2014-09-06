@@ -33,6 +33,7 @@ class eventmedals_ucp_add_test extends eventmedals_base
 		$this->set_permissions($this->user->data['user_id']);
 		
 		$crawler = self::request('GET', 'app.php/eventmedals/add/2');
+		$this->assertContains('SUCCESS_ADD_INFO', $crawler->text());
 		
 		$form = $crawler->selectButton($this->lang('SUBMIT'))->form();
 		$form['day'] = 2;
