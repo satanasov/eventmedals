@@ -30,7 +30,7 @@ class eventmedals_ucp_add_test extends eventmedals_base
 		
 		$this->add_lang_ext('anavaro/eventmedals', 'event_medals');
 		
-		$this->set_permission($this->user->data['user_id']);
+		$this->set_permissions($this->user->data['user_id']);
 		
 		$crawler = self::request('GET', 'app.php/eventmedals/add/2');
 		
