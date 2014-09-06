@@ -73,10 +73,6 @@ class eventmedals_ucp_add_test extends eventmedals_base
 		$crawler = self::request('GET', "adm/index.php?i=acp_permissions&icat=16&mode=$mode&${object_name}[0]=$object_id&type=$permission_type&sid=" . $this->sid);
 		$this->assertContains($this->lang('ACL_SET'), $crawler->filter('h1')->eq(1)->text());
 
-		// XXX globals for \phpbb\auth\auth, refactor it later
-		global $db, $cache;
-		$db = $this->get_db();
-
 		$auth = new \phpbb\auth\auth;
 		// XXX hardcoded id
 		$user_data = $auth->obtain_user_data(2);
