@@ -19,6 +19,12 @@ class eventmedals_ucp_add_test extends eventmedals_base
 	public function test_install()
 	{
 		$this->clean_medals_db();
+		$owner_id = $this->get_user_id('admin');
+		$type = 2;
+		$link = 5;
+		$date = 1399248000;
+		
+		$this->assertEquals(0, $this->set_medal($owner_id, $type, $link, $date));
 	}
 
 	public function test_ucp_add_medals()
@@ -28,7 +34,7 @@ class eventmedals_ucp_add_test extends eventmedals_base
 		
 		$this->add_lang_ext('anavaro/eventmedals', 'event_medals');
 		
-		$crawler = self::request('GET', 'app.php/eventmedals/add/' . $this->get_user_id('testuser1') . '&sid=' . $this->sid);
+		$crawler = self::request('GET', 'eventmedals/add/' . $this->get_user_id('testuser1'));
 		
 		$form = $crawler->selectButton($this->lang('SUBMIT'))->form();
 		$form['day'] = 2;
