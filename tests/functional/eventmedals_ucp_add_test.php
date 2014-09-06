@@ -25,6 +25,7 @@ class eventmedals_ucp_add_test extends eventmedals_base
 
 	public function test_ucp_add_medals()
 	{
+		$this->set_permissions($this->get_user_id('admin'));
 		//add medals
 		$this->login();
 		
