@@ -15,7 +15,8 @@ namespace anavaro\eventmedals\tests\functional;
 */
 class eventmedals_view_tests extends eventmedals_base
 {
-	function public test_prepare()
+
+	public function test_prepare()
 	{
 		$this->clean_medals_db();
 		
@@ -48,8 +49,10 @@ class eventmedals_view_tests extends eventmedals_base
 		$this->assertEquals(1, $this->set_medal($owner_id, $type, $link, $date));
 		
 	}
-	
-	function public test_user_viewtopic_medals()
+	/**
+     * @depends test_prepare
+     */
+	public function test_user_viewtopic_medals()
 	{
 		$this->login('testuser1');
 		
@@ -59,5 +62,37 @@ class eventmedals_view_tests extends eventmedals_base
 		
 		$this->logout();
 	}
-
+	
+	/**
+     * @depends test_user_viewtopic_medals
+     */
+	public function test_change_acl_to_none()
+	{
+		$this->login();
+		$this->add_lang_ext('anavaro/eventmedals', 'event_medals');
+		
+		$crawler = self::request('GET', 'ucp.php?i=-anavaro-eventmedals-ucp-ucp_medals_module&mode=control' . $this->sid);
+		
+		$form = $crawler->selectButton($this->lang('SUBMIT'))->form();
+		$form = $crawler->selectButton($this->lang('SUBMIT'))->form();
+		$form['ucp_profile_view'] = 0;
+		
+		$crawler = self::submit($form);
+		
+		$this->logout();
+	}
+	
+	/**
+     * @depends test_change_acl_to_none
+     */
+	public function test_view_acl_none()
+	{
+		$this->login('testuser1');
+		$this->add_lang_ext('anavaro/eventmedals', 'event_medals');
+		
+		$crawler = self::request('GET', 'memberlist.php?mode=viewprofile&u=' . $this->get_user_id('admin') . '&sid=' . $this->sid);
+		
+		$this->assertContainsLang('UCP_PROFILE_ACC_ERROR', $crawler->filter('html')->text());
+		$this->logout();
+	}
 }

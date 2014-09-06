@@ -28,7 +28,9 @@ class eventmedals_acp_edit_test extends eventmedals_base
 		$this->assertContainsLang('ERR_NO_MEDALS', $crawler->filter('html')->text());
 		$this->logout();
 	}
-		
+	/**
+     * @depends test_acp_edit_no_medals
+     */
 	public function test_acp_edit_build_medals()
 	{
 		
@@ -61,7 +63,9 @@ class eventmedals_acp_edit_test extends eventmedals_base
 		$this->assertEquals(1, $this->set_medal($owner_id, $type, $link, $date));
 		
 	}
-	
+	/**
+     * @depends test_acp_edit_build_medals
+     */
 	public function test_acp_edit_user_no_user()
 	{
 		$this->login();
@@ -81,7 +85,9 @@ class eventmedals_acp_edit_test extends eventmedals_base
 		$this->logout();
 		
 	}
-	
+	/**
+     * @depends test_acp_edit_user_no_user
+     */
 	public function test_acp_edit_user_no_medals()
 	{
 		$this->create_user('testuser4');
@@ -103,7 +109,9 @@ class eventmedals_acp_edit_test extends eventmedals_base
 		$this->assertContainsLang('ERR_USER_NO_MEDALS', $crawler->filter('html')->text());
 		$this->logout();
 	}
-	
+	/**
+     * @depends test_acp_edit_user_no_medals
+     */
 	public function test_acp_edit_user_remove_medal()
 	{
 		$this->login();
@@ -135,7 +143,9 @@ class eventmedals_acp_edit_test extends eventmedals_base
 		
 		$this->logout();
 	}
-	
+	/**
+     * @depends test_acp_edit_user_remove_medal
+     */
 	public function test_acp_edit_user_edit_medal_type()
 	{
 		$this->login();
@@ -163,7 +173,9 @@ class eventmedals_acp_edit_test extends eventmedals_base
 		
 		$this->logout();
 	}
-	
+	/**
+     * @depends test_acp_edit_user_edit_medal_type
+     */
 	public function test_acp_edit_clean_for_event_medals()
 	{
 		$this->clean_medals_db();
@@ -206,7 +218,9 @@ class eventmedals_acp_edit_test extends eventmedals_base
 		$this->assertEquals(1, $this->set_medal($owner_id, $type, $link, $date));
 		
 	}
-	
+	/**
+     * @depends test_acp_edit_clean_for_event_medals
+     */
 	public function test_acp_edit_event_remove_medal()
 	{
 		$this->login();
@@ -241,6 +255,9 @@ class eventmedals_acp_edit_test extends eventmedals_base
 		
 		$this->logout();
 	}
+	/**
+     * @depends test_acp_edit_event_remove_medal
+     */
 	public function test_acp_edit_event_edit_medal_type()
 	{
 		$this->login();
@@ -268,6 +285,9 @@ class eventmedals_acp_edit_test extends eventmedals_base
 		
 		$this->logout();
 	}
+	/**
+     * @depends test_acp_edit_event_edit_medal_type
+     */
 	public function test_acp_edit_event_edit_medal_image()
 	{
 		$this->assertContains('none', $this->medal_image($this->get_user_id('testuser1'), $this->get_topic_id('Test Topic 1')));
@@ -313,6 +333,9 @@ class eventmedals_acp_edit_test extends eventmedals_base
 		
 		$this->logout();
 	}
+	/**
+     * @depends test_acp_edit_event_edit_medal_image
+     */
 	public function test_acp_edit_event_edit_medal_date()
 	{
 		$this->login();
@@ -371,6 +394,9 @@ class eventmedals_acp_edit_test extends eventmedals_base
 		
 		$this->logout();
 	}
+	/**
+     * @depends test_acp_edit_event_edit_medal_date
+     */
 	public function test_acp_edit_event_edit_medal_post()
 	{
 		$this->login();

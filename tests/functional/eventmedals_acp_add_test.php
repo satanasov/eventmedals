@@ -41,6 +41,9 @@ class eventmedals_acp_add_test extends eventmedals_base
 		
 		$this->logout();
 	}
+	/**
+     * @depends test_install
+     */
 	public function test_direct_db()
 	{
 		$owner_id = $this->get_user_id('admin');
@@ -50,7 +53,9 @@ class eventmedals_acp_add_test extends eventmedals_base
 		
 		$this->assertEquals(1, $this->set_medal($owner_id, $type, $link, $date));
 	}
-	
+	/**
+     * @depends test_install
+     */
 	public function test_acp_add_medals()
 	{
 		//add medals
@@ -97,7 +102,9 @@ class eventmedals_acp_add_test extends eventmedals_base
 		$this->logout();
 
 	}
-
+	/**
+     * @depends test_acp_add_medals
+     */
 	public function test_acp_add_medals_unique()
 	{
 		//add medals
@@ -142,7 +149,9 @@ class eventmedals_acp_add_test extends eventmedals_base
 		$this->assertContainsLang('ERR_DUPLICATE_MEDAL', $crawler->text());
 		$this->logout();
 	}
-	
+	/**
+     * @depends test_acp_add_medals_unique
+     */
 	public function test_acp_add_medals_valid_post()
 	{
 		//add medals
