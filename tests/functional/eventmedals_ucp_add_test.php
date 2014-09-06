@@ -101,7 +101,6 @@ class eventmedals_ucp_add_test extends eventmedals_base
 
 	public function test_ucp_add_medals()
 	{
-		$this->assertEquals($this->get_user_id('admin'), $this->set_permissions_add($this->get_user_id('admin')));
 		//add medals
 		$this->login();
 		
