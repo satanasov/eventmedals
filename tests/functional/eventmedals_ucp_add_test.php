@@ -143,14 +143,6 @@ class eventmedals_ucp_add_test extends eventmedals_base
 		
 		$crawler = self::request('GET', 'app.php/eventmedals/add/9999');
 		
-		$form = $crawler->selectButton($this->lang('SUBMIT'))->form();
-		$form['day'] = 2;
-		$form['month'] = 5;
-		$form['year'] = 2014;
-		$form['link'] = $this->get_topic_id('Test Topic 1');
-		
-		$crawler = self::submit($form);
-		
 		$this->assertContainsLang('ERR_NO_USER', $crawler->text());
 		$this->logout();
 	}
