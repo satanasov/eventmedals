@@ -101,7 +101,7 @@ class ajaxify
 						);
 						$sql = 'INSERT INTO ' . $this->table_prefix  .  'event_medals' . $this->db->sql_build_array('INSERT', $sql_ary);
 						//$this->var_display($sql);
-						//$this->db->sql_query($sql);
+						$this->db->sql_query($sql);
 					}
 					else
 					{
