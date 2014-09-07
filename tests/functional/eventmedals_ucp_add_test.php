@@ -156,7 +156,7 @@ class eventmedals_ucp_add_test extends eventmedals_base
 		
 		$this->add_lang_ext('anavaro/eventmedals', 'event_medals');
 		
-		$crawler = self::request('GET', 'app.php/eventmedals/add/' . $this->get_user_id('testuser1') . '&sid=' . $this->sid);
+		$crawler = self::request('GET', 'app.php/eventmedals/add/' . $this->get_user_id('testuser1'));
 		
 		$form = $crawler->selectButton($this->lang('SUBMIT'))->form();
 		$form['day'] = 2;
