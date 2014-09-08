@@ -15,22 +15,6 @@ services:
             - %core.table_prefix%
         tags:
             - { name: event.listener }
-    anavaro.eventmedals.acplistener:
-        class: anavaro\eventmedals\event\acp_listener
-        arguments:
-            - @auth
-            - @cache
-            - @config
-            - @dbal.conn
-            - @request
-            - @template
-            - @user
-            - @controller.helper
-            - %core.root_path%
-            - %core.php_ext%
-            - %core.table_prefix%
-        tags:
-            - { name: event.listener }
     anavaro.eventmedals.ajaxyfy:
         class: anavaro\eventmedals\controller\ajaxify
         arguments:
