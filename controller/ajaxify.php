@@ -55,11 +55,11 @@ class ajaxify
 		$result = $this->db->sql_query($sql);
 		$username = $this->db->sql_fetchrow($result);
 		$username = $username['username'];
+		if (!$username) { trigger_error($this->user->lang('ERR_NO_USER'), E_USER_WARNING); }
 		switch ($action)
 		{
 			case 'add':
 			//Before we start we will check if user hase access to the panel
-			if (!$username) { trigger_error($this->user->lang('ERR_NO_USER'), E_USER_WARNING); }
 			if ($this->auth->acl_get('u_event_add'))
 			{
 				if ($confirm)
@@ -79,6 +79,7 @@ class ajaxify
 					{
 						trigger_error($this->user->lang('ERR_DATE_ERR'), E_USER_WARNING);
 					}
+					if ($type > 4) { $type = 4; }
 					$sql = 'SELECT COUNT(*) as count FROM ' . TOPICS_TABLE . ' WHERE topic_id = ' . $this->db->sql_escape((int) $link);
 					$result = $this->db->sql_query($sql);
 					$tmp = $this->db->sql_fetchrow($result);
@@ -94,13 +95,13 @@ class ajaxify
 					if ($result['count'] < 1) {
 						$sql_ary = array(
 							'owner_id'	=> (int) $userid,
-							'type'	=> (int) $link,
+							'type'	=> (int) $type,
 							'date'	=> (int) $timestamp,
 							'link'	=> (int) $link,
 							'image'	=> $image,
 						);
 						$sql = 'INSERT INTO ' . $this->table_prefix  .  'event_medals' . $this->db->sql_build_array('INSERT', $sql_ary);
-						//$this->var_display($sql);
+						//var_dump($sql);
 						$this->db->sql_query($sql);
 					}
 					else
@@ -131,48 +132,39 @@ class ajaxify
 			{
 				if ($confirm)
 				{
-					$user_id = $this->request->variable('target_user', '');
-					$delete = $this->request->variable('delete', array(''=>''));
-					foreach ($delete as $VAR)
-					{
-						$sql = 'DELETE FROM phpbb_event_medals WHERE owner_id = '.$db->sql_escape($user_id).' AND link = '.$db->sql_escape($VAR).' LIMIT 1';
-						$db->sql_query($sql);
-					}
-					$eventsrq = $this->request->variable ('events', array('' => array(''=>'',''=>'',''=>'')));
+					$eventsrq = $this->request->variable ('events', array('' => array(''=> (int) '',''=> (int) '')));
 					foreach ($eventsrq as $ID => $VAR)
 					{
-						$events_new[$ID] = $VAR['select'];
-						$events_image_new[$ID] = $VAR['image'];
+						if (isset($VAR['delete']))
+						{
+							if($VAR['delete'] == 1)
+							{
+								$sql = 'DELETE FROM ' . $this->table_prefix . 'event_medals WHERE owner_id = '.$this->db->sql_escape($userid).' AND link = '.$this->db->sql_escape($ID);
+								$this->db->sql_query($sql);
+							}
+						}
+						else
+						{
+							$events_new[$ID] = $VAR['select'];
+						}
 					}
-
+					//var_dump($eventsrq);
 					$sql = 'SELECT link, type, image FROM phpbb_event_medals WHERE owner_id = '.$this->db->sql_escape($userid);
 					$result = $this->db->sql_query($sql);
 					while ($row = $this->db->sql_fetchrow($result))
 					{
 						$events_old[$row['link']] = $row['type'];
-						$events_image_old[$row['link']] = $row['image'];
 					}
-					$events_diff = array_diff_assoc($events_new, $events_old);
-					$events_image_diff = array_diff_assoc($events_image_new, $events_image_old);
-					foreach ($delete as $VAR)
+					if (!empty($events_old))
 					{
-						unset($events_diff[$VAR]);
-						unset($events_image_diff[$VAR]);
-					}
-					if ($events_diff)
-					{
-						foreach ($events_diff as $ID => $VAR)
+						$events_diff = array_diff_assoc($events_new, $events_old);
+						if ($events_diff)
 						{
-							$sql = 'UPDATE ' . $this->table_prefix . 'event_medals SET type = '.$this->db->sql_escape($VAR).' WHERE owner_id = '.$this->db->sql_escape($userid).' AND link = '.$this->db->sql_escape($ID).' LIMIT 1';
-							$this->db->sql_query($sql);
-						}
-					}
-					if ($events_image_diff)
-					{
-						foreach ($events_image_diff as $ID => $VAR)
-						{
-							$sql = 'UPDATE ' . $this->table_prefix . 'event_medals SET image = \''.$this->db->sql_escape($VAR).'\' WHERE owner_id = '.$this->db->sql_escape($userid).' AND link = '.$this->db->sql_escape($ID).' LIMIT 1';
-							$this->db->sql_query($sql);
+							foreach ($events_diff as $ID => $VAR)
+							{
+								$sql = 'UPDATE ' . $this->table_prefix . 'event_medals SET type = '.$this->db->sql_escape($VAR).' WHERE owner_id = '.$this->db->sql_escape($userid).' AND link = '.$this->db->sql_escape($ID).' LIMIT 1';
+								$this->db->sql_query($sql);
+							}
 						}
 					}
 				}
@@ -196,18 +188,21 @@ class ajaxify
 							'image'	=>	$row['image']
 						);
 					}
-					foreach ($events as $ID => $VAR)
+					if (!empty($events))
 					{
-						$this->template->assign_block_vars('user_edit', array(
-							'EVENT_ID'	=>	$ID,
-							'TYPE'	=>	$VAR['type'],
-							'TITLE'	=>	$VAR['title'],
-							'IMAGE'	=>	$VAR['image']
+					foreach ($events as $ID => $VAR)
+						{
+							$this->template->assign_block_vars('user_edit', array(
+								'EVENT_ID'	=>	$ID,
+								'TYPE'	=>	$VAR['type'],
+								'TITLE'	=>	$VAR['title'],
+							));
+						}
+						$this->template->assign_vars(array(
+							'STEP'	=> 'first',
 						));
 					}
-					$this->template->assign_vars(array(
-						'STEP'	=> 'first',
-					));
+					else { trigger_error($this->user->lang('ERR_NO_MEDALS'), E_USER_WARNING); }
 				}
 				$this->template->assign_vars(array(
 					'TYPE'	=> 'edit',

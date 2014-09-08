@@ -122,10 +122,8 @@
 						<option value="3" <!-- IF user_edit.TYPE == 3 -->SELECTED<!-- ENDIF -->>{L_MEDAL_TYPE_THREE}</option>
 						<option value="4" <!-- IF user_edit.TYPE == 4 -->SELECTED<!-- ENDIF -->>{L_MEDAL_TYPE_FOUR}</option>
 					</select>
-					<label><input type="checkbox" name="delete[]" value="{user_edit.EVENT_ID}"> {L_MEDAL_DELETE}</label>
+					<label><input type="checkbox" name="events[{user_edit.EVENT_ID}][delete]" value="1"> {L_MEDAL_DELETE}</label>
 				</dd>
-				<dt></dt>
-				<dd><input size="36" id="events[{user_edit.EVENT_ID}][image]" name="events[{user_edit.EVENT_ID}][image]" value="{user_edit.IMAGE}"></dd>
 			</dl>
 			<!-- END user_edit -->
 		</fieldset>
