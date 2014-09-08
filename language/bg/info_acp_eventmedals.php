@@ -91,4 +91,7 @@ $lang = array_merge($lang, array(
 	'ACL_U_EVENT_ADD'	=> 'Може да слага медали',
 	'ACL_U_EVENT_MODIFY'	=> 'Може да променя медали',
 
+	'EVENT_MEDALS_VIEWTOPIC'	=> 'Медали в малкия профил',
+	'EVENT_MEDALS_VIEWTOPIC_EXPLAIN'	=> 'Показвай медалите в малките профили (онези до постовете на потребителите)',
+
 ));
