@@ -51,7 +51,6 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 
 			//add configs
 			array('config.add', array('event_medals_version', '1.0.0')),
-			array('config.add', array('event_medals_viewtopic', 1)),
 
 			//setting permissions
 			array('permission.add', array('u_event_add', true)),
