@@ -52,7 +52,7 @@ class eventmedals_ucp_edit_test extends eventmedals_base
 			'setting'	=> array(
 				$this->get_user_id('admin')	=> array(
 					0	=> array(
-						'u_event_edit' => '1'
+						'u_event_modify' => '1'
 					)
 				),
 			),
