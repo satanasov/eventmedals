@@ -80,7 +80,7 @@ class eventmedals_ucp_edit_test extends eventmedals_base
 		$this->assertContainsLang('ERR_NO_USER', $crawler->text());
 	}
 	/**
-     * @depends test_set_permissions_edit
+     * @depends test_ucp_edit_no_user
      */
 	public function test_ucp_edit_no_medals()
 	{
@@ -93,5 +93,52 @@ class eventmedals_ucp_edit_test extends eventmedals_base
 		
 		$this->assertContainsLang('ERR_USER_NO_MEDALS', $crawler->text());
 	}
-	
+	/**
+     * @depends test_ucp_edit_no_medal
+     */
+	public function test_ucp_edit_medal_type()
+	{
+		//add medals
+		$this->login();
+		
+		$this->add_lang_ext('anavaro/eventmedals', 'event_medals');
+		
+		$this->assertEquals(2, $this->medal_type($this->get_user_id('testuser1'), $this->get_topic_id('Test Topic 1')));
+		
+		$crawler = self::request('GET', 'app.php/eventmedals/edit/'. $this->get_user_id('testuser1'));
+		
+		$form = $crawler->selectButton($this->lang('SUBMIT'))->form();
+		$form['events'] = array($this->get_topic_id('Test Topic 1') => array('select' => '3'));
+		
+		$crawler = self::submit($form);
+		
+		$this->assertContainsLang('SUCCESS_ADD_INFO', $crawler->text());
+		
+		$this->assertEquals(3, $this->medal_type($this->get_user_id('testuser1'), $this->get_topic_id('Test Topic 1')));
+		
+	}
+	/**
+     * @depends test_ucp_edit_medal_type
+     */
+	public function test_ucp_edit_remove_medal()
+	{
+		//add medals
+		$this->login();
+		
+		$this->add_lang_ext('anavaro/eventmedals', 'event_medals');
+		
+		$this->assertEquals(1, $this->medals_for_user($this->get_user_id('testuser1')));
+		
+		$crawler = self::request('GET', 'app.php/eventmedals/edit/'. $this->get_user_id('testuser1'));
+		
+		$form = $crawler->selectButton($this->lang('SUBMIT'))->form();
+		$form['events'] = array($this->get_topic_id('Test Topic 1') => array('delete' => '1'));
+		
+		$crawler = self::submit($form);
+		
+		$this->assertContainsLang('SUCCESS_ADD_INFO', $crawler->text());
+		
+		$this->assertEquals(0, $this->medals_for_user($this->get_user_id('testuser1')));
+		
+	}
 }
