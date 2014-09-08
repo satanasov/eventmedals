@@ -202,7 +202,7 @@ class ajaxify
 							'STEP'	=> 'first',
 						));
 					}
-					else { trigger_error($this->user->lang('ERR_NO_MEDALS'), E_USER_WARNING); }
+					else { trigger_error($this->user->lang('ERR_USER_NO_MEDALS'), E_USER_WARNING); }
 				}
 				$this->template->assign_vars(array(
 					'TYPE'	=> 'edit',
