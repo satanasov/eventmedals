@@ -1,12 +1,13 @@
-Number of extensions for PhpBB 3.1
+[![Build Status](https://travis-ci.org/lucifer4o/eventmedals.svg?branch=master)](https://travis-ci.org/lucifer4o/eventmedals)
 
 Event Medals
-
-  Description:
+============
   
-    Event Medals is a extension for PhpBB3 that adds support for event awards. 
-	It is developed as a way to give awards in user profiles for attending live meetings. 
-	But can be used for much more.
+Description:
+  
+  Event Medals is a extension for PhpBB3 that adds support for event awards. 
+  It is developed as a way to give awards in user profiles for attending live meetings. 
+  But can be used for much more.
     
   Features:
     
@@ -16,7 +17,7 @@ Event Medals
     Profile:
       -show list user medals in profile
       -show form for manual adding of madels ACL users
-	  -TO DO: Return to user profile after adding a medal
+      -TO DO: Return to user profile after adding a medal
       
     UCP:
       -show ACL for who can view the medals in profile (Allways visible for admins and user it self)
@@ -28,7 +29,3 @@ Event Medals
 	  -ACL who can add/edit medals
 	  -Split Add and EDIT ACL
 	  -Edit image of medals
-	  
-  Global TO DO:
-    Optimize and Clean
-
