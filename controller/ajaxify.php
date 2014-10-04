@@ -208,6 +208,10 @@ class ajaxify
 					'TYPE'	=> 'edit',
 				));
 			}
+		else
+		{
+			trigger_error($this->user->lang['UCP_PROFILE_CONTROL_ERROR']);
+		}
 			break;
 		}
 		$this->template->assign_vars(array(
