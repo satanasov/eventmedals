@@ -2,11 +2,10 @@
 
 /**
 *
-* newspage [Bulgarian]
+* Event medals extension for the phpBB Forum Software package.
 *
-* @package language
-* @version $Id$
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+* @copyright (c) 2014
+* @license GNU General Public License, version 2 (GPL-2.0)
 *
 */
 
@@ -37,8 +36,8 @@ $lang = array_merge($lang, array(
 	'BACK'	=> '« Back to previous page',
 	'USER'	=>	'User',
 	'EVENT'	=>	'Event',
-	'NOT_EXISTENTS'	=>	'does not exist',
-	'CORRECT_WARNING_ONE'	=>	'USE BACK button to go back and change username or add user manualy.',
+	'NOT_EXISTENT'	=>	'does not exist',
+	'CORRECT_WARNING_ONE'	=>	'USE BACK button to go back and change username or add user manually.',
 	'CORRECT_WARNING_THREE'	=>	'USE BACK button to go back and correct.',
 	'MEDAL_TYPE'	=>	'Event medal type:',
 	'MEDAL_TYPE_ONE'	=> 'Organizer',
@@ -52,7 +51,7 @@ $lang = array_merge($lang, array(
 	'MEDALS_USER_SELECT'	=>	'Choose user',
 	'MEDALS_EVENT_SELECT'	=>	'Choose event',
 	'MEDALS_SELECT_TYPE'	=>	'What will you change?',
-	'MEDALS_SELECT_TYPE_EXPLENATION'	=>	'Choose ehat kind of change you are doing - event or user.',
+	'MEDALS_SELECT_TYPE_EXPLENATION'	=>	'Choose what kind of change you are doing - event or user.',
 	'MEDALS_EDIT_STEP_TWO_EVENT'	=>	'Step 2: Choose change for this event.',
 	'MEDALS_EDIT_STEP_TWO_USER'	=>	'Step 2: Choose changes for user.',
 	'MEDAL_DELETE'	=>	'Remove event medal',
@@ -78,17 +77,23 @@ $lang = array_merge($lang, array(
 	'ERR_DAY_NOT_IN_RANGE'	=>	'There is no such day in the month!',
 	'ERR_YEAR_NOT_NUM'	=> 'Not numeral Year?',
 	'ERR_DATE_ERR'	=> 'The date is wrong ...',
-	'ERR_TOPIC_ERR'	=> 'Nope! There is no Topic ID like the one you\'ve provided',
-	'ERR_DUPLICATE_MEDAL'	=> 'There is allredy such medal. Go back and check the list!',
+	'ERR_TOPIC_ERR'	=> 'Nope! There is no Topic ID like the one you’ve provided',
+	'ERR_DUPLICATE_MEDAL'	=> 'There is already such medal. Go back and check the list!',
 	'ERR_NO_MEDALS'	=> 'There are no medals. Please add some so you can edit them!',
 	'ERR_NO_USER'	=> 'User does not exist',
 	'ERR_USER_NO_MEDALS'	=> 'Selected user has no medals',
+
+	'UCP_EVENT_CONTROL'	=>	'Event control',
+	'UCP_PROFILE_MEDALS_CONTROL'	=> 'Event medals in profile',
+	'UCP_PROFILE_MEDALS_EXPLAIN'	=> 'Who can see the event medals',
 
 	'NONE'	=>	'No one',
 	'NOT_ENEMY'	=>	'All except enemies',
 	'SPECIAL_FRIENDS'	=> 'Special friends',
 
+	'UCP_PROFILE_ACC_ERROR' => 'You don\'t have access to see this user\'s event medals',
+	'UCP_PROFILE_CONTROL_ERROR'	=> 'You are not authorized to change event medals',
+
 	'ACL_U_EVENT_ADD'	=> 'Add event medals',
 	'ACL_U_EVENT_MODIFY'	=> 'Modify event medals',
-
 ));
