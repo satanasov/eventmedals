@@ -88,10 +88,11 @@ $lang = array_merge($lang, array(
 	'UCP_PROFILE_MEDALS_EXPLAIN'	=> 'Who can see the event medals',
 
 	'NONE'	=>	'No one',
+	'ALL'	=>	'All',
 	'NOT_ENEMY'	=>	'All except enemies',
 	'SPECIAL_FRIENDS'	=> 'Special friends',
 
-	'UCP_PROFILE_ACC_ERROR' => 'You don\'t have access to see this user\'s event medals',
+	'UCP_PROFILE_ACC_ERROR' => 'You don’t have access to see this user’s event medals',
 	'UCP_PROFILE_CONTROL_ERROR'	=> 'You are not authorized to change event medals',
 
 	'ACL_U_EVENT_ADD'	=> 'Add event medals',

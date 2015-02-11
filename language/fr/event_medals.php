@@ -84,9 +84,17 @@ $lang = array_merge($lang, array(
 	'ERR_NO_USER'	=> 'L’utilisateur n’existe pas',
 	'ERR_USER_NO_MEDALS'	=> 'L’utilisateur sélectionné n’a pas de médailles',
 
+	'UCP_EVENT_CONTROL'	=>	'Contrôle de l’événement',
+	'UCP_PROFILE_MEDALS_CONTROL'	=> 'Médailles d’événements affichées dans le profil',
+	'UCP_PROFILE_MEDALS_EXPLAIN'	=> 'Qui peu voir les médailles d’événements ?',
+
 	'NONE'	=>	'Aucune',
+	'ALL'	=>	'Tous',
 	'NOT_ENEMY'	=>	'Tous sauf les ennemis',
 	'SPECIAL_FRIENDS'	=> 'Des amis spéciaux',
+
+	'UCP_PROFILE_ACC_ERROR' => 'Vous n’êtes pas autorisé à voir les médailles d’événements de cet utilisateur',
+	'UCP_PROFILE_CONTROL_ERROR'	=> 'Vous n’êtes pas autorisé à modifier les médailles d’événements',
 
 	'ACL_U_EVENT_ADD'	=> 'Ajouter des médailles d’événements',
 	'ACL_U_EVENT_MODIFY'	=> 'Modifier des médailles d’événements',
