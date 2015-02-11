@@ -205,7 +205,7 @@ class main_listener implements EventSubscriberInterface
 			$medals .= '<img src="' . $this->image_dir . '/blue16.gif" alt="' . $this->user->lang['MEDAL_TYPE_THREE'] .'"> x '. $event_medals[3];
 		}
 		if ($event_medals[4] > 0) {
-			$medals .= '<img src="' . $this->image_dir . '/blck16.gif" alt="' . $this->user->lang['MEDAL_TYPE_FOUR'] .'"> x '. $event_medals[4];
+			$medals .= '<img src="' . $this->image_dir . '/black16.gif" alt="' . $this->user->lang['MEDAL_TYPE_FOUR'] .'"> x '. $event_medals[4];
 		}
 		//$this->var_display($event);
 		global $user;
