@@ -71,10 +71,7 @@ class main_listener implements EventSubscriberInterface
 	protected $image_dir = 'ext/anavaro/eventmedals/images';
 	public function prepare_medals($event)
 	{
-		//$this->var_display($this->user->lang);
-		$sql = 'SELECT profile_event_show FROM ' . $this->table_prefix . 'users_custom WHERE user_id = '.$this->db->sql_escape($event['data']['user_id']);
-		$result = $this->db->sql_query($sql);
-		$optResult = $this->db->sql_fetchrow($result);
+		$optResult = $event['data']['profile_event_show'];
 		$sql = 'SELECT * FROM ' . ZEBRA_TABLE . ' WHERE user_id = '.$this->db->sql_escape($event['data']['user_id']).' AND zebra_id = '.$this->user->data['user_id'];
 		$result = $this->db->sql_fetchrow($this->db->sql_query($sql));
 		$zebra_state = 0;
@@ -99,23 +96,19 @@ class main_listener implements EventSubscriberInterface
 			$zebra_state = 2;
 		}
 
-		$show = ($optResult['profile_event_show'] > 0 ? (($optResult['profile_event_show'] == 1 and $zebra_state != 1) ? (($optResult['profile_event_show'] <= $zebra_state) ? true : false) : false) : false);
+		$show = ($optResult > 0 ? (($optResult == 1 and $zebra_state != 1) ? (($optResult <= $zebra_state) ? true : false) : false) : false);
 		if ($event['data']['user_id'] == $this->user->data['user_id'] || $this->auth->acl_getf_global('m_approve') || $this->auth->acl_get('a_user') || $show) {
 			$sql='SELECT * FROM ' . $this->table_prefix . 'event_medals WHERE owner_id = '.$this->db->sql_escape($event['data']['user_id']).' ORDER BY date ASC';
 			$result=$this->db->sql_query($sql);
 			$outputMedals = '';
 			$medals = array();
 			while ($row = $this->db->sql_fetchrow($result)) {
-				$medals[$row['date']] = array (
+				$medals[] = array (
 					'type'	=>	$row['type'],
 					'link'	=>	$row['link'],
 					'date'	=>	$row['date'],
 					'image' =>	$row['image'],
 				);
-			}
-			if ($medals)
-			{
-				asort($medals);
 			}
 
 			if (isset($medals)) {
@@ -124,10 +117,6 @@ class main_listener implements EventSubscriberInterface
 				foreach($medals as $VAR) {
 					$outputMedals .= "<a href=\"{$this->root_path}viewtopic.{$this->php_ext}?t=".$VAR['link']."\">";
 					$date = date("[d F Y]", $VAR['date']);
-					if ($count == "") {
-						$outputMedals .= "<br>";
-						$count = "1";
-					}
 					if ($VAR['image'] == 'none') {
 						if ($VAR['type'] == "1") {
 							$outputMedals .= '<img src="' . $this->image_dir . '/red.gif" alt="' . $this->user->lang['MEDAL_TYPE_ONE'] .$date.'" title="' . $this->user->lang['MEDAL_TYPE_ONE'] .$date.'">';
@@ -145,8 +134,7 @@ class main_listener implements EventSubscriberInterface
 					else {
 						$outputMedals .= "<img src=\"" . $this->root_path . $VAR['image'] ."\" alt=\"" . $date . "\" title=\"" . $date . "\"/>";
 					}
-					$count++;
-					$outputMedals .= "</a>";
+					$outputMedals .= "</a> ";
 				}
 			}
 		}
@@ -156,12 +144,12 @@ class main_listener implements EventSubscriberInterface
 		}
 		//Let's see if user hase "u_event_control"
 
-		if ($this->auth->acl_get('u_event_add') || $this->auth->acl_get('a_user'))
+		if ($this->auth->acl_get('u_event_add'))
 		{
 			$this->template->assign_var('MEDALS_ADD', "1");
 			$this->template->assign_var('MEDALS_EVENT_ADD_URL', $this->root_path . 'app.php/eventmedals/add/'. $event['data']['user_id']);
 		}
-		if ($this->auth->acl_get('u_event_modify') || $this->auth->acl_get('a_user'))
+		if ($this->auth->acl_get('u_event_modify'))
 		{
 			$this->template->assign_var('MEDALS_MODIFY', "1");
 			$this->template->assign_var('MEDALS_EVENT_EDIT_URL', $this->root_path . 'app.php/eventmedals/edit/'. $event['data']['user_id']);

@@ -79,15 +79,9 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 					),
 					'PRIMARY_KEY'	=> 'owner_id, link',
 				),
-				$this->table_prefix . 'users_custom'		=> array(
-					'COLUMNS'	=> array(
-						'user_id'	=> array('UINT', 0),
-					),
-					'PRIMARY_KEY'    => 'user_id'
-				),
 			),
 			'add_columns'	=> array(
-				$this->table_prefix . 'users_custom'	=> array(
+				USERS_TABLE	=> array(
 					'profile_event_show'    => array('UINT', 0),
 				),
 			),
@@ -98,7 +92,7 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 	{
 		return array(
 			'drop_columns'		=> array(
-				$this->table_prefix . 'users_custom'	=> array(
+				USERS_TABLE	=> array(
 					'profile_event_show',
 				)
 			),
