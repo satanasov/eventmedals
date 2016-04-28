@@ -162,46 +162,50 @@ class main_listener implements EventSubscriberInterface
 	public function modify_post_row($event)
 	{
 		//$this->var_display($event['post_row']);
-		$medals = '';
-		$event_medals[1]=0;
-		$event_medals[2]=0;
-		$event_medals[3]=0;
-		$event_medals[4]=0;
-		$result1 = $this->db->sql_query('SELECT type FROM ' . $this->table_prefix . 'event_medals WHERE owner_id = '.$this->db->sql_escape($event['post_row']['POSTER_ID']));
+		$medals = array();
+		$result1 = $this->db->sql_query('SELECT * FROM ' . $this->table_prefix . 'event_medals WHERE owner_id = '.$this->db->sql_escape($event['post_row']['POSTER_ID']) . '  ORDER BY date ASC');
 		while ($row1 = $this->db->sql_fetchrow($result1)) {
-			if ($row1['type'] == "1") {
-				$event_medals[1]++;
+			$medals[] = array (
+				'type'	=>	$row1['type'],
+				'link'	=>	$row1['link'],
+				'date'	=>	$row1['date'],
+				'image' =>	$row1['image'],
+			);
+		}
+		// The medals before the profile are built here
+		// The function outputs a HTML where if the medal have custom image - it will get it, if not it will get new one assigned
+		// You could change size by adding width and height to IMG tags
+		if (isset($medals)) {
+			$outputMedals = '';
+			$count = "1";
+			foreach($medals as $VAR) {
+				$outputMedals .= "<a href=\"{$this->root_path}viewtopic.{$this->php_ext}?t=".$VAR['link']."\">";
+				$date = date("[d F Y]", $VAR['date']);
+				if ($VAR['image'] == 'none') {
+					if ($VAR['type'] == "1") {
+						$outputMedals .= '<img src="' . $this->image_dir . '/red.gif" alt="' . $this->user->lang['MEDAL_TYPE_ONE'] .$date.'" title="' . $this->user->lang['MEDAL_TYPE_ONE'] .$date.'">';
+					}
+					if ($VAR['type'] == "2") {
+						$outputMedals .= '<img src="' . $this->image_dir . '/gold.gif" alt="' . $this->user->lang['MEDAL_TYPE_TWO'] .$date.'" title="' . $this->user->lang['MEDAL_TYPE_TWO'] .$date.'">';
+					}
+					if ($VAR['type'] == "3") {
+						$outputMedals .= '<img src="' . $this->image_dir . '/blue.gif" alt="' . $this->user->lang['MEDAL_TYPE_THREE'] .$date.'" title="' . $this->user->lang['MEDAL_TYPE_THREE'] .$date.'">';
+					}
+					if ($VAR['type'] == "4") {
+						$outputMedals .= '<img src="' . $this->image_dir . '/black.gif" alt="' . $this->user->lang['MEDAL_TYPE_FOUR'] .$date.'" title="' . $this->user->lang['MEDAL_TYPE_FOUR'] .$date.'">';
+					}
+				}
+				else {
+					$outputMedals .= "<img src=\"" . $this->root_path . $VAR['image'] ."\" alt=\"" . $date . "\" title=\"" . $date . "\"/>";
+				}
+				$outputMedals .= "</a> ";
 			}
-			if ($row1['type'] == "2") {
-				$event_medals[2]++;
-			}
-			if ($row1['type'] == "3") {
-				$event_medals[3]++;
-			}
-			if ($row1['type'] == "4") {
-				$event_medals[4]++;
-			}
 		}
-
-		if ($event_medals[1] > 0) {
-			$medals .= '<img src="' . $this->image_dir . '/red16.gif" alt="' . $this->user->lang['MEDAL_TYPE_ONE'] .'"> x '. $event_medals[1];
-		}
-		if ($event_medals[2] > 0) {
-			$medals .= '<img src="' . $this->image_dir . '/gold16.gif" alt="' . $this->user->lang['MEDAL_TYPE_TWO'] .'"> x '. $event_medals[2];
-		}
-		if ($event_medals[3] > 0) {
-			$medals .= '<img src="' . $this->image_dir . '/blue16.gif" alt="' . $this->user->lang['MEDAL_TYPE_THREE'] .'"> x '. $event_medals[3];
-		}
-		if ($event_medals[4] > 0) {
-			$medals .= '<img src="' . $this->image_dir . '/black16.gif" alt="' . $this->user->lang['MEDAL_TYPE_FOUR'] .'"> x '. $event_medals[4];
-		}
-		//$this->var_display($event);
-		global $user;
-
+		
 		if ($event['row']['user_id'] != ANONYMOUS)
 		{
 			$post_row = $event['post_row'];
-			$post_row['MEDALS'] = $medals;
+			$post_row['MEDALS'] = $outputMedals;
 			$event['post_row'] = $post_row;
 		}
 		//$this->var_display($event['post_row']);
