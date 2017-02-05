@@ -4,7 +4,7 @@
 	"description": "Adds support for event medals",
 	"homepage": "https://github.com/lucifer4o/eventmedals",
 	"version": "1.0.1",
-	"time": "2014-08-22",
+	"time": "2017-02-05",
 	"license": "GPL-2.0",
 	"authors": [
 		{
@@ -15,17 +15,17 @@
 		}
 	],
 	"require": {
-		"php": ">=5.3"
+		"php": ">=5.4"
 	},
 	"extra": {
-		"display-name": "phpBB 3.1 Event medals",
+		"display-name": "phpBB 3.2 Event medals",
 		"version-check": {
 			"host": "lab.anavaro.com",
 			"directory": "/phpbb-ext",
 			"filename": "eventmedals.json"
 		},
 		"soft-require": {
-			"phpbb/phpbb": ">=3.1.0-RC2,<3.2.*@dev"
+			"phpbb/phpbb": ">=3.2.*,<3.3.*@dev"
 		}
 	}
 }
