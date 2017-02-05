@@ -17,9 +17,34 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class main_listener implements EventSubscriberInterface
 {
+	/** @var \phpbb\auth\auth */
+	protected $auth;
+
+	/** @var \phpbb\db\driver\driver_interface */
+	protected $db;
+
+	/** @var \phpbb\template\template */
+	protected $template;
+
+	/** @var \phpbb\user */
+	protected $user;
+
+	/** @var \phpbb\language\language */
+	protected $lang;
+
+	/** @var string */
+	protected $root_path;
+
+	/** @var string */
+	protected $php_ext;
+
+	/** @var */
+	protected $table_prefix;
+
 	static public function getSubscribedEvents()
 	{
 		return array(
+			'core.permissions'	       => 'acl_perms_add',
 			'core.memberlist_prepare_profile_data'	       => 'prepare_medals',
 			'core.user_setup'		=> 'load_language_on_setup',
 			'core.viewtopic_modify_post_row'	=>	'modify_post_row',
@@ -27,35 +52,41 @@ class main_listener implements EventSubscriberInterface
 	}
 
 	/**
-	* Constructor
-	* NOTE: The parameters of this method must match in order and type with
-	* the dependencies defined in the services.yml file for this service.
-	*
-	* @param \phpbb\auth		$auth		Auth object
-	* @param \phpbb\cache\service	$cache		Cache object
-	* @param \phpbb\config	$config		Config object
-	* @param \phpbb\db\driver	$db		Database object
-	* @param \phpbb\request	$request	Request object
-	* @param \phpbb\template	$template	Template object
-	* @param \phpbb\user		$user		User object
-	* @param \phpbb\content_visibility		$content_visibility	Content visibility object
-	* @param \phpbb\controller\helper		$helper				Controller helper object
-	* @param string			$root_path	phpBB root path
-	* @param string			$php_ext	phpEx
-	*/
-	public function __construct(\phpbb\auth\auth $auth, \phpbb\cache\service $cache, \phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\request\request $request, \phpbb\template\template $template, \phpbb\user $user, \phpbb\controller\helper $helper, $root_path, $php_ext, $table_prefix)
+	 * Constructor
+	 * NOTE: The parameters of this method must match in order and type with
+	 * the dependencies defined in the services.yml file for this service.
+	 *
+	 * @param \phpbb\auth\auth                  $auth      Auth object
+	 * @param \phpbb\db\driver\driver_interface $db        Database object
+	 * @param \phpbb\template\template          $template  Template object
+	 * @param \phpbb\user                       $user      User object
+	 * @param \phpbb\language\language          $language
+	 * @param string                            $root_path phpBB root path
+	 * @param string                            $php_ext   phpEx
+	 * @param                                   $table_prefix
+	 * @internal param \phpbb\content_visibility $content_visibility Content visibility object
+	 */
+	public function __construct(\phpbb\auth\auth $auth,
+		\phpbb\db\driver\driver_interface $db, \phpbb\template\template $template,
+		\phpbb\user $user, \phpbb\language\language $language,
+		$root_path, $php_ext, $table_prefix)
 	{
 		$this->auth = $auth;
-		$this->cache = $cache;
-		$this->config = $config;
 		$this->db = $db;
-		$this->request = $request;
 		$this->template = $template;
 		$this->user = $user;
-		$this->helper = $helper;
+		$this->lang = $language;
 		$this->root_path = $root_path;
 		$this->php_ext = $php_ext;
 		$this->table_prefix = $table_prefix;
+	}
+
+	public function acl_perms_add($event)
+	{
+		$permissions = $event['permissions'];
+		$permissions['u_event_add'] = array('lang' => 'ACL_U_EVENT_ADD', 'cat' => 'misc');
+		$permissions['u_event_modify'] = array('lang' => 'ACL_U_EVENT_MODIFY', 'cat' => 'misc');
+		$event['permissions'] = $permissions;
 	}
 
 	public function load_language_on_setup($event)
