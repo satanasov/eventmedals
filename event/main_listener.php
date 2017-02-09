@@ -177,17 +177,23 @@ class main_listener implements EventSubscriberInterface
 
 		if ($this->auth->acl_get('u_event_add'))
 		{
-			$this->template->assign_var('MEDALS_ADD', "1");
-			$this->template->assign_var('MEDALS_EVENT_ADD_URL', $this->root_path . 'app.php/eventmedals/add/'. $event['data']['user_id']);
+			$this->template->assign_vars(array(
+				'MEDALS_ADD'	=> 1,
+				'MEDALS_EVENT_ADD_URL' => $this->root_path . 'app.php/eventmedals/add/'. $event['data']['user_id']
+			));
 		}
 		if ($this->auth->acl_get('u_event_modify'))
 		{
-			$this->template->assign_var('MEDALS_MODIFY', "1");
-			$this->template->assign_var('MEDALS_EVENT_EDIT_URL', $this->root_path . 'app.php/eventmedals/edit/'. $event['data']['user_id']);
+			$this->template->assign_vars(array(
+				'MEDALS_MODIFY'	=> 1,
+				'MEDALS_EVENT_EDIT_URL' => $this->root_path . 'app.php/eventmedals/edit/'. $event['data']['user_id']
+			));
 		}
 
-		$this->template->assign_var('MEDALS_TITLE', $this->lang->lang('MEDALS_TITLE'));
-		$this->template->assign_var('MEDALS', $outputMedals);
+		$this->template->assign_vars(array(
+			'MEDALS_TITLE'	=> $this->lang->lang('MEDALS_TITLE'),
+			'MEDALS'	=> $outputMedals
+		));
 	}
 
 	public function modify_post_row($event)
