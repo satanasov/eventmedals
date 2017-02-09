@@ -128,7 +128,7 @@ class main_listener implements EventSubscriberInterface
 		}
 
 		$show = false;
-		if ($optResult > 0 && ($optResult <= $zebra_state) && !($optResult == 1 and $zebra_state != 1))
+		if ($optResult > 0 && ($optResult <= $zebra_state) && !($optResult == 1 and $zebra_state == 1))
 		{
 			$show = true;
 		}
