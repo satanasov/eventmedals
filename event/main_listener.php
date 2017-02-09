@@ -127,7 +127,11 @@ class main_listener implements EventSubscriberInterface
 			$zebra_state = 2;
 		}
 
-		$show = ($optResult > 0 ? (($optResult == 1 and $zebra_state != 1) ? (($optResult <= $zebra_state) ? true : false) : false) : false);
+		$show = false;
+		if ($optResult > 0 && ($optResult <= $zebra_state) && !($optResult == 1 and $zebra_state != 1))
+		{
+			$show = true;
+		}
 		if ($event['data']['user_id'] == $this->user->data['user_id'] || $this->auth->acl_getf_global('m_approve') || $this->auth->acl_get('a_user') || $show) {
 			$sql='SELECT * FROM ' . $this->table_prefix . 'event_medals WHERE owner_id = '.$this->db->sql_escape($event['data']['user_id']).' ORDER BY date ASC';
 			$result=$this->db->sql_query($sql);
