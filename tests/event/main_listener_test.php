@@ -96,19 +96,176 @@ class main_listener_test extends \phpbb_database_test_case
 		), array_keys(\anavaro\eventmedals\event\main_listener::getSubscribedEvents()));
 	}
 
+	public function prepare_medals_data()
+	{
+		return array(
+			'default'	=> array( // We are no friends and seting is default
+				1, // User_id
+				0, // Is admin
+				4, // Profile we review
+				2, // Show medals state
+				1,  // Expected result
+				array(
+					array(
+						'MEDALS_TITLE'	=> 'MEDALS_TITLE',
+						'MEDALS' => '<a href="/viewtopic.php?t=1"><img src="ext/anavaro/eventmedals/images/gold.gif" alt="MEDAL_TYPE_TWO[01 January 1970]" title="MEDAL_TYPE_TWO[01 January 1970]"></a> '
+					),
+				)
+			),
+			'admin_override'=> array(
+				1,
+				1,
+				4,
+				0,
+				3,
+				array(
+					array(
+						'MEDALS_ADD' => 1,
+						'MEDALS_EVENT_ADD_URL' => '/app.php/eventmedals/add/4'
+					),
+					array(
+						'MEDALS_MODIFY' => 1,
+						'MEDALS_EVENT_EDIT_URL' => '/app.php/eventmedals/edit/4'
+					),
+					array(
+						'MEDALS_TITLE'	=> 'MEDALS_TITLE',
+						'MEDALS' => '<a href="/viewtopic.php?t=1"><img src="ext/anavaro/eventmedals/images/gold.gif" alt="MEDAL_TYPE_TWO[01 January 1970]" title="MEDAL_TYPE_TWO[01 January 1970]"></a> '
+					)
+				)
+			),
+			'do_not_show'=> array(
+				1,
+				0,
+				4,
+				0,
+				1,
+				array(
+					array(
+						'MEDALS_TITLE' => 'MEDALS_TITLE',
+						'MEDALS' => 'UCP_PROFILE_ACC_ERROR'
+					)
+				)
+			),
+			'do_not_show_to_enemy_yes'=> array(
+				1,
+				0,
+				3,
+				1,
+				1,
+				array(
+					array(
+						'MEDALS_TITLE' => 'MEDALS_TITLE',
+						'MEDALS' => 'UCP_PROFILE_ACC_ERROR'
+					)
+				)
+			),
+			'do_not_show_to_enemy_no'=> array(
+				2,
+				0,
+				3,
+				1,
+				1,
+				array(
+					array(
+						'MEDALS_TITLE' => 'MEDALS_TITLE',
+						'MEDALS' => '<a href="/viewtopic.php?t=1"><img src="ext/anavaro/eventmedals/images/gold.gif" alt="MEDAL_TYPE_TWO[01 January 1970]" title="MEDAL_TYPE_TWO[01 January 1970]"></a> '
+					)
+				)
+			),
+			'do_not_show_to_enemy_yes_admin_override'=> array(
+				1,
+				1,
+				3,
+				1,
+				3,
+				array(
+					array(
+						'MEDALS_ADD' => 1,
+						'MEDALS_EVENT_ADD_URL' => '/app.php/eventmedals/add/3'
+					),
+					array(
+						'MEDALS_MODIFY' => 1,
+						'MEDALS_EVENT_EDIT_URL' => '/app.php/eventmedals/edit/3'
+					),
+					array(
+						'MEDALS_TITLE'	=> 'MEDALS_TITLE',
+						'MEDALS' => '<a href="/viewtopic.php?t=1"><img src="ext/anavaro/eventmedals/images/gold.gif" alt="MEDAL_TYPE_TWO[01 January 1970]" title="MEDAL_TYPE_TWO[01 January 1970]"></a> '
+					)
+				),
+			),
+			'show_only_friends_yes'=> array(
+				1,
+				0,
+				2,
+				3,
+				1,
+				array(
+					array(
+						'MEDALS_TITLE' => 'MEDALS_TITLE',
+						'MEDALS' => '<a href="/viewtopic.php?t=1"><img src="ext/anavaro/eventmedals/images/gold.gif" alt="MEDAL_TYPE_TWO[01 January 1970]" title="MEDAL_TYPE_TWO[01 January 1970]"></a> '
+					)
+				)
+			),
+			'show_only_friends_no'=> array(
+				3,
+				0,
+				2,
+				3,
+				1,
+				array(
+					array(
+						'MEDALS_TITLE' => 'MEDALS_TITLE',
+						'MEDALS' => 'UCP_PROFILE_ACC_ERROR'
+					)
+				)
+			),
+			'friend_no_medals'=> array(
+				1,
+				0,
+				5,
+				3,
+				1,
+				array(
+					array(
+						'MEDALS_TITLE' => 'MEDALS_TITLE',
+						'MEDALS' => ''
+					)
+				)
+			),
+		);
+	}
+
 	/**
+	 * @dataProvider prepare_medals_data
 	 *
 	 * Test prepare medals
+	 * @param $user_id
+	 * @param $is_admin
+	 * @param $profile_id
+	 * @param $medals_state
+	 * @param $expected
+	 * @param $specific
 	 */
-	public function test_prepare_medals()
+	public function test_prepare_medals($user_id, $is_admin, $profile_id, $medals_state, $expected, $specific)
 	{
-		$this->set_listener();
-		$this->template->expects($this->once())
+		$this->set_listener((int) $user_id);
+		$this->auth->method('acl_get')
+			->will($this->returnValue($is_admin));
+
+		$this->template->expects($this->exactly((int) $expected))
 			->method('assign_vars');
 
+		foreach ($specific as $id => $var)
+		{
+			$this->template->expects($this->at($id))
+				->method('assign_vars')
+				->with(
+					$var
+				);
+		}
 		$data = array(
-			'profile_event_show' => 1,
-			'user_id' => 2
+			'profile_event_show' => (int) $medals_state,
+			'user_id' => (int) $profile_id
 		);
 		$event_data = array('data');
 		$event = new \phpbb\event\data(compact($event_data));
