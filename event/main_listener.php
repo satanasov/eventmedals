@@ -150,16 +150,16 @@ class main_listener implements EventSubscriberInterface
 					$date = date("[d F Y]", $VAR['date']);
 					if ($VAR['image'] == 'none') {
 						if ($VAR['type'] == "1") {
-							$outputMedals .= '<img src="' . $this->image_dir . '/red.gif" alt="' . $this->user->lang['MEDAL_TYPE_ONE'] .$date.'" title="' . $this->user->lang['MEDAL_TYPE_ONE'] .$date.'">';
+							$outputMedals .= '<img src="' . $this->image_dir . '/red.gif" alt="' . $this->lang->lang('MEDAL_TYPE_ONE') .$date.'" title="' . $this->lang->lang('MEDAL_TYPE_ONE') .$date.'">';
 						}
 						if ($VAR['type'] == "2") {
-							$outputMedals .= '<img src="' . $this->image_dir . '/gold.gif" alt="' . $this->user->lang['MEDAL_TYPE_TWO'] .$date.'" title="' . $this->user->lang['MEDAL_TYPE_TWO'] .$date.'">';
+							$outputMedals .= '<img src="' . $this->image_dir . '/gold.gif" alt="' . $this->lang->lang('MEDAL_TYPE_TWO') .$date.'" title="' . $this->lang->lang('MEDAL_TYPE_TWO') .$date.'">';
 						}
 						if ($VAR['type'] == "3") {
-							$outputMedals .= '<img src="' . $this->image_dir . '/blue.gif" alt="' . $this->user->lang['MEDAL_TYPE_THREE'] .$date.'" title="' . $this->user->lang['MEDAL_TYPE_THREE'] .$date.'">';
+							$outputMedals .= '<img src="' . $this->image_dir . '/blue.gif" alt="' . $this->lang->lang('MEDAL_TYPE_THREE') .$date.'" title="' . $this->lang->lang('MEDAL_TYPE_THREE') .$date.'">';
 						}
 						if ($VAR['type'] == "4") {
-							$outputMedals .= '<img src="' . $this->image_dir . '/black.gif" alt="' . $this->user->lang['MEDAL_TYPE_FOUR'] .$date.'" title="' . $this->user->lang['MEDAL_TYPE_FOUR'] .$date.'">';
+							$outputMedals .= '<img src="' . $this->image_dir . '/black.gif" alt="' . $this->lang->lang('MEDAL_TYPE_FOUR') .$date.'" title="' . $this->lang->lang('MEDAL_TYPE_FOUR') .$date.'">';
 						}
 					}
 					else {
@@ -171,7 +171,7 @@ class main_listener implements EventSubscriberInterface
 		}
 		else
 		{
-			$outputMedals = $this->user->lang['UCP_PROFILE_ACC_ERROR'];
+			$outputMedals = $this->lang->lang('UCP_PROFILE_ACC_ERROR');
 		}
 		//Let's see if user hase "u_event_control"
 
@@ -186,7 +186,7 @@ class main_listener implements EventSubscriberInterface
 			$this->template->assign_var('MEDALS_EVENT_EDIT_URL', $this->root_path . 'app.php/eventmedals/edit/'. $event['data']['user_id']);
 		}
 
-		$this->template->assign_var('MEDALS_TITLE', $this->user->lang['MEDALS_TITLE']);
+		$this->template->assign_var('MEDALS_TITLE', $this->lang->lang('MEDALS_TITLE'));
 		$this->template->assign_var('MEDALS', $outputMedals);
 	}
 
@@ -215,16 +215,16 @@ class main_listener implements EventSubscriberInterface
 		}
 
 		if ($event_medals[1] > 0) {
-			$medals .= '<img src="' . $this->image_dir . '/red16.gif" alt="' . $this->user->lang['MEDAL_TYPE_ONE'] .'"> x '. $event_medals[1];
+			$medals .= '<img src="' . $this->image_dir . '/red16.gif" alt="' . $this->lang->lang('MEDAL_TYPE_ONE') .'"> x '. $event_medals[1];
 		}
 		if ($event_medals[2] > 0) {
-			$medals .= '<img src="' . $this->image_dir . '/gold16.gif" alt="' . $this->user->lang['MEDAL_TYPE_TWO'] .'"> x '. $event_medals[2];
+			$medals .= '<img src="' . $this->image_dir . '/gold16.gif" alt="' . $this->lang->lang('MEDAL_TYPE_TWO') .'"> x '. $event_medals[2];
 		}
 		if ($event_medals[3] > 0) {
-			$medals .= '<img src="' . $this->image_dir . '/blue16.gif" alt="' . $this->user->lang['MEDAL_TYPE_THREE'] .'"> x '. $event_medals[3];
+			$medals .= '<img src="' . $this->image_dir . '/blue16.gif" alt="' . $this->lang->lang('MEDAL_TYPE_THREE') .'"> x '. $event_medals[3];
 		}
 		if ($event_medals[4] > 0) {
-			$medals .= '<img src="' . $this->image_dir . '/black16.gif" alt="' . $this->user->lang['MEDAL_TYPE_FOUR'] .'"> x '. $event_medals[4];
+			$medals .= '<img src="' . $this->image_dir . '/black16.gif" alt="' . $this->lang->lang('MEDAL_TYPE_FOUR') .'"> x '. $event_medals[4];
 		}
 		//$this->var_display($event);
 		global $user;
