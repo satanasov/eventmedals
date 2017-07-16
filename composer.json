@@ -3,8 +3,8 @@
 	"type": "phpbb-extension",
 	"description": "Adds support for event medals",
 	"homepage": "https://github.com/lucifer4o/eventmedals",
-	"version": "1.0.1",
-	"time": "2014-08-22",
+	"version": "1.0.2",
+	"time": "2017-07-17",
 	"license": "GPL-2.0",
 	"authors": [
 		{
