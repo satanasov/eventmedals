@@ -23,7 +23,7 @@ matrix:
       env: DB=mysqli
     - php: 7
       env: DB=mysqli
-    - php: 71
+    - php: 7.1
       env: DB=mysqli
     - php: hhvm
       env: DB=mysqli
