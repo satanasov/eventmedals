@@ -114,8 +114,11 @@ class main_listener implements EventSubscriberInterface
 			}
 			else
 			{
-				if ($result['bff'] == '0') {
-					$zebra_state = 3;
+				if (isset($result['bff']))
+				{
+					if ($result['bff'] == '0') {
+						$zebra_state = 3;
+					}
 				}
 				else {
 					$zebra_state = 4;
