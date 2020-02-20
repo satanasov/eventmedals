@@ -21,23 +21,23 @@ class eventmedals_base extends \phpbb_functional_test_case
 	}
 
 	protected $post;
-	
-	public function setUp()
+
+	public function setUp() : void
 	{
 		parent::setUp();
 		$this->post = array();
 	}
-	
+
 	public function get_user_id($username)
 	{
-		$sql = 'SELECT user_id, username 
+		$sql = 'SELECT user_id, username
 				FROM ' . USERS_TABLE . '
 				WHERE username_clean = \''.$this->db->sql_escape(utf8_clean_string($username)).'\'';
 		$result = $this->db->sql_query($sql);
 		$row = $this->db->sql_fetchrow($result);
 		return $row['user_id'];
 	}
-	
+
 	public function get_topic_id($topic_title)
 	{
 		$sql = 'SELECT topic_id
@@ -47,7 +47,7 @@ class eventmedals_base extends \phpbb_functional_test_case
 		$row = $this->db->sql_fetchrow($result);
 		return $row['topic_id'];
 	}
-	
+
 	public function set_medal($owner_id, $type, $link, $date, $image = 'none')
 	{
 		$sql_ary = array(
@@ -59,58 +59,58 @@ class eventmedals_base extends \phpbb_functional_test_case
 		);
 		$sql = 'INSERT INTO phpbb_event_medals' . $this->db->sql_build_array('INSERT', $sql_ary);
 		$this->db->sql_query($sql);
-		
+
 		$sql = 'SELECT COUNT(*) as count FROM phpbb_event_medals WHERE owner_id = ' . (int) $owner_id . ' AND link = ' . (int) $link;
 		$result = $this->db->sql_query($sql);
 		$row = $this->db->sql_fetchrow($result);
-		
+
 		return $row['count'];
 	}
-	
+
 	public function clean_medals_db()
 	{
 		$sql = "DELETE FROM phpbb_event_medals WHERE owner_id <> 0";
 		$result = $this->db->sql_query($sql);
-		
+
 		return 0;
 	}
-	
+
 	public function medals_for_user($user_id)
 	{
 		$sql = 'SELECT COUNT(*) as count FROM phpbb_event_medals WHERE owner_id = ' . (int) $user_id;
 		$result = $this->db->sql_query($sql);
 		$row = $this->db->sql_fetchrow($result);
-		
+
 		return $row['count'];
 	}
-	
+
 	public function medals_for_event($event_id)
 	{
 		$sql = 'SELECT COUNT(*) as count FROM phpbb_event_medals WHERE link = ' . (int) $event_id;
 		$result = $this->db->sql_query($sql);
 		$row = $this->db->sql_fetchrow($result);
-		
+
 		return $row['count'];
 	}
-	
+
 	public function medal_type($user_id, $event_id)
 	{
 		$sql = 'SELECT type FROM phpbb_event_medals WHERE owner_id = ' . (int) $user_id . ' AND link = ' . (int) $event_id;
 		$result = $this->db->sql_query($sql);
 		$row = $this->db->sql_fetchrow($result);
-		
+
 		return $row['type'];
 	}
-	
+
 	public function medal_image($user_id, $event_id)
-	{	
+	{
 		$sql = 'SELECT image FROM phpbb_event_medals WHERE owner_id = ' . (int) $user_id . ' AND link = ' . (int) $event_id;
 		$result = $this->db->sql_query($sql);
 		$row = $this->db->sql_fetchrow($result);
-		
+
 		return htmlspecialchars($row['image']);
 	}
-	
+
 	public function add_frineds($uid1, $uid2)
 	{
 		$sql_ary = array(
@@ -131,5 +131,5 @@ class eventmedals_base extends \phpbb_functional_test_case
 		$sql = 'INSERT INTO phpbb_zebra' . $this->db->sql_build_array('INSERT', $sql_ary);
 		$this->db->sql_query($sql);
 	}
-	
+
 }

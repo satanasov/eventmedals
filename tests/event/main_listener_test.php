@@ -46,17 +46,20 @@ class main_listener_test extends \phpbb_database_test_case
 		return array('anavaro/eventmedals');
 	}
 
-	public function setUp()
+	public function setUp() : void
 	{
 		parent::setUp();
 
 		global $phpbb_root_path, $phpEx;
 
-		$this->auth = $this->getMock('\phpbb\auth\auth');
+		$this->auth = $this->getMockBuilder('\phpbb\auth\auth')
+			->disableOriginalConstructor()
+			->getMock();
 
 		$this->db = $this->new_dbal();
 
 		$this->template = $this->getMockBuilder('\phpbb\template\template')
+			->disableOriginalConstructor()
 			->getMock();
 
 		$this->language = $this->getMockBuilder('\phpbb\language\language')
@@ -65,10 +68,12 @@ class main_listener_test extends \phpbb_database_test_case
 		$this->language->method('lang')
 			->will($this->returnArgument(0));
 
-		$this->user = $this->getMock('\phpbb\user', array(), array(
-			new \phpbb\language\language(new \phpbb\language\language_file_loader($phpbb_root_path, $phpEx)),
-			'\phpbb\datetime'
-		));
+		$this->user = $this->getMockBuilder('\phpbb\user')
+			->setConstructorArgs(array(
+				new \phpbb\language\language(new \phpbb\language\language_file_loader($phpbb_root_path, $phpEx)),
+				'\phpbb\datetime'
+			))
+			->getMock();
 	}
 
 	public function set_listener($user_id = 1)
