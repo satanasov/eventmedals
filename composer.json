@@ -25,7 +25,7 @@
 			"filename": "eventmedals.json"
 		},
 		"soft-require": {
-			"phpbb/phpbb": ">=3.2.*,<3.3.*@dev"
+			"phpbb/phpbb": ">=3.2.*"
 		}
 	}
 }
