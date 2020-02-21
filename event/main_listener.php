@@ -207,6 +207,7 @@ class main_listener implements EventSubscriberInterface
 	{
 		//$this->var_display($event['post_row']);
 		$medals = '';
+		$event_medals = array();
 		$event_medals[1]=0;
 		$event_medals[2]=0;
 		$event_medals[3]=0;

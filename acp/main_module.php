@@ -16,19 +16,12 @@ namespace anavaro\eventmedals\acp;
 class main_module
 {
 	var $u_action;
-	function var_display($i)
-	{
-		echo "<pre>";
-		print_r($i);
-		echo "</pre>";
-	}
+
 	function main($id, $mode)
 	{
 		global $db, $user, $auth, $template, $cache, $request;
 		global $config, $SID, $phpbb_root_path, $phpbb_admin_path, $phpEx, $k_config, $table_prefix;
-		//$this->var_display($action);
 
-		//$this->var_display($tid);
 		//Lets get some groups!
 		switch ($mode) {
 			case 'add':
@@ -36,7 +29,6 @@ class main_module
 				$this->page_title	= 'ACP_EVENT_MEDALS_ADD';
 
 				$stage = $request->variable('stage', 'first');
-				//$this->var_display($stage);
 				switch ($stage) {
 					case 'first':
 						$post_url = append_sid("index.php?i=".$id."&mode=".$mode."&stage=second");
@@ -62,7 +54,7 @@ class main_module
 						$users = array();
 
 						foreach ($users_arry as $VAR) {
-							$sql = 'SELECT user_id, username 
+							$sql = 'SELECT user_id, username
 									FROM ' . USERS_TABLE . '
 									WHERE username_clean = \''.$db->sql_escape(utf8_clean_string($VAR)).'\'';
 							$result = $db->sql_query($sql);
@@ -88,8 +80,6 @@ class main_module
 						$template->assign_vars(array(
 							'S_ERROR' => implode($nick_errs, " "),
 						));
-
-						//$this->var_display($users_arry);
 					break;
 					case 'third':
 						$post_url = append_sid("index.php?i=".$id."&mode=".$mode."&stage=fourth");
@@ -132,8 +122,7 @@ class main_module
 						$exists = $tmp['count'] > 0 ? 1 : 0;
 						$db->sql_freeresult($result);
 						if ($link and (!is_numeric($link) or $exists < 1)) { trigger_error($user->lang('ERR_TOPIC_ERR'), E_USER_WARNING); }
-						$error_array_sub = 0;
-						if (!$error_array) {
+						if (empty($error_array)) {
 							$timestamp = mktime("0", "0", "0", $month, $day, $year);
 							foreach ($medals_array as $ID => $VAR)
 							{
@@ -270,7 +259,7 @@ class main_module
 						else
 						{
 							$username_request = utf8_normalize_nfc($request->variable('username', ''));
-							$sql = 'SELECT user_id, username 
+							$sql = 'SELECT user_id, username
 									FROM ' . USERS_TABLE . '
 									WHERE username_clean = \''.$db->sql_escape(utf8_clean_string($username_request)).'\'';
 							$result = $db->sql_query($sql);
@@ -377,7 +366,7 @@ class main_module
 								$sql = 'UPDATE ' . $table_prefix . 'event_medals SET image = \'' . $db->sql_escape($image) . '\' WHERE link = '.$db->sql_escape($event_id);
 								$db->sql_query($sql);
 							}
-							if ($users_diff)
+							if (!empty($users_diff))
 							{
 								foreach ($users_diff as $ID => $VAR)
 								{
@@ -427,7 +416,6 @@ class main_module
 						$sql = 'SELECT link, type, image FROM ' . $table_prefix . 'event_medals WHERE owner_id = '.$db->sql_escape($user_id);
 						$result = $db->sql_query($sql);
 						$events_old = array();
-						$events_image_old = array();
 						while ($row = $db->sql_fetchrow($result))
 						{
 							$events_old[$row['link']] = $row['type'];
@@ -437,7 +425,7 @@ class main_module
 						{
 							unset($events_diff[$VAR]);
 						}
-						if ($events_diff)
+						if (!empty($events_diff))
 						{
 							foreach ($events_diff as $ID => $VAR)
 							{
