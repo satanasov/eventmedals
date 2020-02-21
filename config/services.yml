@@ -16,8 +16,6 @@ services:
         class: anavaro\eventmedals\controller\ajaxify
         arguments:
             - '@auth'
-            - '@cache'
-            - '@config'
             - '@dbal.conn'
             - '@request'
             - '@template'
