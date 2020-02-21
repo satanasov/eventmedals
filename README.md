@@ -1,7 +1,7 @@
-[![Build Status](https://travis-ci.org/lucifer4o/eventmedals.svg?branch=master)](https://travis-ci.org/lucifer4o/eventmedals)
-
 Event Medals
 ============
+
+[![Build Status](https://travis-ci.org/satanasov/eventmedals.svg?branch=master)](https://travis-ci.org/satanasov/eventmedals) [![Code Coverage](https://scrutinizer-ci.com/g/satanasov/eventmedals/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/satanasov/eventmedals/?branch=master) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/satanasov/eventmedals/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/satanasov/eventmedals/?branch=master)
   
 Description:
   
