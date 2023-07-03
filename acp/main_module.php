@@ -78,7 +78,7 @@ class main_module
 							}
 						}
 						$template->assign_vars(array(
-							'S_ERROR' => implode($nick_errs, " "),
+							'S_ERROR' => implode(" ", $nick_errs),
 						));
 					break;
 					case 'third':
